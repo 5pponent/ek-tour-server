@@ -1,0 +1,25 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create
+      use-new-id-generator-mappings: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+  profiles:
+    active: db
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+
+server:
+  error:
+    include-stacktrace: on_param # ??? ?? ?? ????? ??
+    include-exception: true
+
+logging:
+  level:
+    org.hibernate.SQL: debug
