@@ -17,7 +17,7 @@ spring:
 
 server:
   error:
-    include-stacktrace: on_param # ??? ?? ?? ????? ??
+    include-stacktrace: on_param
     include-exception: true
 
 logging:
