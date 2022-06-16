@@ -9,5 +9,5 @@ public class EkTourApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(EkTourApplication.class, args);
 	}
-
+//
 }
