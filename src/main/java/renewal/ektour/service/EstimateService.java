@@ -4,14 +4,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import renewal.ektour.domain.Estimate;
 import renewal.ektour.dto.request.EstimateRequest;
 import renewal.ektour.dto.response.EstimateCSRResponse;
 import renewal.ektour.repository.EstimateRepository;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -41,7 +41,7 @@ public class EstimateService {
      */
     // CSR 목록 조회 (페이징)
     public List<EstimateCSRResponse> getEstimates(Integer page) {
-        Page<Estimate> estimates = estimateRepository.findAll(PageRequest.of(page - 1, 15));
+        Page<Estimate> estimates = estimateRepository.findAll(PageRequest.of(page, 15, Sort.by("id").descending()));
         List<EstimateCSRResponse> result = new ArrayList<>();
         for (Estimate estimate : estimates.getContent()) {
             EstimateCSRResponse data = EstimateCSRResponse.builder()
@@ -54,6 +54,10 @@ public class EstimateService {
                     .createdDate(estimate.getCreateDate())
                     .build();
             result.add(data);
+        }
+        // 없는 페이지 요청 시 예외 발생
+        if (result.size() == 0) {
+            throw new NoSuchElementException();
         }
         return result;
     }

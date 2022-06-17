@@ -3,10 +3,7 @@ package renewal.ektour.dto.request;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import renewal.ektour.domain.estimate.Estimate;
-
-import java.time.LocalDateTime;
+import renewal.ektour.domain.Estimate;
 
 @Data
 @AllArgsConstructor

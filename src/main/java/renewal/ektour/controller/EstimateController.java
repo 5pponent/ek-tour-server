@@ -11,7 +11,6 @@ import renewal.ektour.domain.Estimate;
 import renewal.ektour.dto.request.EstimateRequest;
 import renewal.ektour.dto.response.BoolResponse;
 import renewal.ektour.dto.response.EstimateCSRResponse;
-import renewal.ektour.dto.response.EstimateResponse;
 import renewal.ektour.service.EmailService;
 import renewal.ektour.service.EstimateService;
 
@@ -55,10 +54,9 @@ public class EstimateController {
     // CSR 목록 조회 (페이징)
     @GetMapping("/all/{page}")
     public ResponseEntity<?> findListCSR(
-            // page : default 페이지, size : 한 페이지의 글 개수, sort : 정렬 기준 컬럼
-            @PageableDefault(page = 1, size = 15, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-            @PathVariable("page") @Min(1) Integer page) {
-        List<EstimateCSRResponse> response = estimateService.getEstimates(page);
+            @PageableDefault(size = 15) Pageable pageable,
+            @PathVariable("page") @Min(1) Integer page) { // 요청 가능한 최소 페이지 : 1
+        List<EstimateCSRResponse> response = estimateService.getEstimates(page - 1);
         return success(response);
     }
 
@@ -66,6 +64,8 @@ public class EstimateController {
     public ResponseEntity<?> findListSSR() {
         return success(null);
     }
+
+    // TODO 견적 요청 상세 조회 시 등록한 핸드폰 번호, 비밀번호 검증
 
     /**
      * 견적요청 삭제
