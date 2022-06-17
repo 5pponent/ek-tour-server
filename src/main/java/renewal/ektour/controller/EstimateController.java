@@ -2,16 +2,23 @@ package renewal.ektour.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import renewal.ektour.domain.estimate.Estimate;
 import renewal.ektour.dto.request.EstimateRequest;
 import renewal.ektour.dto.response.BoolResponse;
+import renewal.ektour.dto.response.EstimateCSRResponse;
+import renewal.ektour.dto.response.EstimateResponse;
 import renewal.ektour.service.EmailService;
 import renewal.ektour.service.EstimateService;
 
 import javax.mail.MessagingException;
+import javax.validation.constraints.Min;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 import static renewal.ektour.dto.response.RestResponse.success;
 
@@ -34,17 +41,29 @@ public class EstimateController {
     }
 
     /**
-     * 견적요청 조회
+     * 견적 요청 상세 조회
      */
-    // 하나 조회 (상세페이지용)
     @GetMapping("/{estimate_id}")
     public ResponseEntity<?> findById(@PathVariable("estimate_id") Long estimateId) {
-        return success(null);
+        Estimate findEstimate = estimateService.findById(estimateId);
+        return success(findEstimate.toResponse());
     }
 
-    // 전체조회 (페이징)
-    @GetMapping("/all")
-    public ResponseEntity<?> findAll() {
+    /**
+     * 견적 요청 목록 조회
+     */
+    // CSR 목록 조회 (페이징)
+    @GetMapping("/all/{page}")
+    public ResponseEntity<?> findListCSR(
+            // page : default 페이지, size : 한 페이지의 글 개수, sort : 정렬 기준 컬럼
+            @PageableDefault(page = 1, size = 15, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+            @PathVariable("page") @Min(1) Integer page) {
+        List<EstimateCSRResponse> response = estimateService.getEstimates(page);
+        return success(response);
+    }
+
+    // TODO SSR 목록 조회 (페이징)
+    public ResponseEntity<?> findListSSR() {
         return success(null);
     }
 
