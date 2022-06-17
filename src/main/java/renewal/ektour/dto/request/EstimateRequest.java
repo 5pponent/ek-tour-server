@@ -2,7 +2,7 @@ package renewal.ektour.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import renewal.ektour.domain.estimate.Estimate;
+import renewal.ektour.domain.Estimate;
 
 @Data
 @AllArgsConstructor
