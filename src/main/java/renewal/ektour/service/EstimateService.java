@@ -7,6 +7,9 @@ import renewal.ektour.domain.estimate.Estimate;
 import renewal.ektour.dto.request.EstimateRequest;
 import renewal.ektour.repository.EstimateRepository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -25,6 +28,15 @@ public class EstimateService {
     /**
      * 견적요청 조회
      */
+    // 하나 조회 (상세 페이지용)
+    public Estimate findById(Long id) {
+        return estimateRepository.findById(id).orElseThrow();
+    }
+
+    // 전체 조회 (페이징)
+    public List<Estimate> list() {
+        return new ArrayList<>();
+    }
 
     /**
      * 견적요청 삭제 (수정은 필요 없음)

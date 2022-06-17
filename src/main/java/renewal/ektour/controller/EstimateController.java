@@ -2,6 +2,7 @@ package renewal.ektour.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import renewal.ektour.domain.estimate.Estimate;
@@ -29,17 +30,27 @@ public class EstimateController {
     }
 
     /**
-     * 견적요청 조회
+     * 견적 요청 상세 조회
      */
-    // 하나 조회 (상세페이지용)
     @GetMapping("/{estimate_id}")
     public ResponseEntity<?> findById(@PathVariable("estimate_id") Long estimateId) {
+        Estimate findEstimate = estimateService.findById(estimateId);
+        return success(findEstimate.toResponse());
+    }
+
+    /**
+     * 견적 요청 리스트 조회
+     */
+    // CSR 리스트 조회 (페이징)
+    @GetMapping("/all")
+    public ResponseEntity<?> findListCSR(
+            // page : default 페이지, size : 한 페이지의 글 개수, sort : 정렬 기준 컬럼, DE
+            @PageableDefault(page = 0, size = 15, sort = "")) {
         return success(null);
     }
 
-    // 전체조회 (페이징)
-    @GetMapping("/all")
-    public ResponseEntity<?> findAll() {
+    // TODO SSR 리스트 조회 (페이징)
+    public ResponseEntity<?> findListSSR() {
         return success(null);
     }
 
