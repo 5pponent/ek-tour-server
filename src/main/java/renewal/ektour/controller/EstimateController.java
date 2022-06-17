@@ -7,7 +7,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import renewal.ektour.domain.estimate.Estimate;
+import renewal.ektour.domain.Estimate;
 import renewal.ektour.dto.request.EstimateRequest;
 import renewal.ektour.dto.response.BoolResponse;
 import renewal.ektour.dto.response.EstimateCSRResponse;

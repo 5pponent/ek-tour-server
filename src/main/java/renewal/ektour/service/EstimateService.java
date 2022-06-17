@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import renewal.ektour.domain.estimate.Estimate;
+import renewal.ektour.domain.Estimate;
 import renewal.ektour.dto.request.EstimateRequest;
 import renewal.ektour.dto.response.EstimateCSRResponse;
 import renewal.ektour.repository.EstimateRepository;
