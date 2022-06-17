@@ -4,15 +4,16 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import renewal.ektour.dto.response.EstimateResponse;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Estimate {
@@ -47,8 +48,17 @@ public class Estimate {
     // 견적 요청 삭제여부 (사용자에게 보여지는 여부)
     private boolean visibility;
 
+    // 견적 요청일
+    @CreatedDate
+    private String createDate;
+
+    @PrePersist
+    public void onPrePersist(){
+        this.createDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    }
+
     @Builder
-    public Estimate(String name, String email, String phone, String password, String travelType, String vehicleType, int vehicleNumber, int memberCount, String departDate, String arrivalDate, String departPlace, String arrivalPlace, String memo, String stopPlace, String wayType, String payment, boolean taxBill) {
+    public Estimate(String name, String email, String phone, String password, String travelType, String vehicleType, int vehicleNumber, int memberCount, String departDate, String arrivalDate, String departPlace, String arrivalPlace, String memo, String stopPlace, String wayType, String payment, boolean taxBill, String createdDate) {
         this.name = name;
         this.email = email;
         this.phone = phone;
