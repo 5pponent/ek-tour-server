@@ -2,10 +2,15 @@ package renewal.ektour.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import renewal.ektour.domain.Estimate;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import renewal.ektour.domain.estimate.Estimate;
+
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class EstimateRequest {
 
      // 신청자 정보
