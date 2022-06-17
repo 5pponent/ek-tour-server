@@ -8,7 +8,11 @@ import org.springframework.web.bind.annotation.*;
 import renewal.ektour.domain.estimate.Estimate;
 import renewal.ektour.dto.request.EstimateRequest;
 import renewal.ektour.dto.response.BoolResponse;
+import renewal.ektour.service.EmailService;
 import renewal.ektour.service.EstimateService;
+
+import javax.mail.MessagingException;
+import java.io.UnsupportedEncodingException;
 
 import static renewal.ektour.dto.response.RestResponse.success;
 
@@ -19,6 +23,7 @@ import static renewal.ektour.dto.response.RestResponse.success;
 public class EstimateController {
 
     private final EstimateService estimateService;
+    private final EmailService emailService;
 
     /**
      * 견적요청 생성(저장)
@@ -62,6 +67,15 @@ public class EstimateController {
     @PutMapping("/{estimate_id}")
     public ResponseEntity<?> deleteById(@PathVariable("estimate_id") Long estimateId) {
         estimateService.delete(estimateId);
+        return success(new BoolResponse(true));
+    }
+
+    /**
+     * 견적요청 알림 보내기
+     */
+    @PostMapping("/alarm")
+    public ResponseEntity<?> alarm(@RequestBody EstimateRequest form) throws UnsupportedEncodingException, MessagingException {
+        emailService.sendMail(form);
         return success(new BoolResponse(true));
     }
 }
