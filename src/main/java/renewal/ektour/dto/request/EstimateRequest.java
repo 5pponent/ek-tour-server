@@ -1,15 +1,15 @@
 package renewal.ektour.dto.request;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import renewal.ektour.domain.Estimate;
 
 import javax.validation.constraints.*;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
+@Builder
 public class EstimateRequest {
 
     // 신청자 정보
@@ -69,6 +69,7 @@ public class EstimateRequest {
                 .wayType(wayType)
                 .payment(payment)
                 .taxBill(taxBill)
+                .visibility(true)
                 .build();
     }
 }

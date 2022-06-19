@@ -11,15 +11,13 @@ import org.springframework.web.bind.annotation.*;
 import renewal.ektour.domain.Estimate;
 import renewal.ektour.dto.request.EstimateRequest;
 import renewal.ektour.dto.response.BoolResponse;
-import renewal.ektour.dto.response.EstimateCSRResponse;
+import renewal.ektour.dto.response.EstimateListResponse;
 import renewal.ektour.service.EmailService;
 import renewal.ektour.service.EstimateService;
 
 import javax.mail.MessagingException;
 import javax.validation.Valid;
-import javax.validation.constraints.Min;
 import java.io.UnsupportedEncodingException;
-import java.util.List;
 
 import static renewal.ektour.dto.response.ErrorResponse.convertJson;
 import static renewal.ektour.dto.response.RestResponse.badRequest;
@@ -44,7 +42,7 @@ public class EstimateController {
             return badRequest(convertJson(bindingResult.getFieldErrors()));
         }
         Estimate savedEstimate = estimateService.save(form);
-        return success(savedEstimate.toResponse());
+        return success(savedEstimate.toDetailResponse());
     }
 
     /**
@@ -53,27 +51,25 @@ public class EstimateController {
     @GetMapping("/{estimate_id}")
     public ResponseEntity<?> findById(@PathVariable("estimate_id") Long estimateId) {
         Estimate findEstimate = estimateService.findById(estimateId);
-        return success(findEstimate.toResponse());
+        return success(findEstimate.toDetailResponse());
     }
 
     /**
      * 견적 요청 목록 조회
      */
-    // CSR 목록 조회 (페이징)
-    @GetMapping("/all/{page}")
-    public ResponseEntity<?> findListCSR(
-            @PageableDefault(size = 15) Pageable pageable,
-            @PathVariable("page") @Min(1) Integer page) { // 요청 가능한 최소 페이지 : 1
-        List<EstimateCSRResponse> response = estimateService.getEstimates(page - 1);
-        return success(response);
+    // 리액트 클라이언트 견적요청 목록 조회 (페이징)
+    @GetMapping("/all")
+    public ResponseEntity<?> findAllByPageClient(
+            // page : default 페이지, size : 한 페이지의 글 개수, sort : 정렬 기준 컬럼
+            @PageableDefault(size = 15, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+        EstimateListResponse estimateList = estimateService.findAllByPage(pageable);
+        return success(estimateList);
     }
 
-    // TODO SSR 목록 조회 (페이징)
-    public ResponseEntity<?> findListSSR() {
+    // 관리자 페이지 견적요청 목록 조회 (페이징)
+    public ResponseEntity<?> findAllByPageAdmin() {
         return success(null);
     }
-
-    // TODO 견적 요청 상세 조회 시 등록한 핸드폰 번호, 비밀번호 검증
 
     /**
      * 견적요청 삭제

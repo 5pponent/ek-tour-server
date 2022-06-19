@@ -18,7 +18,8 @@ public class InitDummyData {
         // 견적 더미 데이터 생성
         for (int i = 0; i < 20; i++) {
             String idx = String.valueOf(i + 1);
-            EstimateRequest data = new EstimateRequest();
+            EstimateRequest data = EstimateRequest.builder()
+                    .build();
             data.setName("user" + idx);
             estimateService.save(data);
         }
