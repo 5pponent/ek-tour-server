@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <title>이케이투어 운영자</title>
+    <style>
+        .col { margin: auto 0; }
+        td { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 12px;}
+        article { background-color: white; padding: 20px; }
+        select { margin-right: 3px; }
+    </style>
+</head>
+
+<body style="background-color: #e5e5e5;">
+
+<!-- 헤더 -->
+<header class="container" style="margin: 20px auto;">
+    <div class="row row-cols-auto">
+        <div class="col"><h3>이케이 하나관광</h3></div>
+        <div class="col"><span>admin</span> 님 안녕하세요!</div>
+        <div class="col"><input type="button" value="로그아웃" /></div>
+    </div>
+</header>
+
+<div class="container">
+    <div class="row row-cols-auto">
+
+        <!-- 사이드 메뉴 -->
+        <nav class="col-2">
+            <ul class="list-group">
+                <li class="list-group-item"><a href="#">견적요청내역</a></li>
+                <li class="list-group-item"><a href="#">관리자 설정</a></li>
+            </ul>
+        </nav>
+
+        <!-- 컨텐츠 -->
+        <article class="col-10">
+            <h5>견적 요청 내역</h5>
+            <div style="display: flex; justify-content: flex-end; padding: 10px 0;">
+                <select>
+                    <option value="2015">2015년</option>
+                    <option value="2016">2016년</option>
+                    <option value="2017">2017년</option>
+                    <option value="2018">2018년</option>
+                    <option value="2019">2019년</option>
+                    <option value="2020">2020년</option>
+                    <option value="2021">2021년</option>
+                    <option value="2022" selected>2022년</option>
+                    <option value="2023">2023년</option>
+                    <option value="2024">2024년</option>
+                    <option value="2025">2025년</option>
+                    <option value="2026">2026년</option>
+                    <option value="2027">2027년</option>
+                    <option value="2028">2028년</option>
+                    <option value="2029">2029년</option>
+                    <option value="2030">2030년</option>
+                </select>
+                <select>
+                    <option value="1">1월</option>
+                    <option value="2">2월</option>
+                    <option value="3">3월</option>
+                    <option value="4">4월</option>
+                    <option value="5">5월</option>
+                    <option value="6" selected>6월</option>
+                    <option value="7">7월</option>
+                    <option value="8">8월</option>
+                    <option value="9">9월</option>
+                    <option value="10">10월</option>
+                    <option value="11">11월</option>
+                    <option value="12">12월</option>
+                </select>
+                ~
+                <select>
+                    <option value="2015">2015년</option>
+                    <option value="2016">2016년</option>
+                    <option value="2017">2017년</option>
+                    <option value="2018">2018년</option>
+                    <option value="2019">2019년</option>
+                    <option value="2020">2020년</option>
+                    <option value="2021">2021년</option>
+                    <option value="2022" selected>2022년</option>
+                    <option value="2023">2023년</option>
+                    <option value="2024">2024년</option>
+                    <option value="2025">2025년</option>
+                    <option value="2026">2026년</option>
+                    <option value="2027">2027년</option>
+                    <option value="2028">2028년</option>
+                    <option value="2029">2029년</option>
+                    <option value="2030">2030년</option>
+                </select>
+                <select>
+                    <option value="1">1월</option>
+                    <option value="2">2월</option>
+                    <option value="3">3월</option>
+                    <option value="4">4월</option>
+                    <option value="5">5월</option>
+                    <option value="6" selected>6월</option>
+                    <option value="7">7월</option>
+                    <option value="8">8월</option>
+                    <option value="9">9월</option>
+                    <option value="10">10월</option>
+                    <option value="11">11월</option>
+                    <option value="12">12월</option>
+                </select>
+                <select>
+                    <option value="name">요청자</option>
+                    <option value="phone">연락처</option>
+                </select>
+                <input type="text" placeholder="검색어를 입력하세요."/>
+                <input type="button" value="검색"/>
+            </div>
+
+            <div style="border-top: 1px solid lightgray;">
+                <table class="table table-striped table-hover" style="table-layout: fixed">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col" style="width: 50px;">번호</th>
+                            <th scope="col">요청자</th>
+                            <th scope="col">연락처</th>
+                            <th scope="col">여행구분</th>
+                            <th scope="col">출발일</th>
+                            <th scope="col">도착일</th>
+                            <th scope="col">출발지</th>
+                            <th scope="col">도착지</th>
+                            <th scope="col">차량구분</th>
+                            <th scope="col">요청일</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>홍길동</td>
+                            <td>000-0000-0000</td>
+                            <td>관혼상제</td>
+                            <td>0000-00-00</td>
+                            <td>0000-00-00</td>
+                            <td>[서울]서대문구</td>
+                            <td>[서울]광화문</td>
+                            <td>25인승 소형(n대)</td>
+                            <td>0000-00-00</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>이순신</td>
+                            <td>000-0000-0000</td>
+                            <td>관혼상제</td>
+                            <td>0000-00-00</td>
+                            <td>0000-00-00</td>
+                            <td>[서울]서대문구</td>
+                            <td>[서울]광화문</td>
+                            <td>25인승 소형(n대)</td>
+                            <td>0000-00-00</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>강감찬</td>
+                            <td>000-0000-0000</td>
+                            <td>관혼상제</td>
+                            <td>0000-00-00</td>
+                            <td>0000-00-00</td>
+                            <td>[서울]서대문구 어딘가에</td>
+                            <td>[서울]광화문</td>
+                            <td>25인승 소형(n대)</td>
+                            <td>0000-00-00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </article>
+
+    </div>
+</div>
+
+<footer style="border: 1px solid lightgray; background-color: #cfcfcf;">
+    <div style="text-align: center; margin: 50px 0;">© 주식회사 이케이투어 LTD. All rights reserved.</div>
+</footer>
+
+</body>
+</html>
