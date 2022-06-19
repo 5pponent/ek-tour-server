@@ -26,7 +26,7 @@ public class EstimateService {
      * 견적요청 생성(저장)
      */
     @Transactional
-    public Estimate save(EstimateRequest form) {
+    public Estimate createAndSave(EstimateRequest form) {
         Estimate savedEstimate = estimateRepository.save(form.toEntity());
         log.info("견적 저장 = {}", savedEstimate.toDetailResponse().toString());
         return savedEstimate;

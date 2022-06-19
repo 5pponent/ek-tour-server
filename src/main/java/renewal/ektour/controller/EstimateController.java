@@ -36,20 +36,20 @@ public class EstimateController {
      * 견적요청 생성(저장)
      */
     @PostMapping("")
-    public ResponseEntity<?> saveSimpleEstimate(@Valid @RequestBody EstimateRequest form, BindingResult bindingResult) {
+    public ResponseEntity<?> saveEstimate(@Valid @RequestBody EstimateRequest form, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             log.error("estimate validation errors = {}", bindingResult.getFieldErrors());
             return badRequest(convertJson(bindingResult.getFieldErrors()));
         }
-        Estimate savedEstimate = estimateService.save(form);
+        Estimate savedEstimate = estimateService.createAndSave(form);
         return success(savedEstimate.toDetailResponse());
     }
 
     /**
      * 견적 요청 상세 조회
      */
-    @GetMapping("/{estimate_id}")
-    public ResponseEntity<?> findById(@PathVariable("estimate_id") Long estimateId) {
+    @GetMapping("/{estimateId}")
+    public ResponseEntity<?> findById(@PathVariable("estimateId") Long estimateId) {
         Estimate findEstimate = estimateService.findById(estimateId);
         return success(findEstimate.toDetailResponse());
     }
@@ -76,8 +76,8 @@ public class EstimateController {
      */
     // 실제 삭제하는게 아니라 visibility 를 false 로 바꾸고 사용자에게만 안 보여준다.
     // 관리자가 직접 삭제함 디비에는 데이터가 남아있다 (사용자는 삭제 X)
-    @PutMapping("/{estimate_id}")
-    public ResponseEntity<?> deleteById(@PathVariable("estimate_id") Long estimateId) {
+    @PutMapping("/{estimateId}")
+    public ResponseEntity<?> deleteById(@PathVariable("estimateId") Long estimateId) {
         estimateService.delete(estimateId);
         return success(new BoolResponse(true));
     }

@@ -12,5 +12,4 @@ public class EstimateSimpleResponse {
     private String arrivalPlace;// 도착지
     private String vehicleType; // 차량 구분
     private String createdDate; // 요청일
-
 }

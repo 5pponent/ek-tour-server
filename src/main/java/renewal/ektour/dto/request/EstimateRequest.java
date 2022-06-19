@@ -23,6 +23,8 @@ public class EstimateRequest {
     private String phone;
 
     @NotBlank
+    @Size(min = 4, max = 4, message = "비밀번호는 4자리로 설정해주세요")
+    @PositiveOrZero(message = "비밀번호는 0~9자리 숫자로만 가능합니다")
     private String password;
 
     // 필수 견적 요청
