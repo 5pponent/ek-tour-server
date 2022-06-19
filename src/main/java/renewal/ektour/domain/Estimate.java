@@ -6,7 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import renewal.ektour.dto.response.EstimateResponse;
+import renewal.ektour.dto.response.EstimateDetailResponse;
+import renewal.ektour.dto.response.EstimateSimpleResponse;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -58,7 +59,7 @@ public class Estimate {
     }
 
     @Builder
-    public Estimate(String name, String email, String phone, String password, String travelType, String vehicleType, int vehicleNumber, int memberCount, String departDate, String arrivalDate, String departPlace, String arrivalPlace, String memo, String stopPlace, String wayType, String payment, boolean taxBill, String createdDate) {
+    public Estimate(String name, String email, String phone, String password, String travelType, String vehicleType, int vehicleNumber, int memberCount, String departDate, String arrivalDate, String departPlace, String arrivalPlace, String memo, String stopPlace, String wayType, String payment, boolean taxBill, String createdDate, boolean visibility) {
         this.name = name;
         this.email = email;
         this.phone = phone;
@@ -76,11 +77,21 @@ public class Estimate {
         this.wayType = wayType;
         this.payment = payment;
         this.taxBill = taxBill;
-        this.visibility = true;
+        this.visibility = visibility;
     }
 
-    public EstimateResponse toResponse() {
-        return EstimateResponse.builder()
+    public EstimateSimpleResponse toSimpleResponse() {
+        return EstimateSimpleResponse.builder()
+                .name(name)
+                .travelType(travelType)
+                .vehicleType(vehicleType)
+                .departPlace(departPlace)
+                .arrivalPlace(arrivalPlace)
+                .build();
+    }
+
+    public EstimateDetailResponse toDetailResponse() {
+        return EstimateDetailResponse.builder()
                 .name(name)
                 .email(email)
                 .phone(phone)
