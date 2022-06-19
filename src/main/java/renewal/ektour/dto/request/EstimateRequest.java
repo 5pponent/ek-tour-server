@@ -3,32 +3,46 @@ package renewal.ektour.dto.request;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import renewal.ektour.domain.estimate.Estimate;
+import renewal.ektour.domain.Estimate;
 
-import java.time.LocalDateTime;
+import javax.validation.constraints.*;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class EstimateRequest {
 
-     // 신청자 정보
-     private String name;
-     private String email;
-     private String phone;
-     private String password;
+    // 신청자 정보
+    @NotBlank
+    private String name;
 
-     // 필수 견적 요청
-     private String travelType; // 일반여행, 관혼상제, 학교단체, 기타단체
-     private String vehicleType; // 25인승 소형, 28인승 리무진, 45인승 대형
-     private int vehicleNumber; // 차량대수
-     private int memberCount; // 인원수
-     private String departDate; // 출발일시
-     private String arrivalDate; // 도착일시
-     private String departPlace; // 출발지
-     private String arrivalPlace; // 도착지
-     private String memo; // 기타메모
+    @Email(message = "이메일 형식이 아닙니다")
+    private String email;
+
+    @Pattern(regexp = "^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$", message = "010-1234-1234 또는 01012341234 형식이 아닙니다")
+    private String phone;
+
+    @NotBlank
+    private String password;
+
+    // 필수 견적 요청
+    @NotEmpty
+    private String travelType; // 일반여행, 관혼상제, 학교단체, 기타단체
+    @NotEmpty
+    private String vehicleType; // 25인승 소형, 28인승 리무진, 45인승 대형
+    @NotNull
+    private int vehicleNumber; // 차량대수
+    @NotNull
+    private int memberCount; // 인원수
+    @NotEmpty
+    private String departDate; // 출발일시
+    @NotEmpty
+    private String arrivalDate; // 도착일시
+    @NotEmpty
+    private String departPlace; // 출발지
+    @NotEmpty
+    private String arrivalPlace; // 도착지
+    private String memo; // 기타메모
 
     // 선택 견적 요청
     private String stopPlace; // 경유지
