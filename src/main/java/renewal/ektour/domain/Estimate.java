@@ -1,4 +1,4 @@
-package renewal.ektour.domain.estimate;
+package renewal.ektour.domain;
 
 import lombok.AccessLevel;
 import lombok.Builder;

@@ -6,20 +6,23 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import renewal.ektour.domain.Estimate;
 import renewal.ektour.dto.request.EstimateRequest;
 import renewal.ektour.dto.response.BoolResponse;
 import renewal.ektour.dto.response.EstimateCSRResponse;
-import renewal.ektour.dto.response.EstimateResponse;
 import renewal.ektour.service.EmailService;
 import renewal.ektour.service.EstimateService;
 
 import javax.mail.MessagingException;
+import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import static renewal.ektour.dto.response.ErrorResponse.convertJson;
+import static renewal.ektour.dto.response.RestResponse.badRequest;
 import static renewal.ektour.dto.response.RestResponse.success;
 
 @RestController
@@ -35,7 +38,11 @@ public class EstimateController {
      * 견적요청 생성(저장)
      */
     @PostMapping("")
-    public ResponseEntity<?> saveSimpleEstimate(@RequestBody EstimateRequest form) {
+    public ResponseEntity<?> saveSimpleEstimate(@Valid @RequestBody EstimateRequest form, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            log.error("estimate validation errors = {}", bindingResult.getFieldErrors());
+            return badRequest(convertJson(bindingResult.getFieldErrors()));
+        }
         Estimate savedEstimate = estimateService.save(form);
         return success(savedEstimate.toResponse());
     }
