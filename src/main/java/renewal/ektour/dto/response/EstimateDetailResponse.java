@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 @Builder
-public class EstimateResponse {
+public class EstimateDetailResponse {
     // 신청자 정보
     private String name;
     private String email;
