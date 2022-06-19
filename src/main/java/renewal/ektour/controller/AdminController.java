@@ -34,6 +34,12 @@ public class AdminController {
         else return "login";
     }
 
+    @PostMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        adminService.logout(request);
+        return "redirect:/admin";
+    }
+
 
 
 

@@ -33,6 +33,10 @@ public class AdminService {
         }
     }
 
+    public void logout(HttpServletRequest request) {
+        request.getSession().invalidate();
+    }
+
     @Transactional
     public void updatePassword(String oldPassword, String newPassword) {
         Admin admin = adminRepository.findByAdminPassword(oldPassword).orElseThrow();
