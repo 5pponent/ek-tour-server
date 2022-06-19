@@ -51,11 +51,11 @@ public class Estimate {
 
     // 견적 요청일
     @CreatedDate
-    private String createDate;
+    private String createdDate;
 
     @PrePersist
     public void onPrePersist(){
-        this.createDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        this.createdDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 
     @Builder
@@ -87,6 +87,7 @@ public class Estimate {
                 .vehicleType(vehicleType)
                 .departPlace(departPlace)
                 .arrivalPlace(arrivalPlace)
+                .createdDate(createdDate)
                 .build();
     }
 
@@ -110,6 +111,7 @@ public class Estimate {
                 .payment(payment)
                 .taxBill(taxBill)
                 .visibility(visibility)
+                .createdDate(createdDate)
                 .build();
     }
 

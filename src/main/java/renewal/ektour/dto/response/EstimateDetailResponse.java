@@ -33,4 +33,6 @@ public class EstimateDetailResponse {
 
     // 견적 요청 삭제여부 (사용자에게 보여지는 여부)
     private boolean visibility;
+
+    private String createdDate;
 }
