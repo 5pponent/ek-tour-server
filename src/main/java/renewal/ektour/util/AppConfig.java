@@ -1,19 +1,18 @@
 package renewal.ektour.util;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-@Configuration
-@RequiredArgsConstructor
-public class AppConfig implements WebMvcConfigurer {
-    private final LoggingInterceptor loggingInterceptor;
+import java.util.List;
 
+@Configuration
+public class AppConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(loggingInterceptor)
+        registry.addInterceptor(new LoggingInterceptor())
                 .addPathPatterns("/**");
     }
 
@@ -22,5 +21,10 @@ public class AppConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins("*");
+    }
+
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+        resolvers.add(new LoginArgumentResolver());
     }
 }

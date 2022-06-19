@@ -3,9 +3,13 @@ package renewal.ektour.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import renewal.ektour.domain.Admin;
 import renewal.ektour.repository.AdminRepository;
 
-import javax.security.auth.login.LoginException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.NoSuchElementException;
 
 @Service
 @Slf4j
@@ -13,8 +17,26 @@ import javax.security.auth.login.LoginException;
 public class AdminService {
     private final AdminRepository adminRepository;
 
-    public void login(String adminPassword) throws LoginException {
-        if (!adminRepository.existsByAdminPassword(adminPassword)) throw new LoginException("비밀번호가 다릅니다.");
+    @Transactional
+    public Admin createAdmin(String password) {
+        return adminRepository.save(new Admin(password));
+    }
+
+    public boolean login(HttpServletRequest request, String adminPassword) {
+        try {
+            Admin admin = adminRepository.findByAdminPassword(adminPassword).orElseThrow();
+            HttpSession session = request.getSession();
+            session.setAttribute("admin", admin);
+            return true;
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    @Transactional
+    public void updatePassword(String oldPassword, String newPassword) {
+        Admin admin = adminRepository.findByAdminPassword(oldPassword).orElseThrow();
+        admin.updatePassword(newPassword);
     }
 
 }
