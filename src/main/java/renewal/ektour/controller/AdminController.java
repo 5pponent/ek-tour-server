@@ -22,9 +22,14 @@ public class AdminController {
     private final AdminService adminService;
 
     @PostMapping("/login")
-    public String login(@RequestParam("adminPassword") String adminPassword, Model model, HttpServletRequest request) {
+    public String login(@RequestParam("adminPassword") String adminPassword,
+                        Model model,
+                        HttpServletRequest request) {
         boolean loginResult = adminService.login(request, adminPassword);
-        model.addAttribute("loginResult", loginResult);
+        if (!loginResult) {
+            model.addAttribute("loginResult", false);
+            return "login";
+        }
         return "redirect:/admin";
     }
 
