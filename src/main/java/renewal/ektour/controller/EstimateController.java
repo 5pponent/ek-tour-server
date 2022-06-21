@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import renewal.ektour.domain.Estimate;
 import renewal.ektour.dto.request.EstimateRequest;
+import renewal.ektour.dto.request.FindEstimateRequest;
 import renewal.ektour.dto.response.BoolResponse;
 import renewal.ektour.dto.response.EstimateListResponse;
 import renewal.ektour.service.EmailService;
@@ -57,7 +58,7 @@ public class EstimateController {
     /**
      * 견적 요청 목록 조회
      */
-    // 리액트 클라이언트 견적요청 목록 조회 (페이징)
+    // 클라이언트 견적요청 목록 조회 (페이징)
     @GetMapping("/all")
     public ResponseEntity<?> findAllByPageClient(
             // page : default 페이지, size : 한 페이지의 글 개수, sort : 정렬 기준 컬럼
@@ -74,13 +75,26 @@ public class EstimateController {
     /**
      * 검색
      */
-    // 리액트 클라이언트 검색
+    // 클라이언트 검색
     @GetMapping("/search/{searchType}/{keyword}")
     public ResponseEntity<?> searchClient(@PathVariable("searchType") String searchType,
                                           @PathVariable("keyword") String keyword,
                                           @PageableDefault(size = 15, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
         EstimateListResponse estimateListResponse = estimateService.searchClient(searchType, keyword, pageable);
         return success(estimateListResponse);
+    }
+
+    // 클라이언트 내가 쓴 견적요청 조회
+    @PostMapping("/search/my")
+    public ResponseEntity<?> findAllMyEstimates(@RequestBody FindEstimateRequest form,
+                                                @PageableDefault(size = 15, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+                                                BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            log.error("find estimate form validation errors = {}", bindingResult.getFieldErrors());
+            return badRequest(convertJson(bindingResult.getFieldErrors()));
+        }
+        EstimateListResponse estimates = estimateService.findAllMyEstimates(form, pageable);
+        return success(estimates);
     }
 
     /**

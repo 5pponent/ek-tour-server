@@ -21,11 +21,22 @@ public class InitDummyData {
         adminService.createAdmin("1234");
 
         // 견적 더미 데이터 생성
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 6; i++) {
             String idx = String.valueOf(i + 1);
             EstimateRequest data = EstimateRequest.builder()
+                    .name("user" + idx)
+                    .password("1234")
+                    .phone("010-8872-5482")
                     .build();
-            data.setName("user" + idx);
+            estimateService.createAndSave(data);
+        }
+        for (int i = 6; i < 11; i++) {
+            String idx = String.valueOf(i + 1);
+            EstimateRequest data = EstimateRequest.builder()
+                    .name("user" + idx)
+                    .password("4567")
+                    .phone("010-1234-1234")
+                    .build();
             estimateService.createAndSave(data);
         }
         estimateService.createAndSave(EstimateRequest.builder()

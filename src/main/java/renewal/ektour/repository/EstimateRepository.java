@@ -22,4 +22,6 @@ public interface EstimateRepository extends JpaRepository<Estimate, Long> {
 
     @Query("SELECT e FROM Estimate e WHERE e.vehicleType LIKE %:vehicleType%")
     Page<Estimate> searchAllByVehicleType(Pageable pageable, String vehicleType);
+
+    Page<Estimate> findAllByPhoneAndPassword(Pageable pageable, String phone, String password);
 }
