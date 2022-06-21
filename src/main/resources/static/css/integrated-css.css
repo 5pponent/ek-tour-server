@@ -24,9 +24,21 @@ td {
 
 article {
     background-color: white;
-    padding: 20px;
+    padding: 30px;
 }
 
 select {
     margin-right: 3px;
+}
+
+#topBar {
+    background-color: #e7ebf0;
+}
+
+.footer {
+    border: 1px solid lightgray;
+    background-color: #cfcfcf;
+    text-align: center;
+    font-size: 12px;
+    padding: 20px 0;
 }

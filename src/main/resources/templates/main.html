@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Import할 CSS 파일 (경로 주의) -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/integrated-css.css" rel="stylesheet">
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/css/integrated-css.css" rel="stylesheet">
     <title>이케이투어 운영자</title>
 </head>
 
@@ -25,19 +25,31 @@
 </header>
 
 <div class="container">
-    <div class="row row-cols-auto">
+    <div class="row row-cols-auto" id="topBar">
+        <div class="col-2" style="margin: auto 0;">
+            <div id="current_date" style="color: black;"></div>
+        </div>
+        <div class="col-10">
+            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                <ol class="breadcrumb" style="margin: 10px 0;">
+                    <li class="breadcrumb-item"><a href="./main.html">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">견적 요청 내역</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
 
+    <div class="row row-cols-auto">
         <!-- 사이드 메뉴 -->
-        <nav class="col-2">
-            <ul class="list-group">
-                <li class="list-group-item"><a href="#">견적요청내역</a></li>
-                <li class="list-group-item"><a href="#">관리자 설정</a></li>
-            </ul>
+        <nav class="col-2" class="list-group" style="padding: 0px;">
+            <a href="#" class="list-group-item list-group-item-action active">견적요청내역</a>
+            <a href="./setting.html" class="list-group-item list-group-item-action">관리자 설정</a>
         </nav>
 
         <!-- 컨텐츠 -->
         <article class="col-10">
             <h5>견적 요청 내역</h5>
+            <hr>
             <div style="display: flex; justify-content: flex-end; padding: 10px 0;">
                 <select>
                     <option value="2015">2015년</option>
@@ -112,7 +124,7 @@
                 <input type="button" value="검색"/>
             </div>
 
-            <div style="border-top: 1px solid lightgray;">
+            <div class="table-responsive">
                 <table class="table table-striped table-hover" style="table-layout: fixed">
                     <thead class="table-light">
                         <tr>
@@ -174,9 +186,23 @@
     </div>
 </div>
 
-<footer style="border: 1px solid lightgray; background-color: #cfcfcf;">
-    <div style="text-align: center; margin: 50px 0;">© 주식회사 이케이투어 LTD. All rights reserved.</div>
+<footer class="footer">
+    © 주식회사 이케이투어 LTD. All rights reserved.
 </footer>
 
 </body>
+
+<script>
+    date = new Date();
+    year = date.getFullYear();
+    month = date.getMonth() + 1;
+    day = date.getDate();
+    hour = date.getHours();
+    minute = date.getMinutes();
+    second = date.getSeconds();
+    if (minute < 10) minute = "0" + minute;
+    if (second < 10) second = "0" + second;
+    document.getElementById("current_date").innerHTML = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
+</script>
+
 </html>
