@@ -26,7 +26,7 @@ public class InitDummyData {
             EstimateRequest data = EstimateRequest.builder()
                     .name("user" + idx)
                     .password("1234")
-                    .phone("010-8872-5482")
+                    .phone("01088725482")
                     .build();
             estimateService.createAndSave(data);
         }
@@ -35,13 +35,13 @@ public class InitDummyData {
             EstimateRequest data = EstimateRequest.builder()
                     .name("user" + idx)
                     .password("4567")
-                    .phone("010-1234-1234")
+                    .phone("01012341234")
                     .build();
             estimateService.createAndSave(data);
         }
         estimateService.createAndSave(EstimateRequest.builder()
                 .name("배윤재")
-                .phone("010-2128-7755")
+                .phone("01021287755")
                 .password("7755")
                 .email("test@naver.com")
                 .travelType("일반여행")
@@ -59,7 +59,7 @@ public class InitDummyData {
                 .build());
         estimateService.createAndSave(EstimateRequest.builder()
                 .name("이지수")
-                .phone("010-2400-6992")
+                .phone("01024006992")
                 .password("5123")
                 .email("hom1994@smu.ac.kr")
                 .travelType("학교단체")
@@ -77,7 +77,7 @@ public class InitDummyData {
                 .build());
         estimateService.createAndSave(EstimateRequest.builder()
                 .name("이종호")
-                .phone("010-7447-1326")
+                .phone("01074471326")
                 .password("0373")
                 .email("mmm@naver.com")
                 .travelType("일반여행")
