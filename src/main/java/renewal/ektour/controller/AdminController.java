@@ -45,6 +45,9 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-
+    @GetMapping("/setting")
+    public String settingPage() {
+        return "setting";
+    }
 
 }
