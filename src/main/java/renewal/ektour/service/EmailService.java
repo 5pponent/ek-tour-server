@@ -25,7 +25,7 @@ public class EmailService {
         message.setSubject("[이케이하나관광 견적요청]");
         String text = "";
         text += form.getName() + " " + form.getPhone() + "\n";
-        text += form.getTravelType() + " " + form.getVehicleType() + " " + form.getVehicleNumber() + "\n";
+        text += form.getTravelType() + " " + form.getVehicleType() + " " + form.getVehicleNumber() + "대\n";
         text += form.getDepartPlace() + " ~ " + form.getArrivalPlace() + "\n";
         text += "경유지(" + form.getStopPlace() + ")\n";
         text += form.getDepartDate() + " ~ " + form.getArrivalDate() + "\n";

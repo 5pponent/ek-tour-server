@@ -12,9 +12,11 @@ import renewal.ektour.domain.Estimate;
 import renewal.ektour.dto.request.EstimateRequest;
 import renewal.ektour.dto.request.FindEstimateRequest;
 import renewal.ektour.dto.response.BoolResponse;
+import renewal.ektour.dto.response.EstimateListPagingResponse;
 import renewal.ektour.dto.response.EstimateListResponse;
 import renewal.ektour.service.EmailService;
 import renewal.ektour.service.EstimateService;
+import renewal.ektour.util.PageConfig;
 
 import javax.mail.MessagingException;
 import javax.validation.Valid;
@@ -37,12 +39,13 @@ public class EstimateController {
      * 견적요청 생성(저장)
      */
     @PostMapping("")
-    public ResponseEntity<?> saveEstimate(@Valid @RequestBody EstimateRequest form, BindingResult bindingResult) {
+    public ResponseEntity<?> saveAndAlarm(@Valid @RequestBody EstimateRequest form, BindingResult bindingResult) throws MessagingException, UnsupportedEncodingException {
         if (bindingResult.hasErrors()) {
             log.error("estimate validation errors = {}", bindingResult.getFieldErrors());
             return badRequest(convertJson(bindingResult.getFieldErrors()));
         }
         Estimate savedEstimate = estimateService.createAndSave(form);
+        emailService.sendMail(form);
         return success(savedEstimate.toDetailResponse());
     }
 
@@ -62,14 +65,20 @@ public class EstimateController {
     @GetMapping("/all")
     public ResponseEntity<?> findAllByPageClient(
             // page : default 페이지, size : 한 페이지의 글 개수, sort : 정렬 기준 컬럼
-            @PageableDefault(size = 15, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
-        EstimateListResponse estimateList = estimateService.findAllByPage(pageable);
+            @PageableDefault(size = PageConfig.PAGE_PER_COUNT, sort = PageConfig.SORT_STANDARD, direction = Sort.Direction.DESC) Pageable pageable) {
+        EstimateListPagingResponse estimateList = estimateService.findAllByPage(pageable);
         return success(estimateList);
     }
 
     // 관리자 페이지 견적요청 목록 조회 (페이징)
     public ResponseEntity<?> findAllByPageAdmin() {
         return success(null);
+    }
+
+    // 존재하는 전체 페이지 수 조회
+    @GetMapping("/all/page")
+    public ResponseEntity<?> getAllPageCount() {
+        return success(estimateService.getAllPageCount());
     }
 
     /**
@@ -79,21 +88,20 @@ public class EstimateController {
     @GetMapping("/search/{searchType}/{keyword}")
     public ResponseEntity<?> searchClient(@PathVariable("searchType") String searchType,
                                           @PathVariable("keyword") String keyword,
-                                          @PageableDefault(size = 15, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
-        EstimateListResponse estimateListResponse = estimateService.searchClient(searchType, keyword, pageable);
+                                          @PageableDefault(size = PageConfig.PAGE_PER_COUNT, sort = PageConfig.SORT_STANDARD, direction = Sort.Direction.DESC) Pageable pageable) {
+        EstimateListPagingResponse estimateListResponse = estimateService.searchClient(searchType, keyword, pageable);
         return success(estimateListResponse);
     }
 
     // 클라이언트 내가 쓴 견적요청 조회
     @PostMapping("/search/my")
     public ResponseEntity<?> findAllMyEstimates(@RequestBody FindEstimateRequest form,
-                                                @PageableDefault(size = 15, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
                                                 BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             log.error("find estimate form validation errors = {}", bindingResult.getFieldErrors());
             return badRequest(convertJson(bindingResult.getFieldErrors()));
         }
-        EstimateListResponse estimates = estimateService.findAllMyEstimates(form, pageable);
+        EstimateListResponse estimates = estimateService.findAllMyEstimates(form);
         return success(estimates);
     }
 
