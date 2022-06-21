@@ -43,14 +43,12 @@ public class EstimateService {
     /**
      * 견적 요청 목록 조회
      */
-    // 리액트 클라이언트로 내려지는 견적요청 목록 (페이징)
-    public EstimateListResponse findAllByPage(Pageable pageable) {
-        Page<Estimate> estimates = estimateRepository.findAll(pageable);
+    private EstimateListResponse makeEstimateListResponse(Pageable pageable, Page<Estimate> estimates) {
         int totalEstimateCount = estimateRepository.countAll();
-        int currentPageEstimateCount = estimates.getSize();
         int totalPage = estimates.getTotalPages();
         List<EstimateSimpleResponse> result = new ArrayList<>();
         estimates.forEach(estimate -> result.add(estimate.toSimpleResponse()));
+        int currentPageEstimateCount = result.size();
         return EstimateListResponse.builder()
                 .currentPageCount(currentPageEstimateCount)
                 .totalCount(totalEstimateCount)
@@ -60,7 +58,28 @@ public class EstimateService {
                 .build();
     }
 
+    // 리액트 클라이언트로 내려지는 견적요청 목록 (페이징)
+    public EstimateListResponse findAllByPage(Pageable pageable) {
+        Page<Estimate> estimates = estimateRepository.findAll(pageable);
+        return makeEstimateListResponse(pageable, estimates);
+    }
+
     // TODO SSR 목록 조회 (페이징)
+
+    // 클라이언트 검색
+    public EstimateListResponse searchClient(String searchType, String keyword, Pageable pageable) {
+        switch (searchType) {
+            case "name" :
+                return makeEstimateListResponse(pageable, estimateRepository.searchAllByName(pageable, keyword));
+            case "travelType" :
+                return makeEstimateListResponse(pageable, estimateRepository.searchAllByTravelType(pageable, keyword));
+            case "vehicleType" :
+                return makeEstimateListResponse(pageable, estimateRepository.searchAllByVehicleType(pageable, keyword));
+        }
+        
+        // 검색 요건이 맞지 않으면 그냥 다 내림
+        return findAllByPage(pageable);
+    }
 
     /**
      * 견적요청 삭제 (수정은 필요 없음)

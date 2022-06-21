@@ -72,6 +72,18 @@ public class EstimateController {
     }
 
     /**
+     * 검색
+     */
+    // 리액트 클라이언트 검색
+    @GetMapping("/search/{searchType}/{keyword}")
+    public ResponseEntity<?> searchClient(@PathVariable("searchType") String searchType,
+                                          @PathVariable("keyword") String keyword,
+                                          @PageableDefault(size = 15, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+        EstimateListResponse estimateListResponse = estimateService.searchClient(searchType, keyword, pageable);
+        return success(estimateListResponse);
+    }
+
+    /**
      * 견적요청 삭제
      */
     // 실제 삭제하는게 아니라 visibility 를 false 로 바꾸고 사용자에게만 안 보여준다.
