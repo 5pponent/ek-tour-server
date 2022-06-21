@@ -14,6 +14,7 @@ import renewal.ektour.dto.request.FindEstimateRequest;
 import renewal.ektour.dto.response.BoolResponse;
 import renewal.ektour.dto.response.EstimateListPagingResponse;
 import renewal.ektour.dto.response.EstimateListResponse;
+import renewal.ektour.dto.response.PageTotalCountResponse;
 import renewal.ektour.service.EmailService;
 import renewal.ektour.service.EstimateService;
 import renewal.ektour.util.PageConfig;
@@ -78,7 +79,7 @@ public class EstimateController {
     // 존재하는 전체 페이지 수 조회
     @GetMapping("/all/page")
     public ResponseEntity<?> getAllPageCount() {
-        return success(estimateService.getAllPageCount());
+        return success(new PageTotalCountResponse(estimateService.getAllPageCount()));
     }
 
     /**
