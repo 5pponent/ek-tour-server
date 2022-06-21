@@ -13,7 +13,7 @@ public class AppConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LoggingInterceptor())
-                .addPathPatterns("/**");
+                .addPathPatterns("/estimate/**");
     }
 
     // 리액트에서 요청오는거 403으로 포비든 뜨길래 보니까 CORS 이슈임 일단은 테스트용으로 모든 CORS를 열어놨는데 나중에 닫아야함
