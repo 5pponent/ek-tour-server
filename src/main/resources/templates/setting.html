@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Import할 CSS 파일 (경로 주의) -->
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/css/integrated-css.css" rel="stylesheet">
+    <title>이케이투어 운영자</title>
+    <style>
+        .wrapper { width: 500px; padding: 10px; margin-bottom: 20px; }
+        td input { width: 300px; }
+        table { vertical-align: middle; }
+        td { width: 124px; }
+    </style>
+</head>
+
+<body style="background-color: #e5e5e5;">
+
+<!-- 헤더 -->
+<header class="container" style="margin: 20px auto;">
+    <div class="row row-cols-auto">
+        <div class="col"><h3>이케이 하나관광</h3></div>
+        <div class="col"><span>admin</span> 님 안녕하세요!</div>
+        <div class="col">
+            <form th:action="@{/admin/logout}" method="POST">
+                <input type="submit" value="로그아웃">
+            </form>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <div class="row row-cols-auto" id="topBar">
+        <div class="col-2" style="margin: auto 0;">
+            <div id="current_date" style="color: black;"></div>
+        </div>
+        <div class="col-10">
+            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                <ol class="breadcrumb" style="margin: 10px 0;">
+                    <li class="breadcrumb-item"><a href="./main.html">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">관리자 설정</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row row-cols-auto">
+        <!-- 사이드 메뉴 -->
+        <nav class="col-2" class="list-group" style="padding: 0px;">
+            <a href="./main.html" class="list-group-item list-group-item-action">견적요청내역</a>
+            <a href="#" class="list-group-item list-group-item-action active">관리자 설정</a>
+        </nav>
+
+        <!-- 컨텐츠 -->
+        <article class="col-10">
+            <h5>관리자 설정</h5>
+            <hr>
+            <div class="wrapper">
+                <div class="wrapper">
+                    <h6>회사 정보 변경</h6>
+                    <table class="table" style="vertical-align: middle;">
+                        <tbody>
+                        <tr><td>대표</td><td><input type="text" value="배승원"></td></tr>
+                        <tr><td>개인정보취급자명</td><td><input type="text" value="조운"></td></tr>
+                        <tr><td>사업자번호</td><td><input type="text" value="324-87-00192"></td></tr>
+                        <tr><td>법인등록번호</td><td><input type="text" value="284911-0144524"></td></tr>
+                        <tr><td>일반여행업등록법인</td><td>(국내여행/해외여행)</td></tr>
+                        <tr><td>주소</td><td><input type="text" value="서울 송파구 가락로 102, 르호봇 408호"></td></tr>
+                        <tr><td>대표전화</td><td><input type="text" value="02.3432.6545"></td></tr>
+                        <tr><td>팩스</td><td><input type="text" value="02.6008.6545"></td></tr>
+                        <tr><td rowspan="2">버스대절/여행 문의</td><td><input type="text" value="010-6387-6086"></td></tr>
+                        <tr><td><input type="text" value="ektour0914@naver.com"></td></tr>
+                        </tbody>
+                    </table>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary" type="button">변경</button>
+                    </div>
+                </div>
+
+                <div class="wrapper">
+                    <h6>관리자 비밀번호 변경</h6>
+                    <table class="table" style="vertical-align: middle;">
+                        <tbody>
+                        <tr><td>새 비밀번호</td><td><input type="password"></td></tr>
+                        <tr><td>새 비밀번호 확인</td><td><input type="password"></td></tr>
+                        </tbody>
+                    </table>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary" type="button">변경</button>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+    </div>
+</div>
+
+<footer class="footer">
+    © 주식회사 이케이투어 LTD. All rights reserved.
+</footer>
+
+</body>
+
+<script>
+    date = new Date();
+    year = date.getFullYear();
+    month = date.getMonth() + 1;
+    day = date.getDate();
+    hour = date.getHours();
+    minute = date.getMinutes();
+    second = date.getSeconds();
+    if (minute < 10) minute = "0" + minute;
+    if (second < 10) second = "0" + second;
+    document.getElementById("current_date").innerHTML = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
+</script>
+
+</html>
