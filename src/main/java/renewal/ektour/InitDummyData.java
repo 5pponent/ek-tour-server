@@ -18,7 +18,20 @@ public class InitDummyData {
     @PostConstruct
     public void initData() {
         // 관리자 설정
-        adminService.createAdmin("1234");
+        adminService.createAdmin(
+                "1234",
+                "배승원",
+                "조운",
+                "324-87-00192",
+                "284911-0144524",
+                "서울 송파구 가락로 102 르호봇 408호",
+                "02.3432.6545",
+                "02.6008.6545",
+                "010-6387-6086",
+                "ektour0914@naver.com",
+                "KB 국민은행",
+                "810137-04-006627",
+                "이케이투어");
 
         // 견적 더미 데이터 생성
         for (int i = 0; i < 6; i++) {
@@ -48,8 +61,8 @@ public class InitDummyData {
                 .memberCount(20)
                 .vehicleType("25인승 소형")
                 .vehicleNumber(1)
-                .departDate("2022-06-24")
-                .arrivalDate("2022-06-25")
+                .departDate("2022-06-24-11")
+                .arrivalDate("2022-06-25-16")
                 .departPlace("경기 하남대로 947")
                 .arrivalPlace("전북 무주")
                 .wayType("왕복")
@@ -66,8 +79,8 @@ public class InitDummyData {
                 .memberCount(90)
                 .vehicleType("45인승 대형")
                 .vehicleNumber(2)
-                .departDate("2022-06-24")
-                .arrivalDate("2022-06-25")
+                .departDate("2022-06-24-11")
+                .arrivalDate("2022-06-25-11")
                 .departPlace("서울 상명대학교")
                 .arrivalPlace("경기 가평군 북면 노씨터길 12")
                 .wayType("왕복")
@@ -84,8 +97,8 @@ public class InitDummyData {
                 .memberCount(56)
                 .vehicleType("28인승 리무진")
                 .vehicleNumber(2)
-                .departDate("2022-07-02")
-                .arrivalDate("2022-07-02")
+                .departDate("2022-07-02-07")
+                .arrivalDate("2022-07-02-21")
                 .departPlace("대구")
                 .arrivalPlace("서울")
                 .wayType("왕복")
