@@ -64,4 +64,17 @@ public class AdminService {
         return adminRepository.findById(1L).orElseThrow().toCompanyInfoResponse();
     }
 
+    @Transactional
+    public void updateCompanyInfo(CompanyInfoResponse companyInfo) {
+        Admin admin = adminRepository.findById(1L).orElseThrow();
+        admin.updateCompanyInfo(companyInfo);
+    }
+
+    @Transactional
+    public void updatePassword(String password) {
+        Admin admin = adminRepository.findById(1L).orElseThrow();
+        String oldPW = admin.getAdminPassword();
+        admin.updatePassword(password);
+        log.info("관리자 비밀번호 변경 {} -> {}", oldPW, admin.getAdminPassword());
+    }
 }
