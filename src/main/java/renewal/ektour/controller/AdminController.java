@@ -59,7 +59,6 @@ public class AdminController {
                        @PageableDefault(size = PageConfig.PAGE_PER_COUNT, sort = PageConfig.SORT_STANDARD, direction = Sort.Direction.DESC) Pageable pageable) {
         if (loginAdmin == null) return "login";
         Page<Estimate> eList = estimateService.findAllByPageAdmin(pageable);
-        log.info("{}", eList.getTotalPages());
         model.addAttribute("eList", eList);
         return "mainPage";
     }
