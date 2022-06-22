@@ -10,11 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import renewal.ektour.domain.Admin;
-import renewal.ektour.domain.Estimate;
+import renewal.ektour.dto.request.AdminPasswordForm;
 import renewal.ektour.dto.response.CompanyInfoResponse;
 import renewal.ektour.service.AdminService;
-import renewal.ektour.service.EstimateService;
-import renewal.ektour.service.ExcelService;
 import renewal.ektour.util.Login;
 import renewal.ektour.util.PageConfig;
 
@@ -67,16 +65,36 @@ public class AdminController {
         return "redirect:/admin";
     }
 
+    /**
+     * 관리자 설정 페이지로 이동
+     */
     @GetMapping("/setting")
     public String settingPage(Model model) {
         CompanyInfoResponse companyInfo = adminService.getCompanyInfo();
-        model.addAttribute("info", companyInfo);
-        return "settingPage";
+        model.addAttribute("infoForm", companyInfo);
+        model.addAttribute("pwForm", new AdminPasswordForm());
+        return "setting";
     }
 
-    @GetMapping("/excel/{estimateId}")
-    public void createExcel(@PathVariable("estimateId") Long estimateId, HttpServletResponse response) throws IOException, InvalidFormatException {
-        excelService.createExcel(estimateId, response);
+    /**
+     * 관리자 설정 - 회사 정보 변경
+     */
+    @PostMapping("/setting/info")
+    public String updateCompanyInfo(@ModelAttribute("infoForm") CompanyInfoResponse companyInfo,
+                                    Model model) {
+        adminService.updateCompanyInfo(companyInfo);
+        model.addAttribute("infoForm", companyInfo);
+        return "redirect:/admin/setting";
+    }
+
+    @PostMapping("/setting/password")
+    public String updateAdminPassword(@ModelAttribute("pwForm") AdminPasswordForm passwordForm,
+                                      Model model) {
+        if (!passwordForm.passwordCheck()) {
+            return "redirect:/admin/setting";
+        }
+        adminService.updatePassword(passwordForm.getPassword());
+        return "redirect:/admin/setting";
     }
 
 }

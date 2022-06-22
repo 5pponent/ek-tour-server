@@ -64,54 +64,70 @@
             <h5>관리자 설정</h5>
             <hr>
             <div class="wrapper">
-                <form class="wrapper" th:action="@{/admin/}" method="POST">
+                <form class="wrapper" th:action="@{/admin/setting/info}" method="POST"
+                      th:object="${infoForm}">
                     <h6>회사 정보 변경</h6>
                     <table class="table" style="vertical-align: middle;">
                         <tbody>
                         <tr><td>대표</td><td>
-                            <input type="text" th:value="${info.adminName}" value="대표"></td></tr>
+                            <input type="text" th:field="*{adminName}"
+                                   th:value="${infoForm.adminName}" value="대표"></td></tr>
                         <tr><td>개인정보취급자명</td><td>
-                            <input type="text" th:value="${info.infoHandlerName}" value="개인정보취급자명"></td></tr>
+                            <input type="text" th:field="*{infoHandlerName}"
+                                   th:value="${infoForm.infoHandlerName}" value="개인정보취급자명"></td></tr>
                         <tr><td>사업자번호</td><td>
-                            <input type="text" th:value="${info.businessNum}" value="사업자번호"></td></tr>
+                            <input type="text" th:field="*{businessNum}"
+                                   th:value="${infoForm.businessNum}" value="사업자번호"></td></tr>
                         <tr><td>법인등록번호</td><td>
-                            <input type="text" th:value="${info.registrationNum}" value="법인등록번호"></td></tr>
+                            <input type="text" th:field="*{registrationNum}"
+                                   th:value="${infoForm.registrationNum}" value="법인등록번호"></td></tr>
                         <tr><td>일반여행업등록법인</td><td>(국내여행/해외여행)</td></tr>
                         <tr><td>주소</td><td>
-                            <input type="text" th:value="${info.address}" value="주소"></td></tr>
+                            <input type="text" th:field="*{address}"
+                                   th:value="${infoForm.address}" value="주소"></td></tr>
                         <tr><td>대표전화</td><td>
-                            <input type="text" th:value="${info.tel}" value="대표전화"></td></tr>
+                            <input type="text" th:field="*{tel}"
+                                   th:value="${infoForm.tel}" value="대표전화"></td></tr>
                         <tr><td>팩스</td><td>
-                            <input type="text" th:value="${info.fax}" value="팩스"></td></tr>
+                            <input type="text" th:field="*{fax}"
+                                   th:value="${infoForm.fax}" value="팩스"></td></tr>
                         <tr><td rowspan="2">버스대절/여행 문의</td><td>
-                            <input type="text" th:value="${info.phone}" value="휴대폰번호"></td></tr>
+                            <input type="text" th:field="*{phone}"
+                                   th:value="${infoForm.phone}" value="휴대폰번호"></td></tr>
                         <tr><td>
-                            <input type="text" th:value="${info.email}" value="이메일"></td></tr>
+                            <input type="text" th:field="*{email}"
+                                   th:value="${infoForm.email}" value="이메일"></td></tr>
                         <tr><td>은행명</td><td>
-                            <input type="text" th:value="${info.accountBank}" value="은행명"></td></td></tr>
+                            <input type="text" th:field="*{accountBank}"
+                                   th:value="${infoForm.accountBank}" value="은행명"></td></td></tr>
                         <tr><td>계좌번호</td><td>
-                            <input type="text" th:value="${info.accountNum}" value="계좌번호"></td></tr>
+                            <input type="text" th:field="*{accountNum}"
+                                   th:value="${infoForm.accountNum}" value="계좌번호"></td></tr>
                         <tr><td>예금주</td><td>
-                            <input type="text" th:value="${info.accountHolder}" value="예금주"></td></tr>
+                            <input type="text" th:field="*{accountHolder}"
+                                   th:value="${infoForm.accountHolder}" value="예금주"></td></tr>
                         </tbody>
                     </table>
                     <div class="d-grid gap-2">
-                        <input class="btn btn-primary" type="submit" value="변경"></input>
+                        <button class="btn btn-primary" type="submit" onclick="alert('회사 정보를 변경합니다.')">변경</button>
                     </div>
                 </form>
 
-                <div class="wrapper">
+                <form class="wrapper" th:action="@{/admin/setting/password}" method="POST"
+                    th:object="${pwForm}">
                     <h6>관리자 비밀번호 변경</h6>
                     <table class="table" style="vertical-align: middle;">
                         <tbody>
-                        <tr><td>새 비밀번호</td><td><input type="password"></td></tr>
-                        <tr><td>새 비밀번호 확인</td><td><input type="password"></td></tr>
+                        <tr><td>새 비밀번호</td><td>
+                            <input type="password" th:field="*{password}"></td></tr>
+                        <tr><td>새 비밀번호 확인</td><td>
+                            <input type="password" th:field="*{passwordCheck}"></td></tr>
                         </tbody>
                     </table>
                     <div class="d-grid gap-2">
-                        <button class="btn btn-primary" type="button">변경</button>
+                        <button class="btn btn-primary" type="submit" onclick="alert('관리자 비밀번호를 변경합니다.')">변경</button>
                     </div>
-                </div>
+                </form>
             </div>
         </article>
 

@@ -1,9 +1,6 @@
 package renewal.ektour.domain;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import renewal.ektour.dto.response.CompanyInfoResponse;
 
 import javax.persistence.Column;
@@ -13,6 +10,7 @@ import javax.persistence.Id;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 public class Admin {
 
     @Id @GeneratedValue
@@ -69,6 +67,21 @@ public class Admin {
                 .accountNum(accountNum)
                 .accountHolder(accountHolder)
                 .build();
+    }
+
+    public void updateCompanyInfo(CompanyInfoResponse info) {
+        this.adminName = info.getAdminName();
+        this.infoHandlerName = info.getInfoHandlerName();
+        this.businessNum = info.getBusinessNum();
+        this.registrationNum = info.getRegistrationNum();
+        this.address = info.getAddress();
+        this.tel = info.getTel();
+        this.fax = info.getFax();
+        this.phone = info.getPhone();
+        this.email = info.getEmail();
+        this.accountBank = info.getAccountBank();
+        this.accountNum = info.getAccountNum();
+        this.accountHolder = info.getAccountHolder();
     }
 
     public void updatePassword(String newPassword) {
