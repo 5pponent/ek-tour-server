@@ -36,7 +36,7 @@
         <div class="col-10">
             <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                 <ol class="breadcrumb" style="margin: 10px 0;">
-                    <li class="breadcrumb-item"><a href="./main.html" th:href="@{/admin}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="mainPage.html" th:href="@{/admin}">Home</a></li>
                     <li class="breadcrumb-item active" aria-current="page">견적 요청 내역</li>
                 </ol>
             </nav>
@@ -48,7 +48,7 @@
         <div class="col-2" style="padding: 0px;">
             <nav class="list-group">
                 <a href="#" class="list-group-item list-group-item-action active">견적요청내역</a>
-                <a href="./setting.html" th:href="@{/admin/setting}"
+                <a href="settingPage.html" th:href="@{/admin/setting}"
                    class="list-group-item list-group-item-action">관리자 설정</a>
             </nav>
         </div>
@@ -160,12 +160,22 @@
                             <td>25인승 소형(n대)</td>
                             <td>0000-00-00</td>
                         </tr>
+                    <tr th:each="e: ${eList}">
+                        <td th:text="${e.id}"></td>
+                        <td th:text="${e.name}"></td>
+                        <td th:text="${e.phone}"></td>
+                        <td th:text="${e.travelType}"></td>
+                        <td th:text="${e.departDate}"></td>
+                        <td th:text="${e.arrivalDate}"></td>
+                        <td th:text="${e.departPlace}"></td>
+                        <td th:text="${e.arrivalPlace}"></td>
+                        <td th:text="${e.vehicleType}"></td>
+                        <td th:text="${e.createdDate}"></td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
-
         </article>
-
     </div>
 </div>
 

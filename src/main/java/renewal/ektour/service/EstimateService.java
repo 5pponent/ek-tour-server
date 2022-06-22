@@ -61,13 +61,16 @@ public class EstimateService {
                 .build();
     }
 
-    // 리액트 클라이언트로 내려지는 견적요청 목록 (페이징)
+    // 클라이언트로 내려지는 견적요청 목록 (페이징)
     public EstimateListPagingResponse findAllByPage(Pageable pageable) {
         Page<Estimate> estimates = repository.findAll(pageable);
         return makeEstimateListResponse(pageable, estimates);
     }
 
-    // TODO SSR 목록 조회 (페이징)
+    // 관리자페이지 내려지는 견적요청 목록 (페이징)
+    public Page<Estimate> findAllByPageAdmin(Pageable pageable) {
+        return repository.findAll(pageable);
+    }
 
     // 존재하는 모든 페이지 수 조회
     public int getAllPageCount() {
