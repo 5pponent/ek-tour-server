@@ -64,29 +64,41 @@
             <h5>관리자 설정</h5>
             <hr>
             <div class="wrapper">
-                <div class="wrapper">
+                <form class="wrapper" th:action="@{/admin/}" method="POST">
                     <h6>회사 정보 변경</h6>
                     <table class="table" style="vertical-align: middle;">
                         <tbody>
-                        <tr><td>대표</td><td><input type="text" value="배승원"></td></tr>
-                        <tr><td>개인정보취급자명</td><td><input type="text" value="조운"></td></tr>
-                        <tr><td>사업자번호</td><td><input type="text" value="324-87-00192"></td></tr>
-                        <tr><td>법인등록번호</td><td><input type="text" value="284911-0144524"></td></tr>
+                        <tr><td>대표</td><td>
+                            <input type="text" th:value="${info.adminName}" value="대표"></td></tr>
+                        <tr><td>개인정보취급자명</td><td>
+                            <input type="text" th:value="${info.infoHandlerName}" value="개인정보취급자명"></td></tr>
+                        <tr><td>사업자번호</td><td>
+                            <input type="text" th:value="${info.businessNum}" value="사업자번호"></td></tr>
+                        <tr><td>법인등록번호</td><td>
+                            <input type="text" th:value="${info.registrationNum}" value="법인등록번호"></td></tr>
                         <tr><td>일반여행업등록법인</td><td>(국내여행/해외여행)</td></tr>
-                        <tr><td>주소</td><td><input type="text" value="서울 송파구 가락로 102, 르호봇 408호"></td></tr>
-                        <tr><td>대표전화</td><td><input type="text" value="02.3432.6545"></td></tr>
-                        <tr><td>팩스</td><td><input type="text" value="02.6008.6545"></td></tr>
-                        <tr><td rowspan="2">버스대절/여행 문의</td><td><input type="text" value="010-6387-6086"></td></tr>
-                        <tr><td><input type="text" value="ektour0914@naver.com"></td></tr>
-                        <tr><td>은행명</td><td><input type="text" value="KB 국민은행"></td></td></tr>
-                        <tr><td>계좌번호</td><td><input type="text" value="810137-04-006627"></td></tr>
-                        <tr><td>예금주</td><td><input type="text" value="이케이투어"></td></tr>
+                        <tr><td>주소</td><td>
+                            <input type="text" th:value="${info.address}" value="주소"></td></tr>
+                        <tr><td>대표전화</td><td>
+                            <input type="text" th:value="${info.tel}" value="대표전화"></td></tr>
+                        <tr><td>팩스</td><td>
+                            <input type="text" th:value="${info.fax}" value="팩스"></td></tr>
+                        <tr><td rowspan="2">버스대절/여행 문의</td><td>
+                            <input type="text" th:value="${info.phone}" value="휴대폰번호"></td></tr>
+                        <tr><td>
+                            <input type="text" th:value="${info.email}" value="이메일"></td></tr>
+                        <tr><td>은행명</td><td>
+                            <input type="text" th:value="${info.accountBank}" value="은행명"></td></td></tr>
+                        <tr><td>계좌번호</td><td>
+                            <input type="text" th:value="${info.accountNum}" value="계좌번호"></td></tr>
+                        <tr><td>예금주</td><td>
+                            <input type="text" th:value="${info.accountHolder}" value="예금주"></td></tr>
                         </tbody>
                     </table>
                     <div class="d-grid gap-2">
-                        <button class="btn btn-primary" type="button">변경</button>
+                        <input class="btn btn-primary" type="submit" value="변경"></input>
                     </div>
-                </div>
+                </form>
 
                 <div class="wrapper">
                     <h6>관리자 비밀번호 변경</h6>
