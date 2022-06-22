@@ -4,14 +4,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import renewal.ektour.domain.Admin;
+import renewal.ektour.dto.request.AdminPasswordForm;
 import renewal.ektour.dto.response.CompanyInfoResponse;
 import renewal.ektour.service.AdminService;
-import renewal.ektour.service.EstimateService;
 import renewal.ektour.util.Login;
 
 import javax.servlet.http.HttpServletRequest;
@@ -47,11 +44,36 @@ public class AdminController {
         return "redirect:/admin";
     }
 
+    /**
+     * 관리자 설정 페이지로 이동
+     */
     @GetMapping("/setting")
     public String settingPage(Model model) {
         CompanyInfoResponse companyInfo = adminService.getCompanyInfo();
-        model.addAttribute("info", companyInfo);
+        model.addAttribute("infoForm", companyInfo);
+        model.addAttribute("pwForm", new AdminPasswordForm());
         return "setting";
+    }
+
+    /**
+     * 관리자 설정 - 회사 정보 변경
+     */
+    @PostMapping("/setting/info")
+    public String updateCompanyInfo(@ModelAttribute("infoForm") CompanyInfoResponse companyInfo,
+                                    Model model) {
+        adminService.updateCompanyInfo(companyInfo);
+        model.addAttribute("infoForm", companyInfo);
+        return "redirect:/admin/setting";
+    }
+
+    @PostMapping("/setting/password")
+    public String updateAdminPassword(@ModelAttribute("pwForm") AdminPasswordForm passwordForm,
+                                      Model model) {
+        if (!passwordForm.passwordCheck()) {
+            return "redirect:/admin/setting";
+        }
+        adminService.updatePassword(passwordForm.getPassword());
+        return "redirect:/admin/setting";
     }
 
 }
