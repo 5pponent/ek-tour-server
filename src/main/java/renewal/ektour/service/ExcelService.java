@@ -15,6 +15,8 @@ import renewal.ektour.repository.EstimateRepository;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Service
 @RequiredArgsConstructor
@@ -57,14 +59,16 @@ public class ExcelService {
         setValue(sheet, "C14", date);
         String content = estimate.getArrivalPlace() + " ~ " + estimate.getArrivalPlace();
         setValue(sheet, "F14", content);
-        setValue(sheet, "L14", estimate.getVehicleType()); // 규격
+        setValue(sheet, "L14", estimate.getVehicleType().substring(0, 4)); // 규격
         setValue(sheet, "N14", Integer.toString(estimate.getVehicleNumber())); // 댓수
         setValue(sheet, "O14", "대");
-
         
         // 다운로드
         response.setContentType("ms-vnd/excel");
-        response.setHeader("Content-Disposition", "attachment;filename=estimate.xlsx");
+        String fileName = "견적서_" + estimate.getName() + "님_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        // 엑셀 다운로드시 한글 깨짐 처리
+        String outputFileName = new String(fileName.getBytes("KSC5601"), "8859_1");
+        response.setHeader("Content-Disposition", "attachment;filename=" + outputFileName + ".xlsx");
         response.setStatus(200);
         workbook.write(response.getOutputStream());
         workbook.close();

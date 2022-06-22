@@ -22,6 +22,9 @@ server:
   error:
     include-stacktrace: on_param
     include-exception: true
+  servlet:
+    session:
+      tracking-modes: cookie
 
 logging:
   level:
