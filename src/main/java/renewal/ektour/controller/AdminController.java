@@ -2,6 +2,7 @@ package renewal.ektour.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -19,6 +20,8 @@ import renewal.ektour.util.Login;
 import renewal.ektour.util.PageConfig;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Controller
 @RequiredArgsConstructor
@@ -95,6 +98,11 @@ public class AdminController {
         }
         adminService.updatePassword(passwordForm.getPassword());
         return "redirect:/admin/setting";
+    }
+
+    @GetMapping("/excel/{estimateId}")
+    public void createExcel(@PathVariable("estimateId") Long estimateId, HttpServletResponse response) throws IOException, InvalidFormatException {
+        excelService.createExcel(estimateId, response);
     }
 
 }
