@@ -2,7 +2,6 @@ package renewal.ektour.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -10,15 +9,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import renewal.ektour.domain.Admin;
+import renewal.ektour.domain.Estimate;
 import renewal.ektour.dto.request.AdminPasswordForm;
 import renewal.ektour.dto.response.CompanyInfoResponse;
 import renewal.ektour.service.AdminService;
+import renewal.ektour.service.EstimateService;
+import renewal.ektour.service.ExcelService;
 import renewal.ektour.util.Login;
 import renewal.ektour.util.PageConfig;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 @Controller
 @RequiredArgsConstructor
@@ -73,7 +73,7 @@ public class AdminController {
         CompanyInfoResponse companyInfo = adminService.getCompanyInfo();
         model.addAttribute("infoForm", companyInfo);
         model.addAttribute("pwForm", new AdminPasswordForm());
-        return "setting";
+        return "settingPage";
     }
 
     /**
