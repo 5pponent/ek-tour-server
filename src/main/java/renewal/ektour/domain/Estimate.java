@@ -53,9 +53,13 @@ public class Estimate {
     @CreatedDate
     private String createdDate;
 
+    // 견적 유효일 (요청일로부터 +7일)
+    private String validDate;
+
     @PrePersist
     public void onPrePersist(){
         this.createdDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        this.validDate = LocalDateTime.now().plusDays(7).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 
     @Builder
