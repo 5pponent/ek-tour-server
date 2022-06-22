@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -55,9 +56,10 @@ public class AdminController {
     @GetMapping("/main")
     public String main(@Login Admin loginAdmin,
                        Model model,
-                       @PageableDefault(size = PageConfig.PAGE_PER_COUNT, sort = PageConfig.SORT_STANDARD) Pageable pageable) {
+                       @PageableDefault(size = PageConfig.PAGE_PER_COUNT, sort = PageConfig.SORT_STANDARD, direction = Sort.Direction.DESC) Pageable pageable) {
         if (loginAdmin == null) return "login";
         Page<Estimate> eList = estimateService.findAllByPageAdmin(pageable);
+        log.info("{}", eList.getTotalPages());
         model.addAttribute("eList", eList);
         return "mainPage";
     }

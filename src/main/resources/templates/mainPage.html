@@ -148,32 +148,29 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>홍길동</td>
-                            <td>000-0000-0000</td>
-                            <td>관혼상제</td>
-                            <td>0000-00-00</td>
-                            <td>0000-00-00</td>
-                            <td>[서울]서대문구</td>
-                            <td>[서울]광화문</td>
-                            <td>25인승 소형(n대)</td>
-                            <td>0000-00-00</td>
+                        <tr th:each="e: ${eList}">
+                            <td th:text="${e.id}"></td>
+                            <td th:text="${e.name}"></td>
+                            <td th:text="${e.phone}"></td>
+                            <td th:text="${e.travelType}"></td>
+                            <td th:text="${e.departDate}"></td>
+                            <td th:text="${e.arrivalDate}"></td>
+                            <td th:text="${e.departPlace}"></td>
+                            <td th:text="${e.arrivalPlace}"></td>
+                            <td th:text="${e.vehicleType}"></td>
+                            <td th:text="${e.createdDate}"></td>
                         </tr>
-                    <tr th:each="e: ${eList}">
-                        <td th:text="${e.id}"></td>
-                        <td th:text="${e.name}"></td>
-                        <td th:text="${e.phone}"></td>
-                        <td th:text="${e.travelType}"></td>
-                        <td th:text="${e.departDate}"></td>
-                        <td th:text="${e.arrivalDate}"></td>
-                        <td th:text="${e.departPlace}"></td>
-                        <td th:text="${e.arrivalPlace}"></td>
-                        <td th:text="${e.vehicleType}"></td>
-                        <td th:text="${e.createdDate}"></td>
-                    </tr>
                     </tbody>
                 </table>
+                <nav style="text-align: center;">
+                    <ul class="pagination" th:with="last=${eList.totalPages - 1}">
+                        <li><a th:href="@{/admin/main(page=0)}" aria-label="First"><span aria-hidden="true">처음</span></a></li>
+                        <li th:each="page: ${#numbers.sequence(0, last)}" th:class="${page == eList.number + 1} ? 'active'">
+                            <a th:text="${page + 1}" th:href="@{/admin/main(page=${page})}"></a>
+                        </li>
+                        <li><a th:href="@{/admin/main(page=${last})}" aria-label="First"><span aria-hidden="true">마지막</span></a></li>
+                    </ul>
+                </nav>
             </div>
         </article>
     </div>
