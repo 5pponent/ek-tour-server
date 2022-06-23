@@ -96,7 +96,7 @@ public class EstimateController {
 
     // 클라이언트 내가 쓴 견적요청 조회
     @PostMapping("/search/my")
-    public ResponseEntity<?> findAllMyEstimates(@RequestBody FindEstimateRequest form,
+    public ResponseEntity<?> findAllMyEstimates(@Valid @RequestBody FindEstimateRequest form,
                                                 BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             log.error("find estimate form validation errors = {}", bindingResult.getFieldErrors());

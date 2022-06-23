@@ -1,9 +1,6 @@
 package renewal.ektour.domain;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import renewal.ektour.dto.response.EstimateDetailResponse;
@@ -17,6 +14,7 @@ import java.time.format.DateTimeFormatter;
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class Estimate {
 
     @Id @GeneratedValue
@@ -86,6 +84,7 @@ public class Estimate {
 
     public EstimateSimpleResponse toSimpleResponse() {
         return EstimateSimpleResponse.builder()
+                .id(id)
                 .name(name)
                 .travelType(travelType)
                 .vehicleType(vehicleType)
@@ -97,6 +96,7 @@ public class Estimate {
 
     public EstimateDetailResponse toDetailResponse() {
         return EstimateDetailResponse.builder()
+                .id(id)
                 .name(name)
                 .email(email)
                 .phone(phone)
