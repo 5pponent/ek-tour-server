@@ -15,11 +15,13 @@ import java.util.NoSuchElementException;
 @Service
 @Slf4j
 @RequiredArgsConstructor
+@Transactional
 public class AdminService {
-    private final AdminRepository adminRepository;
 
-    @Transactional
-    public Admin createAdmin(String password, String adminName, String infoHandlerName, String businessNum, String registrationNum, String address, String tel, String fax, String phone, String email, String accountBank, String accountNum, String accountHolder) {
+    private final AdminRepository adminRepository;
+    public static final Long ADMIN_ID = 1L;
+
+    public void createAdmin(String password, String adminName, String infoHandlerName, String businessNum, String registrationNum, String address, String tel, String fax, String phone, String email, String accountBank, String accountNum, String accountHolder) {
         Admin admin = Admin.builder()
                 .adminPassword(password)
                 .adminName(adminName)
@@ -35,7 +37,7 @@ public class AdminService {
                 .accountNum(accountNum)
                 .accountHolder(accountHolder)
                 .build();
-        return adminRepository.save(admin);
+        adminRepository.save(admin);
     }
 
     public boolean login(HttpServletRequest request, String adminPassword) {
@@ -53,28 +55,24 @@ public class AdminService {
         request.getSession().invalidate();
     }
 
-    @Transactional
     public void updatePassword(String oldPassword, String newPassword) {
         Admin admin = adminRepository.findByAdminPassword(oldPassword).orElseThrow();
         admin.updatePassword(newPassword);
     }
 
-    @Transactional
     public CompanyInfoResponse getCompanyInfo() {
-        return adminRepository.findById(1L).orElseThrow().toCompanyInfoResponse();
+        return adminRepository.findById(ADMIN_ID).orElseThrow().toCompanyInfoResponse();
     }
 
-    @Transactional
     public void updateCompanyInfo(CompanyInfoResponse companyInfo) {
-        Admin admin = adminRepository.findById(1L).orElseThrow();
+        Admin admin = adminRepository.findById(ADMIN_ID).orElseThrow();
         admin.updateCompanyInfo(companyInfo);
     }
 
-    @Transactional
     public void updatePassword(String password) {
-        Admin admin = adminRepository.findById(1L).orElseThrow();
-        String oldPW = admin.getAdminPassword();
+        Admin admin = adminRepository.findById(ADMIN_ID).orElseThrow();
+        String oldPassword = admin.getAdminPassword();
         admin.updatePassword(password);
-        log.info("관리자 비밀번호 변경 {} -> {}", oldPW, admin.getAdminPassword());
+        log.info("관리자 비밀번호 변경 {} -> {}", oldPassword, admin.getAdminPassword());
     }
 }

@@ -7,12 +7,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import renewal.ektour.domain.Admin;
 import renewal.ektour.domain.Estimate;
-import renewal.ektour.dto.request.AdminPasswordForm;
+import renewal.ektour.dto.request.UpdateAdminPasswordRequest;
 import renewal.ektour.dto.response.CompanyInfoResponse;
 import renewal.ektour.service.AdminService;
 import renewal.ektour.service.EstimateService;
@@ -23,6 +24,8 @@ import renewal.ektour.util.PageConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
+import static renewal.ektour.dto.response.RestResponse.success;
 
 @Controller
 @RequiredArgsConstructor
@@ -60,6 +63,7 @@ public class AdminController {
         if (loginAdmin == null) return "login";
         Page<Estimate> eList = estimateService.findAllByPageAdmin(pageable);
         model.addAttribute("eList", eList);
+        model.addAttribute("maxPage", 10);
         return "mainPage";
     }
 
@@ -76,7 +80,7 @@ public class AdminController {
     public String settingPage(Model model) {
         CompanyInfoResponse companyInfo = adminService.getCompanyInfo();
         model.addAttribute("infoForm", companyInfo);
-        model.addAttribute("pwForm", new AdminPasswordForm());
+        model.addAttribute("pwForm", new UpdateAdminPasswordRequest());
         return "settingPage";
     }
 
@@ -92,8 +96,7 @@ public class AdminController {
     }
 
     @PostMapping("/setting/password")
-    public String updateAdminPassword(@ModelAttribute("pwForm") AdminPasswordForm passwordForm,
-                                      Model model) {
+    public String updateAdminPassword(@ModelAttribute("pwForm") UpdateAdminPasswordRequest passwordForm) {
         if (!passwordForm.passwordCheck()) {
             return "redirect:/admin/setting";
         }
@@ -105,5 +108,14 @@ public class AdminController {
     public void createExcel(@PathVariable("estimateId") Long estimateId, HttpServletResponse response) throws IOException, InvalidFormatException {
         excelService.createExcel(estimateId, response);
     }
+
+    // 클라이언트로 어드민 정보(회사 정보) 내려주기
+    @ResponseBody
+    @GetMapping("/info")
+    public ResponseEntity<?> getAdminInfo() {
+        CompanyInfoResponse companyInfo = adminService.getCompanyInfo();
+        return success(companyInfo);
+    }
+
 
 }
