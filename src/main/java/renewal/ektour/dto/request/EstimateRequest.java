@@ -16,10 +16,12 @@ public class EstimateRequest {
     @NotBlank
     private String name;
 
+    @NotBlank
     @Email(message = "이메일 형식이 아닙니다")
     private String email;
 
-    @Pattern(regexp = "^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$", message = "010-1234-1234 또는 01012341234 형식이 아닙니다")
+    @NotBlank
+    @Size(min = 11, max = 11, message = "01012341234 형식이 아닙니다")
     private String phone;
 
     @NotBlank

@@ -8,6 +8,8 @@ import lombok.Data;
 @AllArgsConstructor
 @Builder
 public class EstimateDetailResponse {
+    private Long id;
+
     // 신청자 정보
     private String name;
     private String email;
