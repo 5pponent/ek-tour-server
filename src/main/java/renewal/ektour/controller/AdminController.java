@@ -13,7 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import renewal.ektour.domain.Admin;
 import renewal.ektour.domain.Estimate;
-import renewal.ektour.dto.request.UpdateAdminPasswordRequest;
+import renewal.ektour.dto.request.AdminSearchForm;
+import renewal.ektour.dto.request.UpdateAdminPasswordForm;
 import renewal.ektour.dto.response.CompanyInfoResponse;
 import renewal.ektour.service.AdminService;
 import renewal.ektour.service.EstimateService;
@@ -56,6 +57,9 @@ public class AdminController {
         else return "loginPage";
     }
 
+    /**
+     * 관리자 메인 페이지 (견적요청 목록 조회 - 페이징)
+     */
     @GetMapping("/main")
     public String main(@Login Admin loginAdmin,
                        Model model,
@@ -64,8 +68,22 @@ public class AdminController {
         Page<Estimate> eList = estimateService.findAllByPageAdmin(pageable);
         model.addAttribute("eList", eList);
         model.addAttribute("maxPage", 10);
+        model.addAttribute("adminSearchForm", new AdminSearchForm());
         return "mainPage";
     }
+
+    // 견적 요청 검색
+    @PostMapping("/search")
+    public String search(@ModelAttribute("adminSearchForm") AdminSearchForm form,
+                         Model model,
+                         @PageableDefault(size = PageConfig.PAGE_PER_COUNT, sort = PageConfig.SORT_STANDARD, direction = Sort.Direction.DESC) Pageable pageable) {
+        Page<Estimate> eList = estimateService.searchByPageAdmin(pageable, form);
+        model.addAttribute("eList", eList);
+        model.addAttribute("maxPage", 10);
+        model.addAttribute("adminSearchForm", new AdminSearchForm());
+        return "searchPage";
+    }
+
 
     @PostMapping("/logout")
     public String logout(HttpServletRequest request) {
@@ -80,7 +98,7 @@ public class AdminController {
     public String settingPage(Model model) {
         CompanyInfoResponse companyInfo = adminService.getCompanyInfo();
         model.addAttribute("infoForm", companyInfo);
-        model.addAttribute("pwForm", new UpdateAdminPasswordRequest());
+        model.addAttribute("pwForm", new UpdateAdminPasswordForm());
         return "settingPage";
     }
 
@@ -96,7 +114,7 @@ public class AdminController {
     }
 
     @PostMapping("/setting/password")
-    public String updateAdminPassword(@ModelAttribute("pwForm") UpdateAdminPasswordRequest passwordForm) {
+    public String updateAdminPassword(@ModelAttribute("pwForm") UpdateAdminPasswordForm passwordForm) {
         if (!passwordForm.passwordCheck()) {
             return "redirect:/admin/setting";
         }

@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import renewal.ektour.domain.Estimate;
+import renewal.ektour.dto.request.AdminSearchForm;
 import renewal.ektour.dto.request.EstimateRequest;
 import renewal.ektour.dto.request.FindEstimateRequest;
 import renewal.ektour.dto.response.EstimateListPagingResponse;
@@ -98,6 +99,15 @@ public class EstimateService {
         List<EstimateSimpleResponse> result = new ArrayList<>();
         estimates.forEach(e -> result.add(e.toSimpleResponse()));
         return new EstimateListResponse(result);
+    }
+
+    // 관리자페이지 검색
+    public Page<Estimate> searchByPageAdmin(Pageable pageable, AdminSearchForm form) {
+        if (form.getSearchType().equals("phone")) {
+            return repository.searchAllByPhone(pageable, form.getStart().toString(), form.getEnd().toString(), form.getKeyword());
+        } else {
+            return repository.searchAllByName(pageable, form.getStart().toString(), form.getEnd().toString(), form.getKeyword());
+        }
     }
 
     /**
