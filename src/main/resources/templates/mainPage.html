@@ -163,12 +163,24 @@
                     </tbody>
                 </table>
                 <nav style="text-align: center;">
-                    <ul class="pagination" th:with="last=${eList.totalPages - 1}">
-                        <li><a th:href="@{/admin/main(page=0)}" aria-label="First"><span aria-hidden="true">처음</span></a></li>
-                        <li th:each="page: ${#numbers.sequence(0, last)}" th:class="${page == eList.number + 1} ? 'active'">
-                            <a th:text="${page + 1}" th:href="@{/admin/main(page=${page})}"></a>
+                    <ul class="pagination" th:with="start=${(eList.number/maxPage)*maxPage + 1}, end=(${(eList.totalPages == 0) ? 1 : (start + (maxPage - 1) < eList.totalPages ? start + (maxPage - 1) : eList.totalPages)})">
+                        <li th:if="${start > 1}">
+                            <a th:href="@{/admin/main(page=0)}" th:text="'<<'"></a>
                         </li>
-                        <li><a th:href="@{/admin/main(page=${last})}" aria-label="First"><span aria-hidden="true">마지막</span></a></li>
+                        <li th:if="${start > 1}">
+                            <a th:href="@{/admin/main(page=${start - maxPage})}" th:text="'<'"></a>
+                        </li>
+
+                        <li th:each="page: ${#numbers.sequence(start, end)}">
+                            <a th:text="${page}" th:href="@{/admin/main(page=${page - 1})}"></a>
+                        </li>
+
+                        <li th:if="${end < eList.totalPages}">
+                            <a th:href="@{/admin/main(page=${start + maxPage})}" th:text="'>'"></a>
+                        </li>
+                        <li th:if="${end < eList.totalPages}">
+                            <a th:href="@{/admin/main(page=${eList.totalPages - 1})}" th:text="'>>'"></a>
+                        </li>
                     </ul>
                 </nav>
             </div>

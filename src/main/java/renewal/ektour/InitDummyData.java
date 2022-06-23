@@ -34,36 +34,36 @@ public class InitDummyData {
                 "이케이투어");
 
         // 견적 더미 데이터 생성
-//        for (int i = 0; i < 100; i++) {
-//            String idx = String.valueOf(i + 1);
-//            EstimateRequest data = EstimateRequest.builder()
-//                    .name("user" + idx)
-//                    .password("1234")
-//                    .phone("01088725482")
-//                    .travelType("관혼상제")
-//                    .departDate("2022-03-03")
-//                    .arrivalDate("2022-04-04")
-//                    .departPlace("인천")
-//                    .arrivalPlace("경기도 안산")
-//                    .vehicleType("25인승 리무진")
-//                    .build();
-//            estimateService.createAndSave(data);
-//        }
-//        for (int i = 101; i < 150; i++) {
-//            String idx = String.valueOf(i + 1);
-//            EstimateRequest data = EstimateRequest.builder()
-//                    .name("user" + idx)
-//                    .password("4567")
-//                    .phone("01012341234")
-//                    .travelType("일반여행")
-//                    .departDate("2022-02-03")
-//                    .arrivalDate("2022-02-04")
-//                    .departPlace("광주")
-//                    .arrivalPlace("서울")
-//                    .vehicleType("25인승 소형")
-//                    .build();
-//            estimateService.createAndSave(data);
-//        }
+        for (int i = 0; i < 100; i++) {
+            String idx = String.valueOf(i + 1);
+            EstimateRequest data = EstimateRequest.builder()
+                    .name("user" + idx)
+                    .password("1234")
+                    .phone("01088725482")
+                    .travelType("관혼상제")
+                    .departDate("2022-03-03")
+                    .arrivalDate("2022-04-04")
+                    .departPlace("인천")
+                    .arrivalPlace("경기도 안산")
+                    .vehicleType("25인승 리무진")
+                    .build();
+            estimateService.createAndSave(data);
+        }
+        for (int i = 101; i < 150; i++) {
+            String idx = String.valueOf(i + 1);
+            EstimateRequest data = EstimateRequest.builder()
+                    .name("user" + idx)
+                    .password("4567")
+                    .phone("01012341234")
+                    .travelType("일반여행")
+                    .departDate("2022-02-03")
+                    .arrivalDate("2022-02-04")
+                    .departPlace("광주")
+                    .arrivalPlace("서울")
+                    .vehicleType("25인승 소형")
+                    .build();
+            estimateService.createAndSave(data);
+        }
         estimateService.createAndSave(EstimateRequest.builder()
                 .name("배윤재")
                 .phone("01021287755")

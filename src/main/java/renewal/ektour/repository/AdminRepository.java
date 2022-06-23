@@ -7,6 +7,5 @@ import java.util.Optional;
 
 public interface AdminRepository extends JpaRepository<Admin, Long> {
 
-    boolean existsByAdminPassword(String adminPassword);
     Optional<Admin> findByAdminPassword(String adminPassword);
 }
