@@ -72,32 +72,32 @@
             <div class="table-responsive">
                 <table class="table table-striped table-hover" style="table-layout: fixed">
                     <thead class="table-light">
-                        <tr>
-                            <th scope="col" style="width: 50px;">번호</th>
-                            <th scope="col">요청자</th>
-                            <th scope="col">연락처</th>
-                            <th scope="col">여행구분</th>
-                            <th scope="col">출발일</th>
-                            <th scope="col">도착일</th>
-                            <th scope="col">출발지</th>
-                            <th scope="col">도착지</th>
-                            <th scope="col">차량구분</th>
-                            <th scope="col">요청일</th>
-                        </tr>
+                    <tr>
+                        <th scope="col" style="width: 50px;">번호</th>
+                        <th scope="col">요청자</th>
+                        <th scope="col">연락처</th>
+                        <th scope="col">여행구분</th>
+                        <th scope="col">출발일</th>
+                        <th scope="col">도착일</th>
+                        <th scope="col">출발지</th>
+                        <th scope="col">도착지</th>
+                        <th scope="col">차량구분</th>
+                        <th scope="col">요청일</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="e: ${eList}">
-                            <td th:text="${e.id}"></td>
-                            <td th:text="${e.name}"></td>
-                            <td th:text="${e.phone}"></td>
-                            <td th:text="${e.travelType}"></td>
-                            <td th:text="${e.departDate}"></td>
-                            <td th:text="${e.arrivalDate}"></td>
-                            <td th:text="${e.departPlace}"></td>
-                            <td th:text="${e.arrivalPlace}"></td>
-                            <td th:text="${e.vehicleType}"></td>
-                            <td th:text="${e.createdDate}"></td>
-                        </tr>
+                    <tr th:each="e: ${eList}">
+                        <td th:text="${e.id}"></td>
+                        <td th:text="${e.name}"></td>
+                        <td th:text="${e.phone}"></td>
+                        <td th:text="${e.travelType}"></td>
+                        <td th:text="${e.departDate}"></td>
+                        <td th:text="${e.arrivalDate}"></td>
+                        <td th:text="${e.departPlace}"></td>
+                        <td th:text="${e.arrivalPlace}"></td>
+                        <td th:text="${e.vehicleType}"></td>
+                        <td th:text="${e.createdDate}"></td>
+                    </tr>
                     </tbody>
                 </table>
                 <nav style="text-align: center;">
