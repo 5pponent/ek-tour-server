@@ -136,10 +136,10 @@ public class AdminController {
         return success(companyInfo);
     }
 
-    // 회사 로고 변경
+    // 회사 로고 업로드
     @PostMapping("/logo")
-    public String updateLogo(@ModelAttribute("file") MultipartFile file) throws IOException {
-        System.out.println(file.getResource().getFile().getName());
+    public String updateLogo(@ModelAttribute("file") MultipartFile file) {
+        adminService.uploadLogo(file);
         return "redirect:/admin/setting";
     }
 
