@@ -24,7 +24,8 @@ public class ExcelService {
 
     private final EstimateRepository repository;
 
-    public static final String FILE_PATH = "C:\\dev\\estimate.xlsx";
+//    public static final String FILE_PATH = "C:\\dev\\estimate.xlsx";
+    public static final String FILE_PATH = "/home/ubuntu/spring/estimate.xlsx";
 
     // 특정 셀에 특정 값 넣기
     private void setValue(Sheet sheet, String position, String value) {
