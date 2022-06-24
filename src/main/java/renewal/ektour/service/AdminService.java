@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import renewal.ektour.domain.Admin;
 import renewal.ektour.dto.response.CompanyInfoResponse;
+import renewal.ektour.exception.AdminPasswordException;
 import renewal.ektour.repository.AdminRepository;
 
 import javax.servlet.http.HttpServletRequest;
@@ -56,7 +57,8 @@ public class AdminService {
     }
 
     public void updatePassword(String oldPassword, String newPassword) {
-        Admin admin = adminRepository.findByAdminPassword(oldPassword).orElseThrow();
+        Admin admin = adminRepository.findByAdminPassword(oldPassword)
+                .orElseThrow(() -> new AdminPasswordException("현재 비밀번호가 틀립니다"));
         admin.updatePassword(newPassword);
     }
 

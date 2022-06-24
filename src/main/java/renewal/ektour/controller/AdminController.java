@@ -118,7 +118,7 @@ public class AdminController {
         if (!passwordForm.passwordCheck()) {
             return "redirect:/admin/setting";
         }
-        adminService.updatePassword(passwordForm.getPassword());
+        adminService.updatePassword(passwordForm.getNowPassword(), passwordForm.getNewPassword());
         return "redirect:/admin/setting";
     }
 

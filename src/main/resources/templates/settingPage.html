@@ -118,10 +118,12 @@
                     <h6>관리자 비밀번호 변경</h6>
                     <table class="table" style="vertical-align: middle;">
                         <tbody>
+                        <tr><td>현재 비밀번호</td><td>
+                            <input type="password" th:field="*{nowPassword}"></td></tr>
                         <tr><td>새 비밀번호</td><td>
-                            <input type="password" th:field="*{password}"></td></tr>
+                            <input type="password" th:field="*{newPassword}"></td></tr>
                         <tr><td>새 비밀번호 확인</td><td>
-                            <input type="password" th:field="*{passwordCheck}"></td></tr>
+                            <input type="password" th:field="*{newPasswordCheck}"></td></tr>
                         </tbody>
                     </table>
                     <div class="d-grid gap-2">
