@@ -17,7 +17,6 @@ public class UpdateAdminPasswordForm {
     private String newPasswordCheck;
 
     public boolean passwordCheck() {
-        if (newPassword == null && newPasswordCheck == null) return false;
         return this.newPassword.equals(this.newPasswordCheck);
     }
 }

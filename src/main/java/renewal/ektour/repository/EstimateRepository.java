@@ -33,4 +33,7 @@ public interface EstimateRepository extends JpaRepository<Estimate, Long> {
 
     @Query("SELECT e FROM Estimate e WHERE e.createdDate BETWEEN :start AND :end AND e.phone = :phone")
     Page<Estimate> searchAllByPhone(Pageable pageable, @Param("start") String start, @Param("end") String end, @Param("phone") String phone);
+
+    @Query("SELECT e FROM Estimate e WHERE e.createdDate BETWEEN :start AND :end")
+    Page<Estimate> searchAllByDate(Pageable pageable, @Param("start") String start, @Param("end") String end);
 }

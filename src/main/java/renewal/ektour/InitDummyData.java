@@ -33,7 +33,7 @@ public class InitDummyData {
                 "810137-04-006627",
                 "이케이투어");
 
-        // 견적 더미 데이터 생성
+//       견적 더미 데이터 생성
 //        for (int i = 0; i < 100; i++) {
 //            String idx = String.valueOf(i + 1);
 //            EstimateRequest data = EstimateRequest.builder()
