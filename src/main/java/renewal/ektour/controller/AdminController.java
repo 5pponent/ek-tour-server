@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import renewal.ektour.domain.Admin;
 import renewal.ektour.domain.Estimate;
 import renewal.ektour.dto.request.AdminSearchForm;
@@ -133,6 +134,13 @@ public class AdminController {
     public ResponseEntity<?> getAdminInfo() {
         CompanyInfoResponse companyInfo = adminService.getCompanyInfo();
         return success(companyInfo);
+    }
+
+    // 회사 로고 변경
+    @PostMapping("/logo")
+    public String updateLogo(@ModelAttribute("file") MultipartFile file) throws IOException {
+        System.out.println(file.getResource().getFile().getName());
+        return "redirect:/admin/setting";
     }
 
 

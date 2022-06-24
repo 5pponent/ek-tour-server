@@ -31,7 +31,7 @@ public class AppConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/image/**")
+        registry.addResourceHandler("/img/**")
                 .addResourceLocations("file:///home/ubuntu/spring/");
     }
 }

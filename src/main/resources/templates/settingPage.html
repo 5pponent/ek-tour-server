@@ -64,6 +64,12 @@
             <h5>관리자 설정</h5>
             <hr>
             <div class="wrapper">
+                <h6>회사 로고 변경</h6>
+                로고 형식은 반드시 logo.png로 설정할 것.
+                <form class="wrapper" th:action="@{/admin/logo}" method="POST" enctype="multipart/form-data">
+                    <input type="file" name="file"/>
+                    <input type="submit" id="submit" value="전송"/>
+                </form>
                 <form class="wrapper" th:action="@{/admin/setting/info}" method="POST"
                       th:object="${infoForm}">
                     <h6>회사 정보 변경</h6>
