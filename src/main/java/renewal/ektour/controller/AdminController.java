@@ -10,6 +10,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import renewal.ektour.domain.Admin;
@@ -17,14 +18,18 @@ import renewal.ektour.domain.Estimate;
 import renewal.ektour.dto.request.AdminSearchForm;
 import renewal.ektour.dto.request.UpdateAdminPasswordForm;
 import renewal.ektour.dto.response.CompanyInfoResponse;
+import renewal.ektour.exception.AdminException;
 import renewal.ektour.service.AdminService;
 import renewal.ektour.service.EstimateService;
 import renewal.ektour.service.ExcelService;
 import renewal.ektour.util.Login;
 import renewal.ektour.util.PageConfig;
+import renewal.ektour.util.SearchManager;
+import renewal.ektour.util.SessionConst;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 
 import static renewal.ektour.dto.response.RestResponse.success;
@@ -37,6 +42,7 @@ public class AdminController {
     private final AdminService adminService;
     private final EstimateService estimateService;
     private final ExcelService excelService;
+    private final SearchManager searchManager;
 
     @PostMapping("/login")
     public String login(@RequestParam("adminPassword") String adminPassword,
@@ -66,6 +72,8 @@ public class AdminController {
                        Model model,
                        @PageableDefault(size = PageConfig.PAGE_PER_COUNT, sort = PageConfig.SORT_STANDARD, direction = Sort.Direction.DESC) Pageable pageable) {
         if (loginAdmin == null) return "login";
+        log.info("현재 페이지 : {}", pageable.getPageNumber());
+        model.addAttribute("currentPage", pageable.getPageNumber() + 1);
         Page<Estimate> eList = estimateService.findAllByPageAdmin(pageable);
         model.addAttribute("eList", eList);
         model.addAttribute("maxPage", 10);
@@ -73,18 +81,40 @@ public class AdminController {
         return "mainPage";
     }
 
-    // 견적 요청 검색
+    // 견적 요청 처음 검색
     @PostMapping("/search")
-    public String search(@ModelAttribute("adminSearchForm") AdminSearchForm form,
+    public String search(@Valid @ModelAttribute("adminSearchForm") AdminSearchForm form,
+                         BindingResult bindingResult,
                          Model model,
                          @PageableDefault(size = PageConfig.PAGE_PER_COUNT, sort = PageConfig.SORT_STANDARD, direction = Sort.Direction.DESC) Pageable pageable) {
+        if (bindingResult.hasErrors()) {
+            log.info("{}", bindingResult.getAllErrors());
+            throw new AdminException("검색 일시적 오류");
+        }
+        log.info("현재 페이지 : {}", pageable.getPageNumber());
+        model.addAttribute("currentPage", pageable.getPageNumber() + 1);
+        searchManager.setValue("search", form);
         Page<Estimate> eList = estimateService.searchByPageAdmin(pageable, form);
         model.addAttribute("eList", eList);
         model.addAttribute("maxPage", 10);
-        model.addAttribute("adminSearchForm", new AdminSearchForm());
+        model.addAttribute("adminSearchForm", form);
         return "searchPage";
     }
-
+    
+    // 검색한 상태에서 페이징
+    @GetMapping("/search")
+    public String searchPage(@PageableDefault(size = PageConfig.PAGE_PER_COUNT, sort = PageConfig.SORT_STANDARD, direction = Sort.Direction.DESC) Pageable pageable,
+                             Model model) {
+        AdminSearchForm form = searchManager.getValue("search");
+        log.info("현재 페이지 : {}", pageable.getPageNumber());
+        model.addAttribute("currentPage", pageable.getPageNumber() + 1);
+        searchManager.setValue("search", form);
+        Page<Estimate> eList = estimateService.searchByPageAdmin(pageable, form);
+        model.addAttribute("eList", eList);
+        model.addAttribute("maxPage", 10);
+        model.addAttribute("adminSearchForm", form);
+        return "searchPage";
+    }
 
     @PostMapping("/logout")
     public String logout(HttpServletRequest request) {
@@ -115,7 +145,11 @@ public class AdminController {
     }
 
     @PostMapping("/setting/password")
-    public String updateAdminPassword(@ModelAttribute("pwForm") UpdateAdminPasswordForm passwordForm) {
+    public String updateAdminPassword(@Valid @ModelAttribute("pwForm") UpdateAdminPasswordForm passwordForm,
+                                      BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new AdminException("비밀번호가 일치하지 않습니다.");
+        }
         if (!passwordForm.passwordCheck()) {
             return "redirect:/admin/setting";
         }

@@ -103,6 +103,9 @@ public class EstimateService {
 
     // 관리자페이지 검색
     public Page<Estimate> searchByPageAdmin(Pageable pageable, AdminSearchForm form) {
+        if (form.getKeyword().equals("")) {
+            return repository.searchAllByDate(pageable, form.getStart().toString(), form.getEnd().toString());
+        }
         if (form.getSearchType().equals("phone")) {
             return repository.searchAllByPhone(pageable, form.getStart().toString(), form.getEnd().toString(), form.getKeyword());
         } else {
