@@ -22,11 +22,16 @@
 
 <div class="box">
   <!-- 로고 이미지 (경로 주의) -->
-  <div class="py-5 text-center">
-    <h2>오류</h2>
+  <div style="text-align: center;">
+    <img th:src="@{/image/error.png}" style="width: 100px; height: 100px;">
   </div>
-  <div class="py-5 text-center">
-    <p>페이지를 찾을 수 없습니다.</p>
+  <br>
+  <div style="text-align: center;">
+    <h2>잘못된 요청</h2>
+  </div>
+  <br>
+  <div style="text-align: center;">
+    <p th:text="${errorMessage}"></p>
   </div>
   <div class="d-grid gap-2" style="margin: 10px 0;">
     <input type="button" class="btn btn-primary" th:onclick="|location.href='@{/admin}'|" value="돌아가기">

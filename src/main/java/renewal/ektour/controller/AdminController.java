@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import renewal.ektour.domain.Admin;
 import renewal.ektour.domain.Estimate;
 import renewal.ektour.dto.request.AdminSearchForm;
@@ -118,7 +119,7 @@ public class AdminController {
         if (!passwordForm.passwordCheck()) {
             return "redirect:/admin/setting";
         }
-        adminService.updatePassword(passwordForm.getPassword());
+        adminService.updatePassword(passwordForm.getNowPassword(), passwordForm.getNewPassword());
         return "redirect:/admin/setting";
     }
 
@@ -133,6 +134,13 @@ public class AdminController {
     public ResponseEntity<?> getAdminInfo() {
         CompanyInfoResponse companyInfo = adminService.getCompanyInfo();
         return success(companyInfo);
+    }
+
+    // 회사 로고 업로드
+    @PostMapping("/logo")
+    public String updateLogo(@ModelAttribute("file") MultipartFile file) {
+        adminService.uploadLogo(file);
+        return "redirect:/admin/setting";
     }
 
 

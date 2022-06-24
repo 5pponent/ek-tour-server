@@ -8,13 +8,16 @@ import javax.validation.constraints.NotBlank;
 public class UpdateAdminPasswordForm {
 
     @NotBlank
-    private String password;
+    private String nowPassword;
 
     @NotBlank
-    private String passwordCheck;
+    private String newPassword;
+
+    @NotBlank
+    private String newPasswordCheck;
 
     public boolean passwordCheck() {
-        if (password == null && passwordCheck == null) return false;
-        return this.password.equals(this.passwordCheck);
+        if (newPassword == null && newPasswordCheck == null) return false;
+        return this.newPassword.equals(this.newPasswordCheck);
     }
 }

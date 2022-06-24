@@ -23,7 +23,8 @@
 <div class="box">
 
     <!-- 로고 이미지 (경로 주의) -->
-    <img th:src="@{/image/logo.png}">
+<!--    <img th:src="@{/image/logo.png}">-->
+    <img src="/img/logo.png">
 
     <div th:if="${loginResult}==false" class="alert alert-danger d-flex align-items-center" role="alert">
         <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
@@ -33,6 +34,7 @@
     <form th:action="@{/admin/login}" method="POST">
         <label for="adminPassword">비밀번호</label>
         <input type="password" id="adminPassword" name="adminPassword" placeholder="비밀번호를 입력하세요" class="form-control">
+        <br><br><br>
         <div class="d-grid gap-2" style="margin: 10px 0;">
             <input type="submit" value="로그인" class="btn btn-primary">
         </div>
