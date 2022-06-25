@@ -87,7 +87,7 @@
                     </thead>
                     <tbody>
                         <tr th:each="e: ${eList}">
-                            <td th:text="${e.id}"></td>
+                            <td><a th:text="${e.id}" th:href="@{/admin/main/{estimateId}(estimateId = ${e.id})}"></a></td>
                             <td th:text="${e.name}"></td>
                             <td th:text="${e.phone}"></td>
                             <td th:text="${e.travelType}"></td>
@@ -97,6 +97,7 @@
                             <td th:text="${e.arrivalPlace}"></td>
                             <td th:text="${e.vehicleType}"></td>
                             <td th:text="${e.createdDate}"></td>
+                            </form>
                         </tr>
                     </tbody>
                 </table>
