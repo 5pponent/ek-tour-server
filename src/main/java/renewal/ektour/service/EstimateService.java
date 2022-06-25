@@ -31,9 +31,7 @@ public class EstimateService {
      */
     @Transactional
     public Estimate createAndSave(EstimateRequest form) {
-        Estimate savedEstimate = repository.save(form.toEntity());
-        log.info("견적 저장 = {}", savedEstimate.toDetailResponse().toString());
-        return savedEstimate;
+        return repository.save(form.toEntity());
     }
 
     /**
@@ -114,12 +112,29 @@ public class EstimateService {
     }
 
     /**
-     * 견적요청 삭제 (수정은 필요 없음)
+     * 견적요청 수정
+     */
+    @Transactional
+    public Estimate update(Long estimateId, EstimateRequest updateForm) {
+        Estimate estimate = findById(estimateId);
+        estimate.update(updateForm);
+        return estimate;
+    }
+
+    /**
+     * 견적요청 삭제
      */
     @Transactional
     public void delete(Long estimateId) {
         Estimate estimate = repository.findById(estimateId).orElseThrow();
-        log.info("견적 = {} 삭제(안보이도록 설정)", estimate);
         estimate.setInvisible();
+    }
+
+    /**
+     * 견적요청 관리자페이지에서 진짜 삭제 (디비삭제)
+     */
+    @Transactional
+    public void realDelete(Long estimateId) {
+        repository.deleteById(estimateId);
     }
 }

@@ -3,6 +3,7 @@ package renewal.ektour.domain;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import renewal.ektour.dto.request.EstimateRequest;
 import renewal.ektour.dto.response.EstimateDetailResponse;
 import renewal.ektour.dto.response.EstimateSimpleResponse;
 
@@ -125,5 +126,26 @@ public class Estimate {
     // 견적 요청 삭제 (보여지는걸 숨기기)
     public void setInvisible() {
         this.visibility = false;
+    }
+
+    // 견적 요청 수정
+    public void update(EstimateRequest form) {
+        this.name = form.getName();
+        this.email = form.getEmail();
+        this.phone = form.getPhone();
+        this.password = form.getPassword();
+        this.travelType = form.getTravelType();
+        this.vehicleType = form.getVehicleType();
+        this.vehicleNumber = form.getVehicleNumber();
+        this.memberCount = form.getMemberCount();
+        this.departDate = form.getDepartDate();
+        this.arrivalDate = form.getArrivalDate();
+        this.departPlace = form.getDepartPlace();
+        this.arrivalPlace = form.getArrivalPlace();
+        this.memo = form.getMemo();
+        this.stopPlace = form.getStopPlace();
+        this.wayType = form.getWayType();
+        this.payment = form.getPayment();
+        this.taxBill = form.isTaxBill();
     }
 }
