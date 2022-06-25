@@ -18,6 +18,7 @@ import renewal.ektour.domain.Estimate;
 import renewal.ektour.dto.request.AdminSearchForm;
 import renewal.ektour.dto.request.UpdateAdminPasswordForm;
 import renewal.ektour.dto.response.CompanyInfoResponse;
+import renewal.ektour.dto.response.EstimateDetailResponse;
 import renewal.ektour.exception.AdminException;
 import renewal.ektour.service.AdminService;
 import renewal.ektour.service.EstimateService;
@@ -114,6 +115,14 @@ public class AdminController {
         model.addAttribute("maxPage", 10);
         model.addAttribute("adminSearchForm", form);
         return "searchPage";
+    }
+
+    @GetMapping("/main/{estimateId}")
+    public String getEstimateDetail(@PathVariable("estimateId") Long id, Model model) {
+        EstimateDetailResponse result = estimateService.findById(id).toDetailResponse();
+        log.info("{}", result.toString());
+        model.addAttribute("estimate", result);
+        return "estimateDetailPage";
     }
 
     @PostMapping("/logout")
