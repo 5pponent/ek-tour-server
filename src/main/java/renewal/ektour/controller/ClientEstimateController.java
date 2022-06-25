@@ -31,7 +31,7 @@ import static renewal.ektour.dto.response.RestResponse.success;
 @RequiredArgsConstructor
 @Slf4j
 @RequestMapping("/estimate")
-public class EstimateController {
+public class ClientEstimateController {
 
     private final EstimateService estimateService;
     private final EmailService emailService;
@@ -65,15 +65,9 @@ public class EstimateController {
     // 클라이언트 견적요청 목록 조회 (페이징)
     @GetMapping("/all")
     public ResponseEntity<?> findAllByPageClient(
-            // page : default 페이지, size : 한 페이지의 글 개수, sort : 정렬 기준 컬럼
             @PageableDefault(size = PageConfig.PAGE_PER_COUNT, sort = PageConfig.SORT_STANDARD, direction = Sort.Direction.DESC) Pageable pageable) {
         EstimateListPagingResponse estimateList = estimateService.findAllByPage(pageable);
         return success(estimateList);
-    }
-
-    // 관리자 페이지 견적요청 목록 조회 (페이징)
-    public ResponseEntity<?> findAllByPageAdmin() {
-        return success(null);
     }
 
     // 존재하는 전체 페이지 수 조회
@@ -107,11 +101,20 @@ public class EstimateController {
     }
 
     /**
-     * 견적요청 삭제
+     * 견적요청 수정
      */
-    // 실제 삭제하는게 아니라 visibility 를 false 로 바꾸고 사용자에게만 안 보여준다.
-    // 관리자가 직접 삭제함 디비에는 데이터가 남아있다 (사용자는 삭제 X)
     @PutMapping("/{estimateId}")
+    public ResponseEntity<?> updateById(@PathVariable("estimateId") Long estimateId,
+                                        @Valid @RequestBody EstimateRequest updateForm) {
+        Estimate updatedEstimate = estimateService.update(estimateId, updateForm);
+        return success(updatedEstimate.toDetailResponse());
+    }
+
+
+    /**
+     * 견적요청 삭제 - 안 보이도록 설정
+     */
+    @DeleteMapping("/{estimateId}")
     public ResponseEntity<?> deleteById(@PathVariable("estimateId") Long estimateId) {
         estimateService.delete(estimateId);
         return success(new BoolResponse(true));
@@ -121,7 +124,7 @@ public class EstimateController {
      * 견적요청 알림 보내기
      */
     @PostMapping("/alarm")
-    public ResponseEntity<?> alarm(@RequestBody EstimateRequest form) throws UnsupportedEncodingException, MessagingException {
+    public ResponseEntity<?> alarm(@RequestBody EstimateRequest form) {
         emailService.sendMail(form);
         return success(new BoolResponse(true));
     }
