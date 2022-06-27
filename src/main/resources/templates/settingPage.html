@@ -63,11 +63,15 @@
             <h5>관리자 설정</h5>
             <hr>
             <div class="wrapper">
-                <h6>회사 로고 변경</h6>
+
                 <form class="wrapper" th:action="@{/admin/logo}" method="POST" enctype="multipart/form-data">
-                    <input type="file" name="file"/>
-                    <input type="submit" id="submit" value="업로드" onclick="alert('회사 로고를 변경합니다.')"/>
+                    <h6>회사 로고 변경</h6>
+                    <input type="file" name="file" class="form-control mb-2"/>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary" type="submit" onclick="alert('회사 로고를 변경합니다.')">업로드</button>
+                    </div>
                 </form>
+
                 <form class="wrapper" th:action="@{/admin/setting/info}" method="POST"
                       th:object="${infoForm}">
                     <h6>회사 정보 변경</h6>

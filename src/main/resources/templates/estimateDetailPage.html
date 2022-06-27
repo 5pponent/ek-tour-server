@@ -95,84 +95,106 @@
                 <tr>
                     <th>여행구분</th>
                     <td>
-                        <input th:field="*{travelType}">
+                        <input class="form-control form-control-sm" th:field="*{travelType}">
                     </td>
                     <th>인원</th>
                     <td>
-                        <input type="number" th:field="*{memberCount}">명
+                        <div class="input-group input-group-sm" style="width: 100px;">
+                            <input type="number" class="form-control form-control-sm" th:field="*{memberCount}">
+                            <span class="input-group-text">명</span>
+                        </div>
                     </td>
                 </tr>
                 <tr>
                     <th>버스 구분</th>
                     <td>
-                        <input th:field="*{vehicleType}">
+                        <input class="form-control form-control-sm" th:field="*{vehicleType}">
                     </td>
                     <th>차량 대수</th>
                     <td>
-                        <input type="number" th:field="*{vehicleNumber}">대
+                        <div class="input-group input-group-sm" style="width: 100px;">
+                            <input type="number" class="form-control form-control-sm" th:field="*{vehicleNumber}">
+                            <span class="input-group-text">대</span>
+                        </div>
                     </td>
                 </tr>
                 <tr>
                     <th>출발 일시</th>
                     <td>
-                        <input type="text" th:field="*{departDate}">
+                        <input class="form-control form-control-sm" type="text" th:field="*{departDate}">
                     </td>
                     <th>도착 일시</th>
                     <td>
-                        <input type="text" th:field="*{arrivalDate}">
+                        <input class="form-control form-control-sm" type="text" th:field="*{arrivalDate}">
                     </td>
                 </tr>
                 <tr>
                     <th>출발 장소</th>
                     <td>
-                        <input th:field="*{departPlace}">
+                        <input class="form-control form-control-sm" type="text" th:field="*{departPlace}">
                     </td>
                     <th>도착 장소</th>
                     <td>
-                        <input th:field="*{arrivalPlace}">
+                        <input class="form-control form-control-sm" type="text" th:field="*{arrivalPlace}">
                     </td>
                 </tr>
                 <tr>
                     <th>경유지</th>
-                    <td><input type="text" th:field="*{stopPlace}"></td>
+                    <td><input class="form-control form-control-sm" type="text" th:field="*{stopPlace}"></td>
                     <th>왕복 구분</th>
                     <td th:field="*{wayType}">
-                        <label><input type="radio" name="wayType" class="form-check-input" th:attr="checked=${estimate.wayType.equals('왕복') ? true : false}">왕복</label>
-                        <label><input type="radio" name="wayType" class="form-check-input" th:attr="checked=${estimate.wayType.equals('편도') ? true : false}">편도</label>
+                        <label><input type="radio" name="wayType" class="form-check-input"
+                                      th:attr="checked=${estimate.wayType.equals('왕복') ? true : false}"
+                                      th:value="왕복">왕복</label>
+                        <label><input type="radio" name="wayType" class="form-check-input"
+                                      th:attr="checked=${estimate.wayType.equals('편도') ? true : false}"
+                                      th:value="편도">편도</label>
                     </td>
                 </tr>
                 <tr>
                     <th>결제 방법</th>
                     <td th:field="*{payment}">
-                        <label><input type="radio" name="payment" class="form-check-input" th:attr="checked=${estimate.payment.equals('현금') ? true : false}">현금</label>
-                        <label><input type="radio" name="payment" class="form-check-input" th:attr="checked=${estimate.payment.equals('카드') ? true : false}">카드</label>
+                        <label><input type="radio" name="payment" class="form-check-input"
+                                      th:attr="checked=${estimate.payment.equals('현금') ? true : false}"
+                                      th:value="현금">현금</label>
+                        <label><input type="radio" name="payment" class="form-check-input"
+                                      th:attr="checked=${estimate.payment.equals('카드') ? true : false}"
+                                      th:value="카드">카드</label>
                     </td>
                     <th>세금계산서</th>
                     <td th:field="*{taxBill}">
-                        <label><input type="radio" name="taxBill" class="form-check-input" th:attr="checked=${estimate.taxBill ? true : false}">발급</label>
-                        <label><input type="radio" name="taxBill" class="form-check-input" th:attr="checked=${!estimate.taxBill ? true : false}">발급 안 함</label>
+                        <label><input type="radio" name="taxBill" class="form-check-input"
+                                      th:attr="checked=${estimate.taxBill ? true : false}"
+                                      th:value="true">발급</label>
+                        <label><input type="radio" name="taxBill" class="form-check-input"
+                                      th:attr="checked=${!estimate.taxBill ? true : false}"
+                                      th:value="false">발급 안 함</label>
                     </td>
                 </tr>
                 <tr>
                     <th>기타 메모 사항</th>
                     <td colspan="3">
                         <textarea class="form-control" rows="3"
-                                  th:text="${estimate.memo}"></textarea>
+                                  th:field="*{memo}"></textarea>
                     </td>
                 </tr>
                 <tr>
                     <th>홈페이지 표시 여부</th>
                     <td colspan="3" th:field="*{visibility}">
-                        <label><input type="radio" name="visibility" class="form-check-input" th:attr="checked=${!estimate.visibility ? true : false}">표시</label>
-                        <label><input type="radio" name="visibility" class="form-check-input" th:attr="checked=${estimate.visibility ? true : false}">표시 안 함</label>
+                        <label><input type="radio" name="visibility" class="form-check-input"
+                                      th:attr="checked=${!estimate.visibility ? true : false}"
+                                      th:value="true">표시</label>
+                        <label><input type="radio" name="visibility" class="form-check-input"
+                                      th:attr="checked=${estimate.visibility ? true : false}"
+                                      th:value="false">표시 안 함</label>
                     </td>
                 </tr>
                 </tbody>
             </table>
             <div class="btn-group" role="group" style="display: table; margin: 0 auto;">
                 <a th:href="@{/admin/estimate/{estimateId}/excel(estimateId = ${estimate.id})}" class="btn btn-success">엑셀 다운</a>
-                <button type="submit" class="btn btn-primary">저장</button>
-                <button type="submit" class="btn btn-danger">삭제</button>
+                <button type="submit" class="btn btn-primary" onclick="alert('견적 정보를 저장합니다.');">저장</button>
+                <button type="submit" class="btn btn-danger" onclick="alert('해당 견적을 삭제합니다.');">삭제</button>
                 <a type="button" class="btn btn-secondary" href="javascript:window.history.back();">취소</a>
             </div>
             </form>

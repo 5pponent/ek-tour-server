@@ -120,7 +120,7 @@ public class AdminEstimateController {
                                  @ModelAttribute("estimate") EstimateDetailResponse estimate,
                                  Model model) {
         estimateService.update(estimateId, estimate);
-        return "redirect:/admin/estimate/" + Long.toString(estimateId);
+        return "redirect:/admin/main";
     }
     
     /**
