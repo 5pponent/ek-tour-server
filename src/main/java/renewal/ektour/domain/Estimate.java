@@ -148,4 +148,25 @@ public class Estimate {
         this.payment = form.getPayment();
         this.taxBill = form.isTaxBill();
     }
+
+    public void update(EstimateDetailResponse form) {
+        this.name = form.getName();
+        this.email = form.getEmail();
+        this.phone = form.getPhone();
+        this.password = form.getPassword();
+        this.travelType = form.getTravelType();
+        this.vehicleType = form.getVehicleType();
+        this.vehicleNumber = form.getVehicleNumber();
+        this.memberCount = form.getMemberCount();
+        this.departDate = form.getDepartDate();
+        this.arrivalDate = form.getArrivalDate();
+        this.departPlace = form.getDepartPlace();
+        this.arrivalPlace = form.getArrivalPlace();
+        this.memo = form.getMemo();
+        this.stopPlace = form.getStopPlace();
+        this.wayType = form.getWayType();
+        this.payment = form.getPayment();
+        this.taxBill = form.isTaxBill();
+        this.visibility = form.isVisibility();
+    }
 }

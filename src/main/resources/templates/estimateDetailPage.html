@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Import할 CSS 파일 (경로 주의) -->
     <link th:href="@{/css/bootstrap.min.css}"
           href="../static/css/bootstrap.min.css"
           rel="stylesheet">
@@ -11,11 +10,6 @@
           href="../static/css/integrated-css.css"
           rel="stylesheet">
     <title>이케이투어 운영자</title>
-    <style>
-        label {
-            color: red;
-        }
-    </style>
 </head>
 
 <body style="background-color: #e5e5e5;">
@@ -63,7 +57,7 @@
         <article class="col-10">
             <h5>견적 요청 상세보기</h5>
             <hr>
-            <form>
+            <form th:object="${estimate}" method="POST" th:action="@{/admin/update/estimate/{estimateId}(estimateId = ${estimate.id})}">
             <table class="table align-middle table-bordered">
                 <thead class="table-info">
                 <tr>
@@ -74,120 +68,109 @@
                 <tr><tr><td colspan="2" style="width: 50%; border-right: 0;"></td></tr></tr>
                 <tr>
                     <th>신청자</th>
-                    <td colspan="3">이태민</td>
+                    <td colspan="3">
+                        <input type="text" readonly class="form-control-plaintext" th:field="*{name}">
+                    </td>
                 </tr>
                 <tr>
                     <th>전화번호</th>
-                    <td>010-0000-0000</td>
+                    <td>
+                        <input type="text" readonly class="form-control-plaintext" th:field="*{phone}">
+                    </td>
                     <th>비밀번호</th>
-                    <td>0000</td>
+                    <td>
+                        <input type="text" readonly class="form-control-plaintext" th:field="*{password}">
+                    </td>
                 </tr>
                 <tr>
                     <th>이메일</th>
-                    <td>ahdwjdtprtm@email.com</td>
+                    <td>
+                        <input type="text" readonly class="form-control-plaintext" th:field="*{email}">
+                    </td>
                     <th>요청일</th>
-                    <td>0000-00-00</td>
+                    <td>
+                        <input type="text" readonly class="form-control-plaintext" th:field="*{createdDate}">
+                    </td>
                 </tr>
                 <tr>
                     <th>여행구분</th>
-                    <td>일반여행, 관혼상제, 기타단체, 학교단체 select</td>
+                    <td>
+                        <input th:field="*{travelType}">
+                    </td>
                     <th>인원</th>
-                    <td>text 명</td>
+                    <td>
+                        <input type="number" th:field="*{memberCount}">명
+                    </td>
                 </tr>
                 <tr>
                     <th>버스 구분</th>
-                    <td>25인승 소형, 28인승 리무진, 35인승 중형, 45인승 대형 select</td>
+                    <td>
+                        <input th:field="*{vehicleType}">
+                    </td>
                     <th>차량 대수</th>
-                    <td>1대~10대 이상 select</td>
+                    <td>
+                        <input type="number" th:field="*{vehicleNumber}">대
+                    </td>
                 </tr>
                 <tr>
                     <th>출발 일시</th>
-                    <td>날짜 select</td>
+                    <td>
+                        <input type="text" th:field="*{departDate}">
+                    </td>
                     <th>도착 일시</th>
-                    <td>날짜 select</td>
+                    <td>
+                        <input type="text" th:field="*{arrivalDate}">
+                    </td>
                 </tr>
                 <tr>
                     <th>출발 장소</th>
-                    <td>시/도 select 세부장소 text</td>
+                    <td>
+                        <input th:field="*{departPlace}">
+                    </td>
                     <th>도착 장소</th>
-                    <td>시/도 select 세부장소 text</td>
+                    <td>
+                        <input th:field="*{arrivalPlace}">
+                    </td>
                 </tr>
                 <tr>
                     <th>경유지</th>
-                    <td>장소 text</td>
+                    <td><input type="text" th:field="*{stopPlace}"></td>
                     <th>왕복 구분</th>
-                    <td>왕복 편도 radio</td>
+                    <td th:field="*{wayType}">
+                        <label><input type="radio" name="wayType" class="form-check-input" th:attr="checked=${estimate.wayType.equals('왕복') ? true : false}">왕복</label>
+                        <label><input type="radio" name="wayType" class="form-check-input" th:attr="checked=${estimate.wayType.equals('편도') ? true : false}">편도</label>
+                    </td>
                 </tr>
                 <tr>
                     <th>결제 방법</th>
-                    <td>현금 카드 radio</td>
+                    <td th:field="*{payment}">
+                        <label><input type="radio" name="payment" class="form-check-input" th:attr="checked=${estimate.payment.equals('현금') ? true : false}">현금</label>
+                        <label><input type="radio" name="payment" class="form-check-input" th:attr="checked=${estimate.payment.equals('카드') ? true : false}">카드</label>
+                    </td>
                     <th>세금계산서</th>
-                    <td>발급 발급안함 radio</td>
+                    <td th:field="*{taxBill}">
+                        <label><input type="radio" name="taxBill" class="form-check-input" th:attr="checked=${estimate.taxBill ? true : false}">발급</label>
+                        <label><input type="radio" name="taxBill" class="form-check-input" th:attr="checked=${!estimate.taxBill ? true : false}">발급 안 함</label>
+                    </td>
                 </tr>
                 <tr>
                     <th>기타 메모 사항</th>
                     <td colspan="3">
-                        <textarea class="form-control" rows="3"></textarea>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <table class="table align-middle table-bordered">
-                <thead class="table-danger">
-                <tr>
-                    <th colspan="4">계약 관리</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr><tr><td colspan="2" style="width: 50%; border-right: 0;"></td></tr></tr>
-                <tr>
-                    <th>계약일</th>
-                    <td colspan="3">날짜 text</td>
-                </tr>
-                <tr>
-                    <th>차량 배차</th>
-                    <td>차종 select</td>
-                    <th>배차 일자</th>
-                    <td>날짜 text</td>
-                </tr>
-                <tr>
-                    <th>전체 금액</th>
-                    <td>text 원</td>
-                    <th>계약금</th>
-                    <td>text 원</td>
-                </tr>
-                <tr>
-                    <th>입금 방법</th>
-                    <td>현지 수금, 카드 결제, 계좌 이체 select</td>
-                    <th>수금 방법</th>
-                    <td>선불, 후불 select or radio</td>
-                </tr>
-                <tr>
-                    <th>처리 메모</th>
-                    <td colspan="3">
-                        <textarea class="form-control" rows="3"></textarea>
+                        <textarea class="form-control" rows="3"
+                                  th:text="${estimate.memo}"></textarea>
                     </td>
                 </tr>
                 <tr>
-                    <th>처리 상태</th>
-                    <td colspan="3">상담중, 상담완료, 계약완료 select</td>
-                </tr>
-                <tr>
-                    <th>SMS 발송 메시지</th>
-                    <td colspan="3">
-                        <textarea class="form-control" rows="3"></textarea>
-                        <label>* 문자 메시지는 2000자 이내로만 입력 가능 합니다.</label>
+                    <th>홈페이지 표시 여부</th>
+                    <td colspan="3" th:field="*{visibility}">
+                        <label><input type="radio" name="visibility" class="form-check-input" th:attr="checked=${!estimate.visibility ? true : false}">표시</label>
+                        <label><input type="radio" name="visibility" class="form-check-input" th:attr="checked=${estimate.visibility ? true : false}">표시 안 함</label>
                     </td>
-                </tr>
-                <tr>
-                    <th>SMS 발송</th>
-                    <td>발송, 미발송 radio</td>
-                    <th>SMS 발송 횟수</th>
-                    <td>count 회 발송 처리됨</td>
                 </tr>
                 </tbody>
             </table>
             <div class="btn-group" role="group" style="display: table; margin: 0 auto;">
+                <a th:href="@{/admin/estimate/{estimateId}/excel(estimateId = ${estimate.id})}" class="btn btn-success">엑셀 다운</a>
                 <button type="submit" class="btn btn-primary">저장</button>
                 <button type="submit" class="btn btn-danger">삭제</button>
                 <a type="button" class="btn btn-secondary" href="javascript:window.history.back();">취소</a>

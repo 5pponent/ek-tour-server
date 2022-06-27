@@ -86,8 +86,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="e: ${eList}">
-                            <td><a th:text="${e.id}" th:href="@{/admin/main/{estimateId}(estimateId = ${e.id})}"></a></td>
+                        <tr th:each="e: ${eList}"
+                            th:onclick="|location.href='@{/admin/estimate/{estimateId}(estimateId = ${e.id})}'|"
+                            style="cursor: pointer;">
+                            <td th:text="${e.id}"></td>
                             <td th:text="${e.name}"></td>
                             <td th:text="${e.phone}"></td>
                             <td th:text="${e.travelType}"></td>
@@ -112,11 +114,9 @@
                         <li th:if="${start > 1}" class="page-item">
                             <a th:href="@{/admin/main(page=${start - maxPage})}" th:text="'<'" class="page-link"></a>
                         </li>
-
                         <li th:each="page: ${#numbers.sequence(start, end)}" th:attr="class=${page.equals(currentPage) ? 'page-item active' : 'page-item'}">
                             <a th:text="${page}" th:href="@{/admin/main(page=${page - 1})}" class="page-link"></a>
                         </li>
-
                         <li th:if="${end < eList.totalPages}" class="page-item">
                             <a th:href="@{/admin/main(page=${start + maxPage})}" th:text="'>'" class="page-link"></a>
                         </li>
