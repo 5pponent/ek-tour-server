@@ -10,6 +10,7 @@ import renewal.ektour.domain.Estimate;
 import renewal.ektour.dto.request.AdminSearchForm;
 import renewal.ektour.dto.request.EstimateRequest;
 import renewal.ektour.dto.request.FindEstimateRequest;
+import renewal.ektour.dto.response.EstimateDetailResponse;
 import renewal.ektour.dto.response.EstimateListPagingResponse;
 import renewal.ektour.dto.response.EstimateSimpleResponse;
 import renewal.ektour.repository.EstimateRepository;
@@ -115,6 +116,16 @@ public class EstimateService {
     public Estimate update(Long estimateId, EstimateRequest updateForm) {
         Estimate estimate = findById(estimateId);
         estimate.update(updateForm);
+        return estimate;
+    }
+
+    @Transactional
+    public Estimate update(Long estimateId, EstimateDetailResponse updateForm) {
+        Estimate estimate = findById(estimateId);
+        log.info("기존 데이터 : {}", estimate.toDetailResponse().toString());
+        log.info("수정할 데이터 : {}", updateForm.toString());
+        estimate.update(updateForm);
+        log.info("수정된 데이터 : {}", estimate.toDetailResponse().toString());
         return estimate;
     }
 
