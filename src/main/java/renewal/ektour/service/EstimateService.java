@@ -11,7 +11,6 @@ import renewal.ektour.dto.request.AdminSearchForm;
 import renewal.ektour.dto.request.EstimateRequest;
 import renewal.ektour.dto.request.FindEstimateRequest;
 import renewal.ektour.dto.response.EstimateListPagingResponse;
-import renewal.ektour.dto.response.EstimateListResponse;
 import renewal.ektour.dto.response.EstimateSimpleResponse;
 import renewal.ektour.repository.EstimateRepository;
 import renewal.ektour.util.PageConfig;
@@ -92,11 +91,9 @@ public class EstimateService {
     }
 
     // 클라이언트 내가 쓴 견적 조회
-    public EstimateListResponse findAllMyEstimates(FindEstimateRequest form) {
-        List<Estimate> estimates = repository.findAllByPhoneAndPassword(form.getPhone(), form.getPassword());
-        List<EstimateSimpleResponse> result = new ArrayList<>();
-        estimates.forEach(e -> result.add(e.toSimpleResponse()));
-        return new EstimateListResponse(result);
+    public EstimateListPagingResponse findAllMyEstimates(Pageable pageable, FindEstimateRequest form) {
+        Page<Estimate> estimates = repository.findAllByPhoneAndPassword(pageable, form.getPhone(), form.getPassword());
+        return makeEstimateListResponse(pageable, estimates);
     }
 
     // 관리자페이지 검색
