@@ -13,7 +13,6 @@ import renewal.ektour.dto.request.EstimateRequest;
 import renewal.ektour.dto.request.FindEstimateRequest;
 import renewal.ektour.dto.response.BoolResponse;
 import renewal.ektour.dto.response.EstimateListPagingResponse;
-import renewal.ektour.dto.response.EstimateListResponse;
 import renewal.ektour.dto.response.PageTotalCountResponse;
 import renewal.ektour.service.EmailService;
 import renewal.ektour.service.EstimateService;
@@ -91,12 +90,13 @@ public class ClientEstimateController {
     // 클라이언트 내가 쓴 견적요청 조회
     @PostMapping("/search/my")
     public ResponseEntity<?> findAllMyEstimates(@Valid @RequestBody FindEstimateRequest form,
-                                                BindingResult bindingResult) {
+                                                BindingResult bindingResult,
+                                                @PageableDefault(size = PageConfig.PAGE_PER_COUNT, sort = PageConfig.SORT_STANDARD, direction = Sort.Direction.DESC) Pageable pageable) {
         if (bindingResult.hasErrors()) {
             log.error("find estimate form validation errors = {}", bindingResult.getFieldErrors());
             return badRequest(convertJson(bindingResult.getFieldErrors()));
         }
-        EstimateListResponse estimates = estimateService.findAllMyEstimates(form);
+        EstimateListPagingResponse estimates = estimateService.findAllMyEstimates(pageable, form);
         return success(estimates);
     }
 
