@@ -79,7 +79,6 @@ public class AdminInfoController {
     public String updateCompanyInfo(@ModelAttribute("infoForm") CompanyInfoResponse companyInfo,
                                     Model model) {
         adminService.updateCompanyInfo(companyInfo);
-        model.addAttribute("infoForm", companyInfo);
         return "redirect:/admin/setting";
     }
 

@@ -96,27 +96,37 @@ public class AdminEstimateController {
     }
 
     // 견적요청 상세 조회
-    @GetMapping("/main/{estimateId}")
+    @GetMapping("/estimate/{estimateId}")
     public String getEstimateDetail(@PathVariable("estimateId") Long estimateId, Model model) {
-        EstimateDetailResponse result = estimateService.findById(estimateId).toDetailResponse();
-        log.info("{}", result.toString());
-        model.addAttribute("estimate", result);
+        EstimateDetailResponse estimate = estimateService.findById(estimateId).toDetailResponse();
+        model.addAttribute("estimate", estimate);
         return "estimateDetailPage";
     }
 
     /**
      * 견적요청 엑셀 다운로드
      */
-    @GetMapping("/excel/{estimateId}")
+    @GetMapping("/estimate/{estimateId}/excel")
     public void createExcel(@PathVariable("estimateId") Long estimateId,
                             HttpServletResponse response) {
         excelService.createExcel(estimateId, response);
     }
 
     /**
+     * 관리자페이지 - 견적요청 수정
+     */
+    @PostMapping("/update/estimate/{estimateId}")
+    public String updateEstimate(@PathVariable("estimateId") Long estimateId,
+                                 @ModelAttribute("estimate") EstimateDetailResponse estimate,
+                                 Model model) {
+        estimateService.update(estimateId, estimate);
+        return "redirect:/admin/estimate/" + Long.toString(estimateId);
+    }
+    
+    /**
      * 관리자페이지 - 견적요청 진짜 삭제 (디비에서 삭제)
      */
-    @DeleteMapping("/{estimateId}")
+    @DeleteMapping("/delete/estimate/{estimateId}")
     public String realDeleteEstimate(@PathVariable("estimateId") Long estimateId) {
         estimateService.realDelete(estimateId);
         return "redirect:/admin/main";
