@@ -7,7 +7,6 @@ import renewal.ektour.exception.AdminException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.PrintWriter;
 
 @Slf4j
 public class LoginCheckInterceptor implements HandlerInterceptor {
@@ -18,7 +17,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         HttpSession session = request.getSession();
-        if (session == null || session.getAttribute(SessionConst.ADMIN) == null) {
+        if (session == null || session.getAttribute(AdminConfig.ADMIN) == null) {
             log.info("로그인되지 않은 사용자 접근");
             throw new AdminException("인증 거부 : 허가되지 않은 사용자");
         }

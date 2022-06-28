@@ -112,6 +112,7 @@ public class EstimateService {
     /**
      * 견적요청 수정
      */
+    // 사용자 (클라이언트) 에서 수정
     @Transactional
     public Estimate update(Long estimateId, EstimateRequest updateForm) {
         Estimate estimate = findById(estimateId);
@@ -119,6 +120,7 @@ public class EstimateService {
         return estimate;
     }
 
+    // 관리자 페이지에서 수정
     @Transactional
     public Estimate update(Long estimateId, EstimateDetailResponse updateForm) {
         Estimate estimate = findById(estimateId);

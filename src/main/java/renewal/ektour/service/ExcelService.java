@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import renewal.ektour.domain.Estimate;
 import renewal.ektour.exception.ExcelException;
 import renewal.ektour.repository.EstimateRepository;
+import renewal.ektour.util.AdminConfig;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
@@ -22,9 +23,6 @@ import java.time.format.DateTimeFormatter;
 public class ExcelService {
 
     private final EstimateRepository repository;
-
-//    public static final String FILE_PATH = "C:\\dev\\estimate.xlsx";
-    public static final String FILE_PATH = "/home/ubuntu/spring/estimate.xlsx";
 
     // 특정 셀에 특정 값 넣기
     private void setValue(Sheet sheet, String position, String value) {
@@ -43,7 +41,7 @@ public class ExcelService {
             Estimate estimate = repository.findById(estimateId).orElseThrow();
 
             // 엑셀 파일 불러오기
-            OPCPackage opcPackage = OPCPackage.open(new File(FILE_PATH));
+            OPCPackage opcPackage = OPCPackage.open(new File(AdminConfig.LINUX_EXCEL_PATH));
             XSSFWorkbook workbook = new XSSFWorkbook(opcPackage);
             String sheetName = workbook.getSheetName(0);
             Sheet sheet = workbook.getSheet(sheetName);

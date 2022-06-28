@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 public class LoggingInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        log.info("-------------- User Request -------------- {}: {}", request.getMethod(), request.getRequestURL());
+        log.info("-------------- User Request {} -------------- {}: {}", request.getRemoteAddr(), request.getMethod(), request.getRequestURL());
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }
 
