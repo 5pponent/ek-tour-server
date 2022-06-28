@@ -11,7 +11,7 @@ public class ServiceExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public String errorHandle(Exception ex, Model model) {
-        log.error("", ex);
+        log.error("예외 발생 및 처리 = {}", ex.getMessage());
         model.addAttribute("errorMessage", ex.getMessage());
         return "error/errorPage";
     }
