@@ -16,8 +16,7 @@ import renewal.ektour.dto.response.EstimateSimpleResponse;
 import renewal.ektour.repository.EstimateRepository;
 import renewal.ektour.util.PageConfig;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -37,9 +36,14 @@ public class EstimateService {
     /**
      * 견적 요청 상세 조회
      */
-    // 하나 조회 (상세 페이지용)
     public Estimate findById(Long id) {
         return repository.findById(id).orElseThrow();
+    }
+
+    // 하나 조회 (상세 페이지용)
+    public Estimate findById(Long id, FindEstimateRequest form) {
+        return repository.findByIdAndPhoneAndPassword(id, form.getPhone(), form.getPassword())
+                .orElseThrow(() -> new NoSuchElementException("해당 데이터가 없습니다."));
     }
 
     /**
@@ -96,6 +100,18 @@ public class EstimateService {
         Page<Estimate> estimates = repository.findAllByPhoneAndPassword(pageable, form.getPhone(), form.getPassword());
         return makeEstimateListResponse(pageable, estimates);
     }
+
+    // 클라이언트 내가 쓴 견적 조회 페이징 없이 리스트 전체 반환
+    public List<EstimateSimpleResponse> findAllMyEstimates(FindEstimateRequest form) {
+        List<Estimate> estimates = repository.findAllByPhoneAndPassword(form.getPhone(), form.getPassword());
+        Collections.reverse(estimates);
+        List<EstimateSimpleResponse> result = new ArrayList<>();
+        for (Estimate e : estimates) {
+            result.add(e.toSimpleResponse());
+        }
+        return result;
+    }
+
 
     // 관리자페이지 검색
     public Page<Estimate> searchByPageAdmin(Pageable pageable, AdminSearchForm form) {
