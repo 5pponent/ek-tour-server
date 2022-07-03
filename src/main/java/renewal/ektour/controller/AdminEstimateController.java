@@ -125,7 +125,7 @@ public class AdminEstimateController {
     /**
      * 관리자페이지 - 견적요청 진짜 삭제 (디비에서 삭제)
      */
-    @DeleteMapping("/delete/estimate/{estimateId}")
+    @PostMapping("/delete/estimate/{estimateId}")
     public String realDeleteEstimate(@PathVariable("estimateId") Long estimateId) {
         estimateService.realDelete(estimateId);
         return "redirect:/admin/main";
