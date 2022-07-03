@@ -58,7 +58,7 @@ public class ExcelService {
             // 차량-내용
             String date = convertDate(estimate.getDepartDate()) + "~" + convertDate(estimate.getArrivalDate());
             setValue(sheet, "C14", date);
-            String content = estimate.getArrivalPlace() + " ~ " + estimate.getArrivalPlace();
+            String content = estimate.getDepartPlace() + " ~ " + estimate.getArrivalPlace();
             setValue(sheet, "F14", content);
             setValue(sheet, "L14", estimate.getVehicleType().substring(0, 4)); // 규격
             setValue(sheet, "N14", Integer.toString(estimate.getVehicleNumber())); // 댓수
