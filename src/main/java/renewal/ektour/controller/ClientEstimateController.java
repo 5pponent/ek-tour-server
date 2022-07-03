@@ -65,6 +65,15 @@ public class ClientEstimateController {
     }
 
     /**
+     * 견적 요청 상세 조회 (폼 없이)
+     */
+    @GetMapping("/{estimateId}")
+    public ResponseEntity<?> findById(@PathVariable("estimateId") Long estimateId) {
+        Estimate findEstimate = estimateService.findById(estimateId);
+        return success(findEstimate.toDetailResponse());
+    }
+
+    /**
      * 견적 요청 목록 조회
      */
     // 클라이언트 견적요청 목록 조회 (페이징)
