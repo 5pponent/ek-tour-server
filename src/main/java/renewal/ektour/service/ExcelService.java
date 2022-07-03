@@ -43,7 +43,7 @@ public class ExcelService {
             Estimate estimate = repository.findById(estimateId).orElseThrow();
 
             // 엑셀 파일 불러오기
-            OPCPackage opcPackage = OPCPackage.open(new File(AdminConfig.LOCAL_EXCEL_PATH));
+            OPCPackage opcPackage = OPCPackage.open(new File(AdminConfig.LINUX_EXCEL_PATH));
             XSSFWorkbook workbook = new XSSFWorkbook(opcPackage);
             String sheetName = workbook.getSheetName(0);
             Sheet sheet = workbook.getSheet(sheetName);

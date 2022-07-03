@@ -55,14 +55,16 @@ public class Estimate {
     // 견적 유효일 (요청일로부터 +7일)
     private String validDate;
 
+    private String ip;
+
     @PrePersist
     public void onPrePersist(){
-        this.createdDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        this.validDate = LocalDateTime.now().plusDays(7).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        this.createdDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        this.validDate = LocalDateTime.now().plusDays(7).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 
     @Builder
-    public Estimate(String name, String email, String phone, String password, String travelType, String vehicleType, int vehicleNumber, int memberCount, String departDate, String arrivalDate, String departPlace, String arrivalPlace, String memo, String stopPlace, String wayType, String payment, boolean taxBill, String createdDate, boolean visibility) {
+    public Estimate(String name, String email, String phone, String password, String travelType, String vehicleType, int vehicleNumber, int memberCount, String departDate, String arrivalDate, String departPlace, String arrivalPlace, String memo, String stopPlace, String wayType, String payment, boolean taxBill, String ip, boolean visibility) {
         this.name = name;
         this.email = email;
         this.phone = phone;
@@ -81,6 +83,7 @@ public class Estimate {
         this.payment = payment;
         this.taxBill = taxBill;
         this.visibility = visibility;
+        this.ip = ip;
     }
 
     public EstimateSimpleResponse toSimpleResponse() {
@@ -117,6 +120,7 @@ public class Estimate {
                 .taxBill(taxBill)
                 .visibility(visibility)
                 .createdDate(createdDate)
+                .ip(ip)
                 .build();
     }
 

@@ -1,8 +1,6 @@
 package renewal.ektour.dto.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 import renewal.ektour.domain.Estimate;
 
 import javax.validation.constraints.*;
@@ -10,6 +8,7 @@ import javax.validation.constraints.*;
 @Data
 @AllArgsConstructor
 @Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class EstimateRequest {
 
     // 신청자 정보
@@ -54,6 +53,8 @@ public class EstimateRequest {
     private String payment; // 결제방법 : 현금(cash), 카드(credit)
     private boolean taxBill; // 세금계산서 : 발급(true), 발급안함(false)
 
+    private String ip;
+
     public Estimate toEntity() {
         return Estimate.builder()
                 .name(name)
@@ -74,6 +75,7 @@ public class EstimateRequest {
                 .payment(payment)
                 .taxBill(taxBill)
                 .visibility(true)
+                .ip(ip)
                 .build();
     }
 }

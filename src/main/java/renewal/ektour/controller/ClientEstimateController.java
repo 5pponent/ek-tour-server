@@ -18,9 +18,8 @@ import renewal.ektour.service.EmailService;
 import renewal.ektour.service.EstimateService;
 import renewal.ektour.util.PageConfig;
 
-import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.io.UnsupportedEncodingException;
 
 import static renewal.ektour.dto.response.ErrorResponse.convertJson;
 import static renewal.ektour.dto.response.RestResponse.badRequest;
@@ -39,12 +38,14 @@ public class ClientEstimateController {
      * 견적요청 생성(저장)
      */
     @PostMapping("")
-    public ResponseEntity<?> saveAndAlarm(@Valid @RequestBody EstimateRequest form, BindingResult bindingResult) throws MessagingException, UnsupportedEncodingException {
+    public ResponseEntity<?> saveAndAlarm(@Valid @RequestBody EstimateRequest form,
+                                          BindingResult bindingResult,
+                                          HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
             log.error("estimate validation errors = {}", bindingResult.getFieldErrors());
             return badRequest(convertJson(bindingResult.getFieldErrors()));
         }
-        Estimate savedEstimate = estimateService.createAndSave(form);
+        Estimate savedEstimate = estimateService.createAndSave(form, request);
         emailService.sendMail(form);
         return success(savedEstimate.toDetailResponse());
     }

@@ -14,8 +14,10 @@ import renewal.ektour.dto.response.EstimateDetailResponse;
 import renewal.ektour.dto.response.EstimateListPagingResponse;
 import renewal.ektour.dto.response.EstimateSimpleResponse;
 import renewal.ektour.repository.EstimateRepository;
+import renewal.ektour.util.IpTracker;
 import renewal.ektour.util.PageConfig;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +32,8 @@ public class EstimateService {
      * 견적요청 생성(저장)
      */
     @Transactional
-    public Estimate createAndSave(EstimateRequest form) {
+    public Estimate createAndSave(EstimateRequest form, HttpServletRequest request) {
+        form.setIp(IpTracker.getClientIp(request));
         return repository.save(form.toEntity());
     }
 

@@ -39,4 +39,6 @@ public class EstimateDetailResponse {
     private boolean visibility;
 
     private String createdDate;
+
+    private String ip;
 }
