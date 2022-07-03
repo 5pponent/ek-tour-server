@@ -1,6 +1,7 @@
 package renewal.ektour.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -20,6 +21,7 @@ import java.time.format.DateTimeFormatter;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ExcelService {
 
     private final EstimateRepository repository;
@@ -41,7 +43,7 @@ public class ExcelService {
             Estimate estimate = repository.findById(estimateId).orElseThrow();
 
             // 엑셀 파일 불러오기
-            OPCPackage opcPackage = OPCPackage.open(new File(AdminConfig.LINUX_EXCEL_PATH));
+            OPCPackage opcPackage = OPCPackage.open(new File(AdminConfig.LOCAL_EXCEL_PATH));
             XSSFWorkbook workbook = new XSSFWorkbook(opcPackage);
             String sheetName = workbook.getSheetName(0);
             Sheet sheet = workbook.getSheet(sheetName);
@@ -72,6 +74,7 @@ public class ExcelService {
             workbook.write(response.getOutputStream());
             workbook.close();
         } catch (Exception e) {
+            log.error("엑셀 에러 = {}", e.getMessage());
             throw new ExcelException("엑셀 변환/다운로드 관련 오류 발생");
         }
     }
@@ -86,8 +89,9 @@ public class ExcelService {
         return date.substring(0, 10);
     }
 
-    // 010-1234-1234 형식
+    // 010-1234-1234 형식으로 변환
     private String convertPhone(String phone) {
+        if (phone.contains("-")) return phone;
         String top = phone.substring(0, 3);
         String mid = phone.substring(3, 7);
         String bottom = phone.substring(7, 11);

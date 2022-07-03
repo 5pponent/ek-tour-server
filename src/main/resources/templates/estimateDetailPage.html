@@ -182,10 +182,10 @@
                     <th>홈페이지 표시 여부</th>
                     <td colspan="3" th:field="*{visibility}">
                         <label><input type="radio" name="visibility" class="form-check-input"
-                                      th:attr="checked=${!estimate.visibility ? true : false}"
+                                      th:attr="checked=${estimate.visibility ? true : false}"
                                       th:value="true">표시</label>
                         <label><input type="radio" name="visibility" class="form-check-input"
-                                      th:attr="checked=${estimate.visibility ? true : false}"
+                                      th:attr="checked=${!estimate.visibility ? true : false}"
                                       th:value="false">표시 안 함</label>
                     </td>
                 </tr>
@@ -193,9 +193,8 @@
             </table>
             <div class="btn-group" role="group" style="display: table; margin: 0 auto;">
                 <a th:href="@{/admin/estimate/{estimateId}/excel(estimateId = ${estimate.id})}" class="btn btn-success">엑셀 다운</a>
-                <button type="submit" class="btn btn-primary" onclick="alert('견적 정보를 저장합니다.');">저장</button>
-                <button type="submit" class="btn btn-danger" onclick="alert('해당 견적을 삭제합니다.');">삭제</button>
-                <a type="button" class="btn btn-secondary" href="javascript:window.history.back();">취소</a>
+                <button type="submit" class="btn btn-primary" onclick="alert('견적 정보를 저장합니다.');">변경사항 저장</button>
+                <a type="button" class="btn btn-secondary" href="javascript:window.history.back();">뒤로가기</a>
             </div>
             </form>
         </article>

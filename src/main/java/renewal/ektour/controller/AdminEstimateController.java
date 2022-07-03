@@ -117,8 +117,7 @@ public class AdminEstimateController {
      */
     @PostMapping("/update/estimate/{estimateId}")
     public String updateEstimate(@PathVariable("estimateId") Long estimateId,
-                                 @ModelAttribute("estimate") EstimateDetailResponse estimate,
-                                 Model model) {
+                                 @ModelAttribute("estimate") EstimateDetailResponse estimate) {
         estimateService.update(estimateId, estimate);
         return "redirect:/admin/main";
     }
