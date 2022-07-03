@@ -93,7 +93,16 @@ public class ClientEstimateController {
         return success(estimateListResponse);
     }
 
-    // 클라이언트 내가 쓴 견적요청 조회 (페이징 X, 리스트 전체 반환)
+    // 클라이언트 내가 쓴 견적 요청 목록 조회 (페이징 O)
+    @PostMapping("/search/my/all")
+    public ResponseEntity<?> findAllMyEstimatesPaging(
+            @Valid @RequestBody FindEstimateRequest form,
+            @PageableDefault(size = PageConfig.PAGE_PER_COUNT, sort = PageConfig.SORT_STANDARD, direction = Sort.Direction.DESC) Pageable pageable) {
+        EstimateListPagingResponse estimateList = estimateService.findAllMyEstimates(pageable, form);
+        return success(estimateList);
+    }
+
+    // 클라이언트 내가 쓴 견적 요청 목록 조회 (페이징 X, 리스트 전체 반환)
     @PostMapping("/search/my")
     public ResponseEntity<?> findAllMyEstimates(@Valid @RequestBody FindEstimateRequest form,
                                                 BindingResult bindingResult) {
@@ -114,7 +123,6 @@ public class ClientEstimateController {
         Estimate updatedEstimate = estimateService.update(estimateId, updateForm);
         return success(updatedEstimate.toDetailResponse());
     }
-
 
     /**
      * 견적요청 삭제 - 안 보이도록 설정
