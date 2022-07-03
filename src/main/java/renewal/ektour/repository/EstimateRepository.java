@@ -15,7 +15,10 @@ public interface EstimateRepository extends JpaRepository<Estimate, Long> {
     @Query("SELECT e FROM Estimate e WHERE e.visibility = true")
     Page<Estimate> findAll(Pageable pageable);
 
-    @Query("SELECT COUNT(e) FROM Estimate e")
+    @Query("SELECT e FROM Estimate e")
+    Page<Estimate> findAllByAdmin(Pageable pageable);
+
+    @Query("SELECT COUNT(e) FROM Estimate e WHERE e.visibility = true")
     int countAll();
 
     @Query("SELECT e FROM Estimate e WHERE e.name LIKE %:name%")
