@@ -68,7 +68,7 @@ public class EstimateService {
 
     // 관리자페이지 내려지는 견적요청 목록 (페이징)
     public Page<Estimate> findAllByPageAdmin(Pageable pageable) {
-        return repository.findAll(pageable);
+        return repository.findAllByAdmin(pageable);
     }
 
     // 존재하는 모든 페이지 수 조회
