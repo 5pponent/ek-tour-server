@@ -7,6 +7,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import renewal.ektour.domain.Estimate;
 
+import java.util.List;
+import java.util.Optional;
+
 public interface EstimateRepository extends JpaRepository<Estimate, Long> {
 
     @Query("SELECT e FROM Estimate e WHERE e.visibility = true")
@@ -28,6 +31,10 @@ public interface EstimateRepository extends JpaRepository<Estimate, Long> {
     Page<Estimate> searchAllByVehicleType(Pageable pageable, String vehicleType);
 
     Page<Estimate> findAllByPhoneAndPassword(Pageable pageable, String phone, String password);
+
+    List<Estimate> findAllByPhoneAndPassword(String phone, String password);
+
+    Optional<Estimate> findByIdAndPhoneAndPassword(Long id, String phone, String password);
 
     @Query("SELECT e FROM Estimate e WHERE e.createdDate BETWEEN :start AND :end AND e.name = :name")
     Page<Estimate> searchAllByName(Pageable pageable, @Param("start") String start, @Param("end") String end, @Param("name") String name);
