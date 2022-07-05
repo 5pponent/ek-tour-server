@@ -21,4 +21,5 @@ public class CompanyInfoResponse {
     private String accountBank;
     private String accountNum;
     private String accountHolder;
+    private String kakaoTalkId;
 }
