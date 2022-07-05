@@ -41,9 +41,9 @@ public class Estimate {
 
     // 선택 견적 요청
     private String stopPlace; // 경유지
-    private String wayType; // 왕복구분 : 왕복(round), 편도(one-way)
-    private String payment; // 결제방법 : 현금(cash), 카드(credit)
-    private boolean taxBill; // 세금계산서 : 발급(true), 발급안함(false)
+    private String wayType; // 왕복구분 : 왕복, 편도
+    private String payment; // 결제방법 : 현금, 카드
+    private String taxBill; // 세금계산서 : 발급, 발급안함
 
     // 견적 요청 삭제여부 (사용자에게 보여지는 여부)
     private boolean visibility;
@@ -64,7 +64,7 @@ public class Estimate {
     }
 
     @Builder
-    public Estimate(String name, String email, String phone, String password, String travelType, String vehicleType, int vehicleNumber, int memberCount, String departDate, String arrivalDate, String departPlace, String arrivalPlace, String memo, String stopPlace, String wayType, String payment, boolean taxBill, String ip, boolean visibility) {
+    public Estimate(String name, String email, String phone, String password, String travelType, String vehicleType, int vehicleNumber, int memberCount, String departDate, String arrivalDate, String departPlace, String arrivalPlace, String memo, String stopPlace, String wayType, String payment, String taxBill, String ip, boolean visibility) {
         this.name = name;
         this.email = email;
         this.phone = phone;
@@ -150,7 +150,7 @@ public class Estimate {
         this.stopPlace = form.getStopPlace();
         this.wayType = form.getWayType();
         this.payment = form.getPayment();
-        this.taxBill = form.isTaxBill();
+        this.taxBill = form.getTaxBill();
     }
 
     public void update(EstimateDetailResponse form) {
@@ -170,7 +170,7 @@ public class Estimate {
         this.stopPlace = form.getStopPlace();
         this.wayType = form.getWayType();
         this.payment = form.getPayment();
-        this.taxBill = form.isTaxBill();
+        this.taxBill = form.getTaxBill();
         this.visibility = form.isVisibility();
     }
 }

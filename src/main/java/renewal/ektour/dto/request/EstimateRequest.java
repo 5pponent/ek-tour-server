@@ -51,7 +51,7 @@ public class EstimateRequest {
     private String stopPlace; // 경유지
     private String wayType; // 왕복구분 : 왕복(round), 편도(one-way)
     private String payment; // 결제방법 : 현금(cash), 카드(credit)
-    private boolean taxBill; // 세금계산서 : 발급(true), 발급안함(false)
+    private String taxBill; // 세금계산서 : 발급(true), 발급안함(false)
 
     private String ip;
 
