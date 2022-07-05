@@ -30,13 +30,14 @@ public class Admin {
     private String accountBank;
     private String accountNum;
     private String accountHolder;
+    private String kakaoTalkId;
 
     public Admin(String adminPassword) {
         this.adminPassword = adminPassword;
     }
 
     @Builder
-    public Admin(String adminPassword, String adminName, String infoHandlerName, String businessNum, String registrationNum, String address, String tel, String fax, String phone, String email, String accountBank, String accountNum, String accountHolder) {
+    public Admin(String adminPassword, String adminName, String infoHandlerName, String businessNum, String registrationNum, String address, String tel, String fax, String phone, String email, String accountBank, String accountNum, String accountHolder, String kakaoTalkId) {
         this.adminPassword = adminPassword;
         this.adminName = adminName;
         this.infoHandlerName = infoHandlerName;
@@ -50,6 +51,7 @@ public class Admin {
         this.accountBank = accountBank;
         this.accountNum = accountNum;
         this.accountHolder = accountHolder;
+        this.kakaoTalkId = kakaoTalkId;
     }
 
     public CompanyInfoResponse toCompanyInfoResponse() {
@@ -66,6 +68,7 @@ public class Admin {
                 .accountBank(accountBank)
                 .accountNum(accountNum)
                 .accountHolder(accountHolder)
+                .kakaoTalkId(kakaoTalkId)
                 .build();
     }
 
@@ -82,6 +85,7 @@ public class Admin {
         this.accountBank = info.getAccountBank();
         this.accountNum = info.getAccountNum();
         this.accountHolder = info.getAccountHolder();
+        this.kakaoTalkId = info.getKakaoTalkId();
     }
 
     public void updatePassword(String newPassword) {

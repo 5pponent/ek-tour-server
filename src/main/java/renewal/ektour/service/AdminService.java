@@ -25,7 +25,7 @@ public class AdminService {
 
     private final AdminRepository adminRepository;
 
-    public void createAdmin(String password, String adminName, String infoHandlerName, String businessNum, String registrationNum, String address, String tel, String fax, String phone, String email, String accountBank, String accountNum, String accountHolder) {
+    public void createAdmin(String password, String adminName, String infoHandlerName, String businessNum, String registrationNum, String address, String tel, String fax, String phone, String email, String accountBank, String accountNum, String accountHolder, String kakaoTalkId) {
         Admin admin = Admin.builder()
                 .adminPassword(password)
                 .adminName(adminName)
@@ -40,6 +40,7 @@ public class AdminService {
                 .accountBank(accountBank)
                 .accountNum(accountNum)
                 .accountHolder(accountHolder)
+                .kakaoTalkId(kakaoTalkId)
                 .build();
         adminRepository.save(admin);
     }
