@@ -15,7 +15,6 @@ public class EstimateRequest {
     @NotBlank
     private String name;
 
-    @NotBlank
     @Email(message = "이메일 형식이 아닙니다")
     private String email;
 

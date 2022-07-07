@@ -56,7 +56,7 @@ public class EstimateService {
         int totalEstimateCount = repository.countAll();
         int totalPage = estimates.getTotalPages();
         List<EstimateSimpleResponse> result = new ArrayList<>();
-        estimates.forEach(estimate -> result.add(estimate.toSimpleResponse()));
+        estimates.forEach(estimate -> { if (estimate.isVisibility()) result.add(estimate.toSimpleResponse());});
         int currentPageEstimateCount = result.size();
         return EstimateListPagingResponse.builder()
                 .currentPageCount(currentPageEstimateCount)
