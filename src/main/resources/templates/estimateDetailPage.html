@@ -179,10 +179,10 @@
                     <th>세금계산서</th>
                     <td th:field="*{taxBill}">
                         <label><input type="radio" name="taxBill" class="form-check-input"
-                                      th:attr="checked=${estimate.taxBill ? true : false}"
+                                      th:attr="checked=${estimate.taxBill.equals('발급') ? true : false}"
                                       th:value="true">발급</label>
                         <label><input type="radio" name="taxBill" class="form-check-input"
-                                      th:attr="checked=${!estimate.taxBill ? true : false}"
+                                      th:attr="checked=${!estimate.taxBill.equals('발급안함') ? true : false}"
                                       th:value="false">발급 안 함</label>
                     </td>
                 </tr>
