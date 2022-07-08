@@ -29,8 +29,6 @@ public class EstimateRequest {
 
     // 필수 견적 요청
     @NotEmpty
-    private String travelType; // 일반여행, 관혼상제, 학교단체, 기타단체
-    @NotEmpty
     private String vehicleType; // 25인승 소형, 28인승 리무진, 45인승 대형
     @NotNull
     private int vehicleNumber; // 차량대수
@@ -47,6 +45,7 @@ public class EstimateRequest {
     private String memo; // 기타메모
 
     // 선택 견적 요청
+    private String travelType; // 일반여행, 관혼상제, 학교단체, 기타단체
     private String stopPlace; // 경유지
     private String wayType; // 왕복구분 : 왕복(round), 편도(one-way)
     private String payment; // 결제방법 : 현금(cash), 카드(credit)
