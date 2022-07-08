@@ -21,9 +21,9 @@ public class WebController {
     /**
      * 리액트 라우팅 리다이렉션
      */
-    @GetMapping(value = {"", "/notice","/list", "/introduce", "/smallbus",
-            "/limousine", "/bigbus", "/request", "/my", "/my/list","/search/my/estimate",
-            "/service", "/mobile", "/mobile/**"})
+    @GetMapping(value = {"", "/estimate/list/**", "/notice","/list", "/introduce",
+            "/bus", "/request", "/my", "estimate/my/list/**","/search/my/estimate",
+            "/service-center", "/mobile", "/mobile/**"})
     public String redirect() {
         return "forward:/index.html";
     }
