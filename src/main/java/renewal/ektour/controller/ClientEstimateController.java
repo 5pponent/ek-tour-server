@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.*;
 import renewal.ektour.domain.Estimate;
 import renewal.ektour.dto.request.EstimateRequest;
 import renewal.ektour.dto.request.FindEstimateRequest;
+import renewal.ektour.dto.response.EstimateDetailResponse;
 import renewal.ektour.dto.response.EstimateListPagingResponse;
 import renewal.ektour.dto.response.EstimateSimpleResponse;
 import renewal.ektour.dto.response.PageTotalCountResponse;
+import renewal.ektour.exception.ValidationException;
 import renewal.ektour.service.EmailService;
 import renewal.ektour.service.EstimateService;
 import renewal.ektour.util.PageConfig;
@@ -22,8 +24,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
-import static renewal.ektour.dto.response.ErrorResponse.convertJson;
-import static renewal.ektour.dto.response.RestResponse.badRequest;
 import static renewal.ektour.dto.response.RestResponse.success;
 
 @RestController
@@ -39,40 +39,35 @@ public class ClientEstimateController {
      * 견적요청 생성(저장)
      */
     @PostMapping("")
-    public ResponseEntity<?> saveAndAlarm(@Valid @RequestBody EstimateRequest form,
+    public EstimateDetailResponse saveAndAlarm(@Valid @RequestBody EstimateRequest form,
                                           BindingResult bindingResult,
-                                          HttpServletRequest request)  {
-        if (bindingResult.hasErrors()) {
-            log.error("estimate validation errors = {}", bindingResult.getFieldErrors());
-            return badRequest(convertJson(bindingResult.getFieldErrors()));
-        }
+                                          HttpServletRequest request) {
+        if (bindingResult.hasErrors()) throw new ValidationException(bindingResult);
+
         Estimate savedEstimate = estimateService.createAndSave(request, form);
         emailService.sendMail(form);
-        return success(savedEstimate.toDetailResponse());
+        return savedEstimate.toDetailResponse();
     }
+
 
     /**
      * 견적 요청 상세 조회 (핸드폰 번호, 비밀번호와 함께 요청)
      */
     @PostMapping("/{estimateId}")
-    public ResponseEntity<?> findById(@PathVariable("estimateId") Long estimateId,
+    public EstimateDetailResponse findById(@PathVariable("estimateId") Long estimateId,
                                       @Valid @RequestBody FindEstimateRequest form,
                                       BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            log.error("estimate validation errors = {}", bindingResult.getFieldErrors());
-            return badRequest(convertJson(bindingResult.getFieldErrors()));
-        }
-        Estimate findEstimate = estimateService.findById(estimateId, form);
-        return success(findEstimate.toDetailResponse());
+        if (bindingResult.hasErrors()) throw new ValidationException(bindingResult);
+
+        return estimateService.findById(estimateId, form).toDetailResponse();
     }
 
     /**
      * 견적 요청 상세 조회 (폼 없이)
      */
     @GetMapping("/{estimateId}")
-    public ResponseEntity<?> findById(@PathVariable("estimateId") Long estimateId) {
-        Estimate findEstimate = estimateService.findById(estimateId);
-        return success(findEstimate.toDetailResponse());
+    public EstimateDetailResponse findById(@PathVariable("estimateId") Long estimateId) {
+        return estimateService.findById(estimateId).toDetailResponse();
     }
 
     /**
@@ -80,16 +75,15 @@ public class ClientEstimateController {
      */
     // 클라이언트 견적요청 목록 조회 (페이징)
     @GetMapping("/all")
-    public ResponseEntity<?> findAllByPageClient(
+    public EstimateListPagingResponse findAllByPageClient(
             @PageableDefault(size = PageConfig.PAGE_PER_COUNT, sort = PageConfig.SORT_STANDARD, direction = Sort.Direction.DESC) Pageable pageable) {
-        EstimateListPagingResponse estimateList = estimateService.findAllByPage(pageable);
-        return success(estimateList);
+        return estimateService.findAllByPage(pageable);
     }
 
     // 존재하는 전체 페이지 수 조회
     @GetMapping("/all/page")
-    public ResponseEntity<?> getAllPageCount() {
-        return success(new PageTotalCountResponse(estimateService.getAllPageCount()));
+    public PageTotalCountResponse getAllPageCount() {
+        return new PageTotalCountResponse(estimateService.getAllPageCount());
     }
 
     /**
@@ -97,42 +91,35 @@ public class ClientEstimateController {
      */
     // 클라이언트 검색
     @GetMapping("/search/{searchType}/{keyword}")
-    public ResponseEntity<?> searchClient(@PathVariable("searchType") String searchType,
+    public EstimateListPagingResponse searchClient(@PathVariable("searchType") String searchType,
                                           @PathVariable("keyword") String keyword,
                                           @PageableDefault(size = PageConfig.PAGE_PER_COUNT, sort = PageConfig.SORT_STANDARD, direction = Sort.Direction.DESC) Pageable pageable) {
-        EstimateListPagingResponse estimateListResponse = estimateService.searchClient(searchType, keyword, pageable);
-        return success(estimateListResponse);
+        return estimateService.searchClient(searchType, keyword, pageable);
     }
 
     // 클라이언트 내가 쓴 견적 요청 목록 조회 (페이징 O)
     @PostMapping("/search/my/all")
-    public ResponseEntity<?> findAllMyEstimatesPaging(
+    public EstimateListPagingResponse findAllMyEstimatesPaging(
             @Valid @RequestBody FindEstimateRequest form,
             @PageableDefault(size = PageConfig.PAGE_PER_COUNT, sort = PageConfig.SORT_STANDARD, direction = Sort.Direction.DESC) Pageable pageable) {
-        EstimateListPagingResponse estimateList = estimateService.findAllMyEstimates(pageable, form);
-        return success(estimateList);
+        return estimateService.findAllMyEstimates(pageable, form);
     }
 
     // 클라이언트 내가 쓴 견적 요청 목록 조회 (페이징 X, 리스트 전체 반환)
     @PostMapping("/search/my")
-    public ResponseEntity<?> findAllMyEstimates(@Valid @RequestBody FindEstimateRequest form,
+    public List<EstimateSimpleResponse> findAllMyEstimates(@Valid @RequestBody FindEstimateRequest form,
                                                 BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            log.error("find estimate form validation errors = {}", bindingResult.getFieldErrors());
-            return badRequest(convertJson(bindingResult.getFieldErrors()));
-        }
-        List<EstimateSimpleResponse> result = estimateService.findAllMyEstimates(form);
-        return success(result);
+        if (bindingResult.hasErrors()) throw new ValidationException(bindingResult);
+        return estimateService.findAllMyEstimates(form);
     }
 
     /**
      * 견적요청 수정
      */
     @PutMapping("/{estimateId}")
-    public ResponseEntity<?> updateById(@PathVariable("estimateId") Long estimateId,
+    public EstimateDetailResponse updateById(@PathVariable("estimateId") Long estimateId,
                                         @Valid @RequestBody EstimateRequest updateForm) {
-        Estimate updatedEstimate = estimateService.update(estimateId, updateForm);
-        return success(updatedEstimate.toDetailResponse());
+        return estimateService.update(estimateId, updateForm).toDetailResponse();
     }
 
     /**
