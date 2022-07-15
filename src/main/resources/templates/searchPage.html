@@ -85,7 +85,9 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="e: ${eList}">
+                    <tr th:each="e: ${eList}"
+                        th:onclick="|location.href='@{/admin/estimate/{estimateId}(estimateId = ${e.id})}'|"
+                        style="cursor: pointer;">
                         <td th:text="${e.id}"></td>
                         <td th:text="${e.name}"></td>
                         <td th:text="${e.phone}"></td>

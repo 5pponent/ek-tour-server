@@ -159,10 +159,10 @@
                     <th>왕복 구분</th>
                     <td th:field="*{wayType}">
                         <label><input type="radio" name="wayType" class="form-check-input"
-                                      th:attr="checked=${estimate.wayType.equals('왕복') ? true : false}"
+                                      th:checked="${estimate.wayType eq '왕복'}"
                                       th:value="왕복">왕복</label>
                         <label><input type="radio" name="wayType" class="form-check-input"
-                                      th:attr="checked=${estimate.wayType.equals('편도') ? true : false}"
+                                      th:checked="${estimate.wayType eq '편도'}"
                                       th:value="편도">편도</label>
                     </td>
                 </tr>
@@ -170,20 +170,20 @@
                     <th>결제 방법</th>
                     <td th:field="*{payment}">
                         <label><input type="radio" name="payment" class="form-check-input"
-                                      th:attr="checked=${estimate.payment.equals('현금') ? true : false}"
+                                      th:checked="${estimate.payment eq '현금'}"
                                       th:value="현금">현금</label>
                         <label><input type="radio" name="payment" class="form-check-input"
-                                      th:attr="checked=${estimate.payment.equals('카드') ? true : false}"
+                                      th:checked="${estimate.payment eq '카드'}"
                                       th:value="카드">카드</label>
                     </td>
                     <th>세금계산서</th>
                     <td th:field="*{taxBill}">
                         <label><input type="radio" name="taxBill" class="form-check-input"
-                                      th:attr="checked=${estimate.taxBill.equals('발급') ? true : false}"
-                                      th:value="true">발급</label>
+                                      th:checked="${estimate.taxBill eq '발급'}"
+                                      th:value="발급">발급</label>
                         <label><input type="radio" name="taxBill" class="form-check-input"
-                                      th:attr="checked=${!estimate.taxBill.equals('발급안함') ? true : false}"
-                                      th:value="false">발급 안 함</label>
+                                      th:checked="${estimate.taxBill eq '발급안함'}"
+                                      th:value="발급안함">발급 안 함</label>
                     </td>
                 </tr>
                 <tr>
@@ -197,10 +197,10 @@
                     <th>홈페이지 표시 여부</th>
                     <td colspan="3" th:field="*{visibility}">
                         <label><input type="radio" name="visibility" class="form-check-input"
-                                      th:attr="checked=${estimate.visibility ? true : false}"
+                                      th:checked="${estimate.visibility eq true}"
                                       th:value="true">표시</label>
                         <label><input type="radio" name="visibility" class="form-check-input"
-                                      th:attr="checked=${!estimate.visibility ? true : false}"
+                                      th:checked="${estimate.visibility eq false}"
                                       th:value="false">표시 안 함</label>
                     </td>
                 </tr>
