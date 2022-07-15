@@ -13,6 +13,10 @@ public class RestResponse<T> {
         return ResponseEntity.status(HttpStatus.OK).body(body);
     }
 
+    public static ResponseEntity<BoolResponse> success() {
+        return ResponseEntity.status(HttpStatus.OK).body(new BoolResponse(true));
+    }
+
     public static <T> ResponseEntity<T> notFound(T body) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
     }

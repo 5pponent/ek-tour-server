@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import renewal.ektour.domain.Estimate;
 import renewal.ektour.dto.request.EstimateRequest;
 import renewal.ektour.dto.request.FindEstimateRequest;
-import renewal.ektour.dto.response.BoolResponse;
 import renewal.ektour.dto.response.EstimateListPagingResponse;
 import renewal.ektour.dto.response.EstimateSimpleResponse;
 import renewal.ektour.dto.response.PageTotalCountResponse;
@@ -142,7 +141,7 @@ public class ClientEstimateController {
     @DeleteMapping("/{estimateId}")
     public ResponseEntity<?> deleteById(@PathVariable("estimateId") Long estimateId) {
         estimateService.delete(estimateId);
-        return success(new BoolResponse(true));
+        return success();
     }
 
     /**
@@ -151,6 +150,6 @@ public class ClientEstimateController {
     @PostMapping("/alarm")
     public ResponseEntity<?> alarm(@RequestBody EstimateRequest form) {
         emailService.sendMail(form);
-        return success(new BoolResponse(true));
+        return success();
     }
 }
