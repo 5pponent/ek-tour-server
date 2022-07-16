@@ -87,15 +87,7 @@ public class Estimate {
     }
 
     public EstimateSimpleResponse toSimpleResponse() {
-        return EstimateSimpleResponse.builder()
-                .id(id)
-                .name(name)
-                .travelType(travelType)
-                .vehicleType(vehicleType)
-                .departPlace(departPlace)
-                .arrivalPlace(arrivalPlace)
-                .createdDate(createdDate)
-                .build();
+        return new EstimateSimpleResponse(id, name, travelType, vehicleType, arrivalPlace, vehicleType, createdDate);
     }
 
     public EstimateDetailResponse toDetailResponse() {

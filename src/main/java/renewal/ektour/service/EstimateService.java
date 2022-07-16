@@ -58,13 +58,14 @@ public class EstimateService {
         List<EstimateSimpleResponse> result = new ArrayList<>();
         estimates.forEach(estimate -> { if (estimate.isVisibility()) result.add(estimate.toSimpleResponse());});
         int currentPageEstimateCount = result.size();
-        return EstimateListPagingResponse.builder()
-                .currentPageCount(currentPageEstimateCount)
-                .totalCount(totalEstimateCount)
-                .estimateList(result)
-                .currentPage(pageable.getPageNumber())
-                .totalPage(totalPage)
-                .build();
+//        return EstimateListPagingResponse.builder()
+//                .currentPageCount(currentPageEstimateCount)
+//                .totalCount(totalEstimateCount)
+//                .estimateList(result)
+//                .currentPage(pageable.getPageNumber())
+//                .totalPage(totalPage)
+//                .build();
+        return new EstimateListPagingResponse(currentPageEstimateCount, totalEstimateCount, pageable.getPageNumber(), totalPage, result);
     }
 
     // 클라이언트로 내려지는 견적요청 목록 (페이징)
