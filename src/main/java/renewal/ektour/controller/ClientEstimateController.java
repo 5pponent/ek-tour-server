@@ -86,31 +86,12 @@ public class ClientEstimateController {
         return new PageTotalCountResponse(estimateService.getAllPageCount());
     }
 
-    /**
-     * 검색
-     */
-    // 클라이언트 검색
-    @GetMapping("/search/{searchType}/{keyword}")
-    public EstimateListPagingResponse searchClient(@PathVariable("searchType") String searchType,
-                                          @PathVariable("keyword") String keyword,
-                                          @PageableDefault(size = PageConfig.PAGE_PER_COUNT, sort = PageConfig.SORT_STANDARD, direction = Sort.Direction.DESC) Pageable pageable) {
-        return estimateService.searchClient(searchType, keyword, pageable);
-    }
-
     // 클라이언트 내가 쓴 견적 요청 목록 조회 (페이징 O)
     @PostMapping("/search/my/all")
     public EstimateListPagingResponse findAllMyEstimatesPaging(
             @Valid @RequestBody FindEstimateRequest form,
             @PageableDefault(size = PageConfig.PAGE_PER_COUNT, sort = PageConfig.SORT_STANDARD, direction = Sort.Direction.DESC) Pageable pageable) {
         return estimateService.findAllMyEstimates(pageable, form);
-    }
-
-    // 클라이언트 내가 쓴 견적 요청 목록 조회 (페이징 X, 리스트 전체 반환)
-    @PostMapping("/search/my")
-    public List<EstimateSimpleResponse> findAllMyEstimates(@Valid @RequestBody FindEstimateRequest form,
-                                                BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) throw new ValidationException(bindingResult);
-        return estimateService.findAllMyEstimates(form);
     }
 
     /**
