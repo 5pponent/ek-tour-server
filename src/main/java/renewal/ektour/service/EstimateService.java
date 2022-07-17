@@ -65,7 +65,7 @@ public class EstimateService {
 //                .currentPage(pageable.getPageNumber())
 //                .totalPage(totalPage)
 //                .build();
-        return new EstimateListPagingResponse(currentPageEstimateCount, totalEstimateCount, pageable.getPageNumber(), totalPage, result);
+        return new EstimateListPagingResponse(pageable.getPageNumber(), totalPage, currentPageEstimateCount, totalEstimateCount, result);
     }
 
     // 클라이언트로 내려지는 견적요청 목록 (페이징)

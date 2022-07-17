@@ -76,8 +76,7 @@ public class AdminInfoController {
 
     // 관리자 정보 변경
     @PostMapping("/setting/info")
-    public String updateCompanyInfo(@ModelAttribute("infoForm") CompanyInfoResponse companyInfo,
-                                    Model model) {
+    public String updateCompanyInfo(@ModelAttribute("infoForm") CompanyInfoResponse companyInfo) {
         adminService.updateCompanyInfo(companyInfo);
         return "redirect:/admin/setting";
     }

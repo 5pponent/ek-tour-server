@@ -1,5 +1,7 @@
 package renewal.ektour.dto.response
 
+import renewal.ektour.domain.Admin
+
 data class PageTotalCountResponse(
     var totalCount: Int = 0
 )

@@ -1,7 +1,6 @@
 package renewal.ektour.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,13 +23,12 @@ import renewal.ektour.dto.response.EstimateListPagingResponse;
 import renewal.ektour.repository.EstimateRepository;
 
 import javax.servlet.http.HttpServletRequest;
-
 import java.time.LocalDate;
-import java.util.*;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 @SpringBootTest
@@ -189,10 +187,11 @@ class EstimateServiceTest {
     @DisplayName("[searchByPageAdmin] 관리자 페이지 견적 검색")
     void searchByPageAdmin() {
         // given
-        AdminSearchForm form = new AdminSearchForm();
-        form.setStart(LocalDate.now());
-        form.setEnd(LocalDate.now().plusDays(1L));
-        form.setKeyword("");
+        AdminSearchForm form = new AdminSearchForm(LocalDate.now(), LocalDate.now().plusDays(1L), "", "");
+//
+//        form.setStart(LocalDate.now());
+//        form.setEnd(LocalDate.now().plusDays(1L));
+//        form.setKeyword("");
 
         // when
         Page<Estimate> expected = estimateService.searchByPageAdmin(pageable, form);
