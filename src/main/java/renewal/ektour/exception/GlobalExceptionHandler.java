@@ -13,7 +13,7 @@ import static renewal.ektour.dto.response.RestResponse.badRequest;
 
 @Slf4j
 @ControllerAdvice
-public class ServiceExceptionHandler {
+public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
@@ -25,7 +25,7 @@ public class ServiceExceptionHandler {
 
     @ExceptionHandler(ValidationException.class)
     public ResponseEntity<ErrorListResponse> errorHandle(ValidationException ex) {
-        log.error("예외 발생 및 처리 = {}", ex.getMessage());
+        log.error("검증 예외 발생 및 처리 = {}", ex.getMessage());
         return badRequest(ex.getBindingResult());
     }
 

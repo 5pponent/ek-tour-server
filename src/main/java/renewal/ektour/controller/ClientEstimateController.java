@@ -13,7 +13,6 @@ import renewal.ektour.dto.request.EstimateRequest;
 import renewal.ektour.dto.request.FindEstimateRequest;
 import renewal.ektour.dto.response.EstimateDetailResponse;
 import renewal.ektour.dto.response.EstimateListPagingResponse;
-import renewal.ektour.dto.response.EstimateSimpleResponse;
 import renewal.ektour.dto.response.PageTotalCountResponse;
 import renewal.ektour.exception.ValidationException;
 import renewal.ektour.service.EmailService;
@@ -22,7 +21,6 @@ import renewal.ektour.util.PageConfig;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.List;
 
 import static renewal.ektour.dto.response.RestResponse.success;
 
@@ -76,7 +74,11 @@ public class ClientEstimateController {
     // 클라이언트 견적요청 목록 조회 (페이징)
     @GetMapping("/all")
     public EstimateListPagingResponse findAllByPageClient(
-            @PageableDefault(size = PageConfig.PAGE_PER_COUNT, sort = PageConfig.SORT_STANDARD, direction = Sort.Direction.DESC) Pageable pageable) {
+            @PageableDefault(
+                    size = PageConfig.PAGE_PER_COUNT,
+                    sort = PageConfig.SORT_STANDARD,
+                    direction = Sort.Direction.DESC
+            ) Pageable pageable) {
         return estimateService.findAllByPage(pageable);
     }
 
@@ -90,7 +92,11 @@ public class ClientEstimateController {
     @PostMapping("/search/my/all")
     public EstimateListPagingResponse findAllMyEstimatesPaging(
             @Valid @RequestBody FindEstimateRequest form,
-            @PageableDefault(size = PageConfig.PAGE_PER_COUNT, sort = PageConfig.SORT_STANDARD, direction = Sort.Direction.DESC) Pageable pageable) {
+            @PageableDefault(
+                    size = PageConfig.PAGE_PER_COUNT,
+                    sort = PageConfig.SORT_STANDARD,
+                    direction = Sort.Direction.DESC) Pageable pageable
+    ) {
         return estimateService.findAllMyEstimates(pageable, form);
     }
 
@@ -98,8 +104,10 @@ public class ClientEstimateController {
      * 견적요청 수정
      */
     @PutMapping("/{estimateId}")
-    public EstimateDetailResponse updateById(@PathVariable("estimateId") Long estimateId,
-                                        @Valid @RequestBody EstimateRequest updateForm) {
+    public EstimateDetailResponse updateById(
+            @PathVariable("estimateId") Long estimateId,
+            @Valid @RequestBody EstimateRequest updateForm
+    ) {
         return estimateService.update(estimateId, updateForm).toDetailResponse();
     }
 

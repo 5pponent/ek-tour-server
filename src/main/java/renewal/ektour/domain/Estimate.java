@@ -16,6 +16,7 @@ import java.time.format.DateTimeFormatter;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@Builder
 public class Estimate {
 
     @Id @GeneratedValue
@@ -63,39 +64,8 @@ public class Estimate {
         this.validDate = LocalDateTime.now().plusDays(7).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 
-    @Builder
-    public Estimate(String name, String email, String phone, String password, String travelType, String vehicleType, int vehicleNumber, int memberCount, String departDate, String arrivalDate, String departPlace, String arrivalPlace, String memo, String stopPlace, String wayType, String payment, String taxBill, String ip, boolean visibility) {
-        this.name = name;
-        this.email = email;
-        this.phone = phone;
-        this.password = password;
-        this.travelType = travelType;
-        this.vehicleType = vehicleType;
-        this.vehicleNumber = vehicleNumber;
-        this.memberCount = memberCount;
-        this.departDate = departDate;
-        this.arrivalDate = arrivalDate;
-        this.departPlace = departPlace;
-        this.arrivalPlace = arrivalPlace;
-        this.memo = memo;
-        this.stopPlace = stopPlace;
-        this.wayType = wayType;
-        this.payment = payment;
-        this.taxBill = taxBill;
-        this.visibility = visibility;
-        this.ip = ip;
-    }
-
     public EstimateSimpleResponse toSimpleResponse() {
-        return EstimateSimpleResponse.builder()
-                .id(id)
-                .name(name)
-                .travelType(travelType)
-                .vehicleType(vehicleType)
-                .departPlace(departPlace)
-                .arrivalPlace(arrivalPlace)
-                .createdDate(createdDate)
-                .build();
+        return new EstimateSimpleResponse(id, name, travelType, vehicleType, arrivalPlace, vehicleType, createdDate);
     }
 
     public EstimateDetailResponse toDetailResponse() {
@@ -125,7 +95,7 @@ public class Estimate {
     }
 
     /**
-     * 비즈니스 로직 (by dirty checking)
+     * 비즈니스 로직
      */
     // 견적 요청 삭제 (보여지는걸 숨기기)
     public void setInvisible() {

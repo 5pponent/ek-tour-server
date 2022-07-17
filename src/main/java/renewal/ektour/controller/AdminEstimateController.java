@@ -46,11 +46,15 @@ public class AdminEstimateController {
     }
 
     @GetMapping("/main")
-    public String main(@Login Admin loginAdmin,
-                       Model model,
-                       @PageableDefault(size = PageConfig.PAGE_PER_COUNT,
-                               sort = PageConfig.SORT_STANDARD,
-                               direction = Sort.Direction.DESC) Pageable pageable) {
+    public String main(
+            @Login Admin loginAdmin,
+            Model model,
+            @PageableDefault(
+                    size = PageConfig.PAGE_PER_COUNT,
+                    sort = PageConfig.SORT_STANDARD,
+                    direction = Sort.Direction.DESC
+            ) Pageable pageable
+    ) {
         if (loginAdmin == null) return "login";
         Page<Estimate> eList = estimateService.findAllByPageAdmin(pageable);
         setPagingModel(model, pageable, eList, new AdminSearchForm());
@@ -61,7 +65,11 @@ public class AdminEstimateController {
      * 견적요청 검색
      */
     // 검색 변수 설정 편의 메소드
-    private void setSearchVariables(AdminSearchForm form, Pageable pageable, Model model) {
+    private void setSearchVariables(
+            AdminSearchForm form,
+            Pageable pageable,
+            Model model
+    ) {
         searchManager.setValue("search", form);
         Page<Estimate> eList = estimateService.searchByPageAdmin(pageable, form);
         setPagingModel(model, pageable, eList, form);
@@ -69,12 +77,16 @@ public class AdminEstimateController {
 
     // 견적 요청 처음 검색
     @PostMapping("/search")
-    public String search(@Valid @ModelAttribute("adminSearchForm") AdminSearchForm form,
-                         BindingResult bindingResult,
-                         Model model,
-                         @PageableDefault(size = PageConfig.PAGE_PER_COUNT,
-                                 sort = PageConfig.SORT_STANDARD,
-                                 direction = Sort.Direction.DESC) Pageable pageable) {
+    public String search(
+            @Valid @ModelAttribute("adminSearchForm") AdminSearchForm form,
+            BindingResult bindingResult,
+            Model model,
+            @PageableDefault(
+                    size = PageConfig.PAGE_PER_COUNT,
+                    sort = PageConfig.SORT_STANDARD,
+                    direction = Sort.Direction.DESC
+            ) Pageable pageable
+    ) {
         if (bindingResult.hasErrors()) {
             log.error("{}", bindingResult.getFieldErrors());
             throw new AdminException("검색 일시적 오류");
@@ -86,10 +98,13 @@ public class AdminEstimateController {
     // 검색한 상태에서 페이징
     @GetMapping("/search")
     public String searchPage(
-            @PageableDefault(size = PageConfig.PAGE_PER_COUNT,
-            sort = PageConfig.SORT_STANDARD,
-            direction = Sort.Direction.DESC) Pageable pageable,
-                             Model model) {
+            @PageableDefault(
+                    size = PageConfig.PAGE_PER_COUNT,
+                    sort = PageConfig.SORT_STANDARD,
+                    direction = Sort.Direction.DESC
+            ) Pageable pageable,
+            Model model
+    ) {
         AdminSearchForm form = searchManager.getValue("search");
         setSearchVariables(form, pageable, model);
         return "searchPage";
@@ -97,7 +112,10 @@ public class AdminEstimateController {
 
     // 견적요청 상세 조회
     @GetMapping("/estimate/{estimateId}")
-    public String getEstimateDetail(@PathVariable("estimateId") Long estimateId, Model model) {
+    public String getEstimateDetail(
+            @PathVariable("estimateId") Long estimateId,
+            Model model
+    ) {
         EstimateDetailResponse estimate = estimateService.findById(estimateId).toDetailResponse();
         model.addAttribute("estimate", estimate);
         return "estimateDetailPage";
@@ -107,8 +125,10 @@ public class AdminEstimateController {
      * 견적요청 엑셀 다운로드
      */
     @GetMapping("/estimate/{estimateId}/excel")
-    public void createExcel(@PathVariable("estimateId") Long estimateId,
-                            HttpServletResponse response) {
+    public void createExcel(
+            @PathVariable("estimateId") Long estimateId,
+            HttpServletResponse response
+    ) {
         excelService.createExcel(estimateId, response);
     }
 
@@ -116,8 +136,10 @@ public class AdminEstimateController {
      * 관리자페이지 - 견적요청 수정
      */
     @PostMapping("/update/estimate/{estimateId}")
-    public String updateEstimate(@PathVariable("estimateId") Long estimateId,
-                                 @ModelAttribute("estimate") EstimateDetailResponse estimate) {
+    public String updateEstimate(
+            @PathVariable("estimateId") Long estimateId,
+            @ModelAttribute("estimate") EstimateDetailResponse estimate
+    ) {
         estimateService.update(estimateId, estimate);
         return "redirect:/admin/main";
     }

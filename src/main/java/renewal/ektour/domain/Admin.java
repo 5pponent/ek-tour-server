@@ -11,6 +11,8 @@ import javax.persistence.Id;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@AllArgsConstructor
+@Builder
 public class Admin {
 
     @Id @GeneratedValue
@@ -31,28 +33,6 @@ public class Admin {
     private String accountNum;
     private String accountHolder;
     private String kakaoTalkId;
-
-    public Admin(String adminPassword) {
-        this.adminPassword = adminPassword;
-    }
-
-    @Builder
-    public Admin(String adminPassword, String adminName, String infoHandlerName, String businessNum, String registrationNum, String address, String tel, String fax, String phone, String email, String accountBank, String accountNum, String accountHolder, String kakaoTalkId) {
-        this.adminPassword = adminPassword;
-        this.adminName = adminName;
-        this.infoHandlerName = infoHandlerName;
-        this.businessNum = businessNum;
-        this.registrationNum = registrationNum;
-        this.address = address;
-        this.tel = tel;
-        this.fax = fax;
-        this.phone = phone;
-        this.email = email;
-        this.accountBank = accountBank;
-        this.accountNum = accountNum;
-        this.accountHolder = accountHolder;
-        this.kakaoTalkId = kakaoTalkId;
-    }
 
     public CompanyInfoResponse toCompanyInfoResponse() {
         return CompanyInfoResponse.builder()
