@@ -10,32 +10,32 @@ import javax.validation.constraints.Size
 data class AdminSearchForm(
         @NotNull
         @DateTimeFormat(pattern = "yyyy-MM-dd")
-        val start: LocalDate? = null,
+        var start: LocalDate? = null,
 
         @NotNull
         @DateTimeFormat(pattern = "yyyy-MM-dd")
-        val end: LocalDate? = null,
+        var end: LocalDate? = null,
 
-        val searchType: String = "",
-        val keyword: String = "",
+        var searchType: String = "",
+        var keyword: String = "",
 )
 
 data class FindEstimateRequest(
 
         @NotBlank
         @Size(min = 11, max = 11, message = "01012341234 형식이 아닙니다")
-        val phone: String = "",
+        var phone: String = "",
 
         @NotBlank
         @Size(min = 4, max = 4, message = "비밀번호는 4자리로 설정해주세요")
         @PositiveOrZero(message = "비밀번호는 0~9자리 숫자로만 가능합니다")
-        val password: String = "",
+        var password: String = "",
 )
 
 data class UpdateAdminPasswordForm(
-        @NotBlank val nowPassword: String = "",
-        @NotBlank val newPassword: String = "",
-        @NotBlank val newPasswordCheck: String = "",
+        @NotBlank var nowPassword: String = "",
+        @NotBlank var newPassword: String = "",
+        @NotBlank var newPasswordCheck: String = "",
 ) {
         fun passwordCheck(): Boolean {
                 return this.newPassword == this.newPasswordCheck
