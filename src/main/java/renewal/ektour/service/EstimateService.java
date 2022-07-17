@@ -83,38 +83,11 @@ public class EstimateService {
         return (repository.countAll() / PageConfig.PAGE_PER_COUNT) + 1;
     }
 
-    // 클라이언트 검색
-    public EstimateListPagingResponse searchClient(String searchType, String keyword, Pageable pageable) {
-        switch (searchType) {
-            case "name" :
-                return makeEstimateListResponse(pageable, repository.searchAllByName(pageable, keyword));
-            case "travelType" :
-                return makeEstimateListResponse(pageable, repository.searchAllByTravelType(pageable, keyword));
-            case "vehicleType" :
-                return makeEstimateListResponse(pageable, repository.searchAllByVehicleType(pageable, keyword));
-        }
-        
-        // 검색 요건이 맞지 않으면 그냥 다 내림
-        return findAllByPage(pageable);
-    }
-
     // 클라이언트 내가 쓴 견적 조회
     public EstimateListPagingResponse findAllMyEstimates(Pageable pageable, FindEstimateRequest form) {
         Page<Estimate> estimates = repository.findAllByPhoneAndPassword(pageable, form.getPhone(), form.getPassword());
         return makeEstimateListResponse(pageable, estimates);
     }
-
-    // 클라이언트 내가 쓴 견적 조회 페이징 없이 리스트 전체 반환
-    public List<EstimateSimpleResponse> findAllMyEstimates(FindEstimateRequest form) {
-        List<Estimate> estimates = repository.findAllByPhoneAndPassword(form.getPhone(), form.getPassword());
-        Collections.reverse(estimates);
-        List<EstimateSimpleResponse> result = new ArrayList<>();
-        for (Estimate e : estimates) {
-            result.add(e.toSimpleResponse());
-        }
-        return result;
-    }
-
 
     // 관리자페이지 검색
     public Page<Estimate> searchByPageAdmin(Pageable pageable, AdminSearchForm form) {
@@ -144,7 +117,6 @@ public class EstimateService {
     public Estimate update(Long estimateId, EstimateDetailResponse updateForm) {
         Estimate estimate = findById(estimateId);
         log.info("기존 데이터 : {}", estimate.toDetailResponse().toString());
-        log.info("수정할 데이터 : {}", updateForm.toString());
         estimate.update(updateForm);
         log.info("수정된 데이터 : {}", estimate.toDetailResponse().toString());
         return estimate;
