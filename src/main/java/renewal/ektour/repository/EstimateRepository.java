@@ -27,10 +27,10 @@ public interface EstimateRepository extends JpaRepository<Estimate, Long> {
 
     Optional<Estimate> findByIdAndPhoneAndPassword(Long id, String phone, String password);
 
-    @Query("SELECT e FROM Estimate e WHERE e.createdDate BETWEEN :start AND :end AND e.name = :name")
+    @Query("SELECT e FROM Estimate e WHERE e.createdDate BETWEEN :start AND :end AND e.name LIKE %:name%")
     Page<Estimate> searchAllByName(Pageable pageable, @Param("start") String start, @Param("end") String end, @Param("name") String name);
 
-    @Query("SELECT e FROM Estimate e WHERE e.createdDate BETWEEN :start AND :end AND e.phone = :phone")
+    @Query("SELECT e FROM Estimate e WHERE e.createdDate BETWEEN :start AND :end AND e.phone LIKE %:phone%")
     Page<Estimate> searchAllByPhone(Pageable pageable, @Param("start") String start, @Param("end") String end, @Param("phone") String phone);
 
     @Query("SELECT e FROM Estimate e WHERE e.createdDate BETWEEN :start AND :end")

@@ -23,12 +23,13 @@ import renewal.ektour.dto.response.EstimateListPagingResponse;
 import renewal.ektour.repository.EstimateRepository;
 
 import javax.servlet.http.HttpServletRequest;
+
 import java.time.LocalDate;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 @SpringBootTest
@@ -187,18 +188,33 @@ class EstimateServiceTest {
     @DisplayName("[searchByPageAdmin] 관리자 페이지 견적 검색")
     void searchByPageAdmin() {
         // given
-        AdminSearchForm form = new AdminSearchForm(LocalDate.now(), LocalDate.now().plusDays(1L), "", "");
-//
-//        form.setStart(LocalDate.now());
-//        form.setEnd(LocalDate.now().plusDays(1L));
-//        form.setKeyword("");
+        Estimate insertedEstimate = estimateService.createAndSave(request, testEstimate);
+        AdminSearchForm form = new AdminSearchForm();
+        form.setStart(LocalDate.now());
+        form.setEnd(LocalDate.now().plusDays(1L));
+        form.setSearchType("");
+        form.setKeyword("");
 
         // when
         Page<Estimate> expected = estimateService.searchByPageAdmin(pageable, form);
         Page<Estimate> actual = estimateRepository.searchAllByDate(pageable, form.getStart().toString(), form.getEnd().toString());
 
+        form.setKeyword("user1");
+        Page<Estimate> expected2 = estimateService.searchByPageAdmin(pageable, form);
+        Page<Estimate> actual2 = estimateRepository.searchAllByName(pageable, form.getStart().toString(), form.getEnd().toString(), form.getKeyword());
+
+        form.setSearchType("phone");
+        form.setKeyword("0100000");
+        Page<Estimate> expected3 = estimateService.searchByPageAdmin(pageable, form);
+        Page<Estimate> actual3 = estimateRepository.searchAllByPhone(pageable, form.getStart().toString(), form.getEnd().toString(), form.getKeyword());
+
         // then
         assertThat(actual).isEqualTo(expected);
+        assertThat(actual2).isEqualTo(expected2);
+        assertThat(actual3).isEqualTo(expected3);
+        log.info("날짜 검색 : {}", expected.getContent().get(0).toSimpleResponse());
+        log.info("이름 검색 : {}", expected2.getContent().get(0).toSimpleResponse());
+        log.info("핸드폰 검색 : {}", expected3.getContent().get(0).toSimpleResponse());
     }
 
     @Test
