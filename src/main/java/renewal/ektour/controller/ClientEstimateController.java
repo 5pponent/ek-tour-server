@@ -13,6 +13,7 @@ import renewal.ektour.dto.request.EstimateRequest;
 import renewal.ektour.dto.request.FindEstimateRequest;
 import renewal.ektour.dto.response.EstimateDetailResponse;
 import renewal.ektour.dto.response.EstimateListPagingResponse;
+import renewal.ektour.dto.response.EstimateSimpleResponse;
 import renewal.ektour.dto.response.PageTotalCountResponse;
 import renewal.ektour.exception.ValidationException;
 import renewal.ektour.service.EmailService;
@@ -21,6 +22,7 @@ import renewal.ektour.util.PageConfig;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.List;
 
 import static renewal.ektour.dto.response.RestResponse.success;
 
@@ -86,6 +88,14 @@ public class ClientEstimateController {
     @GetMapping("/all/page")
     public PageTotalCountResponse getAllPageCount() {
         return new PageTotalCountResponse(estimateService.getAllPageCount());
+    }
+
+    // 클라이언트 내가 쓴 견적 요청 목록 조회 (페이징 X, 리스트 전체 반환)
+    @PostMapping("/search/my")
+    public List<EstimateSimpleResponse> findAllMyEstimates(@Valid @RequestBody FindEstimateRequest form,
+                                                           BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) throw new ValidationException(bindingResult);
+        return estimateService.findAllMyEstimates(form);
     }
 
     // 클라이언트 내가 쓴 견적 요청 목록 조회 (페이징 O)

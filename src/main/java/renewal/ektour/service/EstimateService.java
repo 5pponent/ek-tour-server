@@ -102,6 +102,17 @@ public class EstimateService {
         }
     }
 
+    // 클라이언트 내가 쓴 견적 조회 페이징 없이 리스트 전체 반환
+    public List<EstimateSimpleResponse> findAllMyEstimates(FindEstimateRequest form) {
+        List<Estimate> estimates = repository.findAllByPhoneAndPassword(form.getPhone(), form.getPassword());
+        Collections.reverse(estimates);
+        List<EstimateSimpleResponse> result = new ArrayList<>();
+        for (Estimate e : estimates) {
+            result.add(e.toSimpleResponse());
+        }
+        return result;
+    }
+
     /**
      * 견적요청 수정
      */
