@@ -93,12 +93,12 @@ public class EstimateService {
     // 관리자페이지 검색
     public Page<Estimate> searchByPageAdmin(Pageable pageable, AdminSearchForm form) {
         if (form.getKeyword().equals("")) {
-            return repository.searchAllByDate(pageable, form.getStart().toString(), form.getEnd().toString());
+            return repository.searchAllByDate(pageable, form.getStart().toString(), form.getEnd().plusDays(1L).toString());
         }
         if (form.getSearchType().equals("phone")) {
-            return repository.searchAllByPhone(pageable, form.getStart().toString(), form.getEnd().toString(), form.getKeyword());
+            return repository.searchAllByPhone(pageable, form.getStart().toString(), form.getEnd().plusDays(1L).toString(), form.getKeyword());
         } else {
-            return repository.searchAllByName(pageable, form.getStart().toString(), form.getEnd().toString(), form.getKeyword());
+            return repository.searchAllByName(pageable, form.getStart().toString(), form.getEnd().plusDays(1L).toString(), form.getKeyword());
         }
     }
 
