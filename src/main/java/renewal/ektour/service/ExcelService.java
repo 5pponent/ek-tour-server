@@ -74,7 +74,7 @@ public class ExcelService {
             workbook.write(response.getOutputStream());
             workbook.close();
         } catch (Exception e) {
-            log.error("엑셀 에러 = {}", e.getMessage());
+            log.error("엑셀 에러 = {}", e.getMessage(), e.fillInStackTrace());
             throw new ExcelException("엑셀 변환/다운로드 관련 오류 발생");
         }
     }

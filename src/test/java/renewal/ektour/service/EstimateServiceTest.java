@@ -33,7 +33,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 @SpringBootTest
-@AutoConfigureMockMvc
 @Transactional
 class EstimateServiceTest {
 
@@ -146,7 +145,7 @@ class EstimateServiceTest {
 
         // when
         Page<Estimate> expected = estimateService.findAllByPageAdmin(pageable);
-        Page<Estimate> actual = estimateRepository.findAll(pageable);
+        Page<Estimate> actual = estimateRepository.findAllByAdmin(pageable);
 
         // then
         assertThat(actual.getTotalPages()).isEqualTo(expected.getTotalPages());
@@ -196,13 +195,16 @@ class EstimateServiceTest {
         form.setKeyword("");
 
         // when
+        // 날짜 검색
         Page<Estimate> expected = estimateService.searchByPageAdmin(pageable, form);
         Page<Estimate> actual = estimateRepository.searchAllByDate(pageable, form.getStart().toString(), form.getEnd().toString());
 
+        // 이름 검색
         form.setKeyword("user1");
         Page<Estimate> expected2 = estimateService.searchByPageAdmin(pageable, form);
         Page<Estimate> actual2 = estimateRepository.searchAllByName(pageable, form.getStart().toString(), form.getEnd().toString(), form.getKeyword());
 
+        // 핸드폰 검색
         form.setSearchType("phone");
         form.setKeyword("0100000");
         Page<Estimate> expected3 = estimateService.searchByPageAdmin(pageable, form);

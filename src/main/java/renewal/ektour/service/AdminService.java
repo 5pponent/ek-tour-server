@@ -80,6 +80,7 @@ public class AdminService {
         try {
             file.transferTo(new File(AdminConfig.LINUX_LOGO_PATH));
         } catch (IOException e) {
+            log.error("파일 업로드 에러 : {}", e.getMessage(), e.fillInStackTrace());
             throw new AdminException("로고 업로드 오류");
         }
     }
