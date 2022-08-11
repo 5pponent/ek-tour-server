@@ -8,8 +8,24 @@
 - 확장성과 유지보수성이 낮은 기능 실현의 최우선 목적의 코드 설계
 - 구식 호스팅 서비스를 통한 잦은 서버 장애 발생 및 과도한 유지비용 발생
 
-## 기술스택
-```Spring boot```, ```Thymeleaf```, ```Spring Data JPA```, ```MySQL```, ```AWS RDS```, ```AWS EC2```
+## 기술 스택
+Framework
+- Spring Boot (Java 11)
+
+Database
+- MySQL
+
+ORM
+- Spring Data JPA
+
+Dependencies
+- spring-boot-starter-mail
+- Thymeleaf (template engine for SSR)
+- Apache POI (for handling excel sheets)
+
+Deployment
+- AWS EC2
+- AWS RDS
 
 ## 기능
 ### 1. 리액트 클라이언트 REST API 형식으로 데이터 제공
